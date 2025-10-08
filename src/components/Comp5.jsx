@@ -1,6 +1,6 @@
 export default function Comp5() {
     return (
-        <div className="mt-20 overflow-hidden px-12">
+        <div className=" mt-20 overflow-hidden px-12">
             <div className="carousel w-full rounded-3xl">
                 <div id="item1" className="carousel-item w-full">
                     <img

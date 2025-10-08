@@ -1,6 +1,6 @@
 export default function Header() {
     return (
-        <div className="fixed z-1 w-full navbar bg-white shadow-blue-300 shadow-2xl ">
+        <div className="sticky top-0 z-1 w-full  navbar bg-white shadow-blue-300 shadow-2xl ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div

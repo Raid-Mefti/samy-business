@@ -2,13 +2,10 @@ export default function Comp3() {
     return (
         <div className="hero bg-white h-96 mt-20 mb-20 text-black">
             <div className="hero-content flex-col lg:flex-row-reverse">
-                <img
-                    src="logo2.png"
-                    className="max-w-sm rounded-lg "
-                />
-                <div>
-                    <h1 className="text-5xl font-bold">About samy business!</h1>
-                    <p className="py-6 text-xl">
+
+                <div className="flex flex-col justify-center  items-center">
+                    <h1 className="text-6xl font-bold">About samy business!</h1>
+                    <p className="py-6 text-2xl">
                         Basée à Alger et créée en 2007, Samy Business est une
                         EURL (Entreprise Unipersonnelle à Responsabilité
                         Limitée) algérienne spécialisée dans l'importation de
@@ -22,7 +19,7 @@ export default function Comp3() {
                         local, misant sur la qualité, la fiabilité et
                         l'innovation pour satisfaire ses clients.
                     </p>
-                    <button className="btn btn-info ">learn more</button>
+                    <button className="btn btn-info mr-0">Plus d'infos</button>
                 </div>
             </div>
         </div>
