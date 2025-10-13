@@ -1,12 +1,43 @@
+"use client";
+
+import ThemeSwitcher from "./ThemeSwitcher";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export default function Header() {
+    const { language } = useLanguage();
+
+    const translations = {
+        fr: {
+            about: "À propos de nous",
+            products: "Produits",
+            services: "Services",
+            contact: "Contact",
+            product1: "produit1",
+            product2: "produit2",
+            product3: "produit3",
+        },
+        en: {
+            about: "About Us",
+            products: "Products",
+            services: "Services",
+            contact: "Contact",
+            product1: "product1",
+            product2: "product2",
+            product3: "product3",
+        },
+    };
+
+    const t = translations[language];
+
     return (
-        <div className="sticky top-0 z-1 w-full  navbar bg-white shadow-blue-300 shadow-2xl ">
+        <div className="sticky top-0 z-1 w-full navbar bg-base-100 shadow-lg ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div
                         tabIndex={0}
                         role="button"
-                        className="btn bg-amber-500 btn-ghost lg:hidden"
+                        className="btn btn-primary btn-ghost lg:hidden"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -30,49 +61,45 @@ export default function Header() {
                     ></ul>
                 </div>
                 <a>
-                    <img className="ml-14 h-24" src="logo2.png" alt="Samy" />
+                    <img
+                        className="ml-4 sm:ml-6 lg:ml-8 h-24"
+                        src="logo2.png"
+                        alt="Samy"
+                    />
                 </a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="ml-10 menu menu-horizontal px-1 text-black text-2xl gap-10">
+                <ul className="ml-10 menu menu-horizontal px-1 text-base-content text-2xl gap-10">
                     <li>
-                        <a>À propos de nous</a>
+                        <a>{t.about}</a>
                     </li>
                     <li>
                         <details>
-                            <summary>Produits</summary>
-                            <ul className="p-2 bg-amber-50">
+                            <summary>{t.products}</summary>
+                            <ul className="p-2 bg-base-200">
                                 <li>
-                                    <a>produit1</a>
+                                    <a>{t.product1}</a>
                                 </li>
                                 <li>
-                                    <a> produit2</a>
+                                    <a>{t.product2}</a>
                                 </li>
                                 <li>
-                                    <a>produit3</a>
+                                    <a>{t.product3}</a>
                                 </li>
                             </ul>
                         </details>
                     </li>
                     <li>
-                        <a>Services</a>
+                        <a>{t.services}</a>
                     </li>
                     <li>
-                        <a>Contact</a>
+                        <a>{t.contact}</a>
                     </li>
                 </ul>
             </div>
-            <div className="navbar-end mr-7">
-                
-<button className="btn bg-white border-none" popoverTarget="popover-1" style={{ anchorName: "--anchor-1" } }>
-  <img className="w-12" src="terre.png" alt="xxx" />
-</button>
-
-<ul className="font-bold dropdown menu w-52 rounded-box bg-amber-50  shadow-sm "
-  popover="auto" id="popover-1" style={{ positionAnchor: "--anchor-1" }  }>
-  <li><a className="text-black">francais</a></li>
-  <li><a className="text-black">anglais</a></li>
-</ul>
+            <div className="navbar-end mr-4 sm:mr-6 lg:mr-8 ">
+                <LanguageSwitcher />
+                <ThemeSwitcher />
             </div>
         </div>
     );

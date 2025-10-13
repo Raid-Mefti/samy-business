@@ -1,6 +1,6 @@
 export default function Comp5() {
     return (
-        <div className=" mt-20 overflow-hidden px-12">
+        <div className="mt-12 overflow-hidden bg-base-100">
             <div className="carousel w-full rounded-3xl">
                 <div id="item1" className="carousel-item w-full">
                     <img
@@ -28,16 +28,16 @@ export default function Comp5() {
                 </div>
             </div>
             <div className="flex w-full justify-center gap-2 py-2">
-                <a href="#item1" className="btn btn-md">
+                <a href="#item1" className="btn btn-primary btn-md">
                     1
                 </a>
-                <a href="#item2" className="btn btn-md">
+                <a href="#item2" className="btn btn-primary btn-md">
                     2
                 </a>
-                <a href="#item3" className="btn btn-md">
+                <a href="#item3" className="btn btn-primary btn-md">
                     3
                 </a>
-                <a href="#item4" className="btn btn-md">
+                <a href="#item4" className="btn btn-primary btn-md">
                     4
                 </a>
             </div>

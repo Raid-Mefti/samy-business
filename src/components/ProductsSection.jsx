@@ -14,7 +14,7 @@ const ProductItem = ({ name, iconPath }) => (
             className="w-8 h-8 object-contain"
         />
         {/* Product Name */}
-        <span className="text-black font-bold font-medium">{name}</span>
+        <span className="text-base-content font-bold font-medium">{name}</span>
     </div>
 );
 
@@ -40,10 +40,10 @@ const manufacturedProducts = [
 
 // --- Main Component ---
 
-export default function Comp8() {
+export default function ProductsSection() {
     return (
-        <section className="container mx-auto px-4 py-16 text-black">
-            <h2 className="text-3xl font-bold mb-10 text-center text-site-text">
+        <section className="container mx-auto py-16 text-base-content bg-base-100">
+            <h2 className="text-3xl font-bold mb-10 text-center text-base-content">
                 LES PRODUITS DE SAMY BUSINESS
             </h2>
 
@@ -51,7 +51,7 @@ export default function Comp8() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 {/* Column 1: Produits Importés */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4 border-b border-brand-accent pb-2 text-brand-accent">
+                    <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
                         Produits importés
                     </h3>
                     <div className="space-y-3">
@@ -63,10 +63,10 @@ export default function Comp8() {
 
                 {/* Column 2: Produits Exportés */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4 border-b border-brand-accent pb-2 text-brand-accent">
+                    <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
                         Produits exportés
                     </h3>
-                    <div className="space-y-3 text-black">
+                    <div className="space-y-3 text-base-content">
                         {exportedProducts.map((product) => (
                             <ProductItem key={product.name} {...product} />
                         ))}
@@ -75,7 +75,7 @@ export default function Comp8() {
 
                 {/* Column 3: Produits Fabriqués */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4 border-b border-brand-accent pb-2 text-brand-accent">
+                    <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
                         Produits fabriqués
                     </h3>
                     <div className="space-y-3">
