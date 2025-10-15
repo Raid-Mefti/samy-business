@@ -71,7 +71,7 @@ export default function Comp7() {
     return (
         // Black background with a subtle primary color top border
         <footer
-            className={`bg-base-300 border-t border-base-content/20 text-base-content py-1 -mx-4 sm:-mx-6 lg:-mx-8 ${
+            className={`bg-base-300 border-t border-base-content/20 text-base-content py-1  ${
                 lang === "ar" ? "text-right" : ""
             }`}
         >

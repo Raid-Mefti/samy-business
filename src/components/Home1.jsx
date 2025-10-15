@@ -27,7 +27,7 @@ export default function Home1() {
 
     return (
         <>
-            <div className="relative h-[90vh] overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8">
+            <div className="relative h-[90vh] overflow-hidden ">
                 <img
                     className="w-full h-full object-cover"
                     src="hero.jpg"

@@ -41,7 +41,7 @@ export default function Header() {
 
     return (
         <div
-            className={`sticky top-0 z-1 w-full navbar bg-base-100 shadow-lg ${
+            className={`sticky top-0 z-1 w-full backdrop-blur-sm navbar bg-base-100/30 dow-lg ${
                 language === "ar" ? "flex-row-reverse" : ""
             }`}
         >
