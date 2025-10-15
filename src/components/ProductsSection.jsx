@@ -1,5 +1,4 @@
 // src/components/sections/ProductsSection.jsx
-
 import Image from "next/image";
 
 // Reusable component for a single product entry
