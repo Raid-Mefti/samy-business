@@ -1,18 +1,63 @@
 export default function ArticlePage() {
+    const lang = typeof document !== "undefined" ? document.documentElement.lang : "fr";
+    const t = {
+        fr: {
+            date: "1 janvier 2025",
+            article: "مقال",
+            author: "الكاتب، مؤسس Namedly",
+            firstSub: "العنوان الفرعي الأول",
+            secondSub: "عنوان فرعي آخر لتقسيم النص",
+            lastSub: "العنوان الفرعي الأخير";
+            quote: "اقتباس كبير ومؤكد للتأكيد وكسر المحتوى.",
+            fullName: "الاسم الكامل",
+            role: "المنصب في الشركة",
+            red1: "جدول",
+            red2: "تحليل",
+            red3: "المنتج",
+        },
+        en: {
+            date: "January 1, 2025",
+            article: "Article",
+            author: "Author, Founder of Namedly",
+            firstSub: "First subheader",
+            secondSub: "Another subheader to break up text",
+            lastSub: "Last subheader, for good measure",
+            quote: "A large, heavily bolded quote for emphasis and breaking up content.",
+            fullName: "Full name",
+            role: "Role at company",
+            red1: "tableau",
+            red2: "d'analyse",
+            red3: "du produit",
+        },
+        ar: {
+            date: "1 يناير 2025",
+            article: "مقال",
+            author: "الكاتب، مؤسس Namedly",
+            firstSub: "العنوان الفرعي الأول",
+            secondSub: "عنوان فرعي آخر لتقسيم النص",
+            lastSub: "العنوان الفرعي الأخير",
+            quote: "\"اقتباس كبير ومؤكد للتأكيد وكسر المحتوى.\"",
+            fullName: "الاسم الكامل",
+            role: "المنصب في الشركة",
+            red1: "جدول",
+            red2: "تحليل",
+            red3: "المنتج",
+        },
+    }[lang];
     return (
         <div className="min-h-screen bg-base-100">
             {/* Main content container with centered column */}
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+            <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 ${lang === "ar" ? "text-right" : ""}`}>
                 {/* Metadata Section */}
                 <div className="text-center mb-6 sm:mb-8">
                     <p className="text-base-content/60 text-sm font-normal mb-3 sm:mb-4">
-                        January 1, 2025
+                        {t.date}
                     </p>
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-base-content mb-3 sm:mb-4">
-                        Article
+                        {t.article}
                     </h1>
                     <p className="text-base-content/60 text-sm font-normal">
-                        Author, Founder of Namedly
+                        {t.author}
                     </p>
                 </div>
 
@@ -28,9 +73,7 @@ export default function ArticlePage() {
                 {/* Article Content */}
                 <div className="prose prose-lg max-w-none">
                     {/* First subheader */}
-                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">
-                        First subheader
-                    </h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">{t.firstSub}</h2>
                     <p className="text-base-content leading-relaxed mb-6 sm:mb-8">
                         The first paragraph of an article is often an
                         introduction to the text. Sometimes it’s called the
@@ -45,9 +88,7 @@ export default function ArticlePage() {
                     </p>
 
                     {/* Another subheader */}
-                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">
-                        Another subheader to break up text
-                    </h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">{t.secondSub}</h2>
                     <p className="text-base-content leading-relaxed mb-6 sm:mb-8">
                         The second paragraph of an article is sometimes called
                         the “nut graph,” which is short for “nutshell
@@ -63,27 +104,20 @@ export default function ArticlePage() {
 
                     {/* Blockquote Section */}
                     <div className="text-center my-12 sm:my-14 lg:my-16">
-                        <blockquote className="text-xl sm:text-2xl lg:text-3xl font-bold text-base-content leading-tight mb-6 sm:mb-8">
-                            "A large, heavily bolded quote for emphasis and
-                            breaking up content."
-                        </blockquote>
+                        <blockquote className="text-xl sm:text-2xl lg:text-3xl font-bold text-base-content leading-tight mb-6 sm:mb-8">{t.quote}</blockquote>
                         <div className="flex flex-col items-center">
                             <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-3">
                                 <span className="text-primary-content text-xl">
                                     😊
                                 </span>
                             </div>
-                            <p className="font-bold text-base-content">
-                                Full name
-                            </p>
-                            <p className="text-base-content">Role at company</p>
+                            <p className="font-bold text-base-content">{t.fullName}</p>
+                            <p className="text-base-content">{t.role}</p>
                         </div>
                     </div>
 
                     {/* Last subheader */}
-                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">
-                        Last subheader, for good measure
-                    </h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">{t.lastSub}</h2>
                     <p className="text-black leading-relaxed mb-12 sm:mb-14 lg:mb-16">
                         Nemo enim ipsam voluptatem quia voluptas sit aspernatur
                         aut odit aut fugit, sed quia consequuntur magni dolores
@@ -96,11 +130,11 @@ export default function ArticlePage() {
                 </div>
 
                 {/* Red Section */}
-                <div className="bg-primary w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center">
+                <div className={`bg-primary w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center ${lang === "ar" ? "text-right" : ""}`}>
                     <div className="text-primary-content font-serif text-2xl sm:text-3xl lg:text-4xl leading-tight">
-                        <div>tableau</div>
-                        <div>d'analyse</div>
-                        <div>du produit</div>
+                        <div>{t.red1}</div>
+                        <div>{t.red2}</div>
+                        <div>{t.red3}</div>
                     </div>
                 </div>
             </div>

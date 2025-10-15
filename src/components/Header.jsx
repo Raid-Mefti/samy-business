@@ -26,12 +26,25 @@ export default function Header() {
             product2: "product2",
             product3: "product3",
         },
+        ar: {
+            about: "من نحن",
+            products: "المنتجات",
+            services: "الخدمات",
+            contact: "اتصل بنا",
+            product1: "المنتج 1",
+            product2: "المنتج 2",
+            product3: "المنتج 3",
+        },
     };
 
     const t = translations[language];
 
     return (
-        <div className="sticky top-0 z-1 w-full navbar bg-base-100 shadow-lg ">
+        <div
+            className={`sticky top-0 z-1 w-full navbar bg-base-100 shadow-lg ${
+                language === "ar" ? "flex-row-reverse" : ""
+            }`}
+        >
             <div className="navbar-start">
                 <div className="dropdown">
                     <div

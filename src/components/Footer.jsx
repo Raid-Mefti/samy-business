@@ -13,13 +13,78 @@ const socialLinks = [
 ];
 
 export default function Comp7() {
+    // Simple language-aware text selection using document's lang
+    const lang =
+        typeof document !== "undefined" ? document.documentElement.lang : "fr";
+    const t = {
+        fr: {
+            legal: "Informations légales",
+            privacy: "Politique de confidentialité",
+            terms: "Conditions générales",
+            contacts: "Contacts:",
+            contactText:
+                "Nous contacter pour toutes demandes de sourcing et de partenariat.",
+            nav: "Navigation:",
+            products: "Nos Produits",
+            about: "À propos",
+            contact: "Contactez-nous",
+            rights: "Tous droits réservés.",
+        },
+        en: {
+            legal: "Legal information",
+            privacy: "Privacy policy",
+            terms: "Terms and conditions",
+            contacts: "Contacts:",
+            contactText:
+                "Contact us for any sourcing and partnership requests.",
+            nav: "Navigation:",
+            products: "Our Products",
+            about: "About Us",
+            contact: "Contact Us",
+            rights: "All rights reserved.",
+        },
+        ar: {
+            legal: "المعلومات القانونية",
+            privacy: "سياسة الخصوصية",
+            terms: "الشروط والأحكام",
+            contacts: "جهات الاتصال:",
+            contactText: "تواصل معنا لطلبات التوريد والشراكات.",
+            nav: "التنقل:",
+            products: "منتجاتنا",
+            about: "من نحن",
+            contact: "اتصل بنا",
+            rights: "جميع الحقوق محفوظة.",
+        },
+    }[lang] || {
+        legal: "Informations légales",
+        privacy: "Politique de confidentialité",
+        terms: "Conditions générales",
+        contacts: "Contacts:",
+        contactText:
+            "Nous contacter pour toutes demandes de sourcing et de partenariat.",
+        nav: "Navigation:",
+        products: "Nos Produits",
+        about: "À propos",
+        contact: "Contactez-nous",
+        rights: "Tous droits réservés.",
+    };
     return (
         // Black background with a subtle primary color top border
-        <footer className="bg-base-300 border-t border-base-content/20 text-base-content py-1 -mx-4 sm:-mx-6 lg:-mx-8">
+        <footer
+            className={`bg-base-300 border-t border-base-content/20 text-base-content py-1 -mx-4 sm:-mx-6 lg:-mx-8 ${
+                lang === "ar" ? "text-right" : ""
+            }`}
+        >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Top Row: Logo and Social Links */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-base-content/20 pb-8 mb-8">
-                    <div className="flex items-center space-x-3 mb-6 md:mb-0">
+                    <div
+                        className={`flex items-center ${
+                            lang === "ar"
+                                ? "space-x-reverse space-x-3"
+                                : "space-x-3"
+                        } mb-6 md:mb-0`}
+                    >
                         <Image
                             className="mt-4"
                             src="logo.svg"
@@ -56,17 +121,17 @@ export default function Comp7() {
                         <ul className="space-y-2">
                             <li>
                                 <Link href="#" className="hover:text-primary">
-                                    Informations légales
+                                    {t.legal}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="#" className="hover:text-primary">
-                                    Politique de confidentialité
+                                    {t.privacy}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="#" className="hover:text-primary">
-                                    Conditions générales
+                                    {t.terms}
                                 </Link>
                             </li>
                         </ul>
@@ -75,12 +140,9 @@ export default function Comp7() {
                     {/* Column 2: Contacts */}
                     <div>
                         <h5 className="font-semibold text-base-content mb-3">
-                            Contacts:
+                            {t.contacts}
                         </h5>
-                        <p>
-                            Nous contacter pour toutes demandes de sourcing et
-                            de partenariat.
-                        </p>
+                        <p>{t.contactText}</p>
                         <p className="mt-2 text-primary font-medium">
                             contact@samybusiness.com
                         </p>
@@ -89,7 +151,7 @@ export default function Comp7() {
                     {/* Column 3: Navigation Quick Links */}
                     <div>
                         <h5 className="font-semibold text-base-content mb-3">
-                            Navigation:
+                            {t.nav}
                         </h5>
                         <ul className="space-y-2">
                             <li>
@@ -97,7 +159,7 @@ export default function Comp7() {
                                     href="/products"
                                     className="hover:text-primary"
                                 >
-                                    Nos Produits
+                                    {t.products}
                                 </Link>
                             </li>
                             <li>
@@ -105,7 +167,7 @@ export default function Comp7() {
                                     href="/about"
                                     className="hover:text-primary"
                                 >
-                                    About Us
+                                    {t.about}
                                 </Link>
                             </li>
                             <li>
@@ -113,16 +175,15 @@ export default function Comp7() {
                                     href="/contact"
                                     className="hover:text-primary"
                                 >
-                                    Contactez-nous
+                                    {t.contact}
                                 </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <p className="text-center text-xs text-base-content/60 mt-12">
-                    &copy; {new Date().getFullYear()} Samy Business. Tous droits
-                    réservés.
+                <p className={`text-center text-xs text-base-content/60 mt-12`}>
+                    &copy; {new Date().getFullYear()} Samy Business. {t.rights}
                 </p>
             </div>
         </footer>

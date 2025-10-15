@@ -50,15 +50,43 @@ export default function ProcessSteps() {
                     "The zinc sulfate solution from leaching, still impure, is purified in two successive stages. First, copper cementation takes place, then that of cobalt and cadmium. These elements are precipitated in metallic state by addition of zinc powder and antimony.",
             },
         },
+        ar: {
+            step1: {
+                title: "استقبال ومناولة الخامات",
+                description:
+                    "يُنقل مركز الزنك (السفاليريت) (ZnS) بالسفن بشكل أساسي من أمريكا اللاتينية (بيرو). قريبًا سيتم اعتماد مصدرين إضافيين للتوريد، وهما خامات العابد ووادي ميزور. تُفرغ الخامات وتُخزن في حجرات منفصلة. يستقبل المركب سنويًا أكثر من 70,000 طن من الخامات.",
+            },
+            step2: {
+                title: "التحميص الحمضي",
+                description:
+                    "لإنتاج الزنك، يستخدم مركب ALZINC كمادة أولية مركز الزنك الذي يحتوي في المتوسط على 54% إلى 60% من الزنك، 32% كبريت، 6% حديد، 1% إلى 2% رصاص، 3% SiO2 وحوالي خمسة عشر عنصرًا آخر بنسب أقل من 0.5%. تبدأ عمليات المعالجة بتحميص المركز.",
+            },
+            step3: {
+                title: "الاستخلاص (الترشيح)",
+                description:
+                    "تُذاب الكالسين في حمض الكبريت، وتسمى هذه العملية بالاستخلاص. تُنتج التفاعل محلول كبريتات الزنك الذي سيغذي بعد التنقية قاعات التحليل الكهربائي. يتم الاستخلاص على مرحلتين: يتضمن الاستخلاص المحايد...",
+            },
+            step4: {
+                title: "التنقية",
+                description:
+                    "تُنقّى محلول كبريتات الزنك الناتج عن الاستخلاص —والذي لا يزال غير نقي— على مرحلتين متتاليتين. أولاً تتم إسمنتة النحاس، ثم الكوبالت والكادميوم. تُرسب هذه العناصر في الحالة المعدنية بإضافة مسحوق الزنك والأنتيمون.",
+            },
+        },
     };
 
     const t = translations[language];
 
     return (
-        <div className="h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content py-8 bg-base-100">
+        <div
+            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content py-8 bg-base-100 ${
+                language === "ar" ? "text-right" : ""
+            }`}
+        >
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
                 <img
-                    className="mt-4 w-20 h-fit mr-8 filter brightness-0 invert"
+                    className={`mt-4 w-20 h-fit ${
+                        language === "ar" ? "ml-8" : "mr-8"
+                    } filter brightness-0 invert`}
                     src="Vector1.png"
                     alt="Réception et manutention des minerais"
                 />
@@ -70,7 +98,9 @@ export default function ProcessSteps() {
             </div>
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
                 <img
-                    className="mt-4 w-20 h-fit mr-8 filter brightness-0 invert"
+                    className={`mt-4 w-20 h-fit ${
+                        language === "ar" ? "ml-8" : "mr-8"
+                    } filter brightness-0 invert`}
                     src="Frame1.png"
                     alt="Grillage Acide"
                 />
@@ -82,7 +112,9 @@ export default function ProcessSteps() {
             </div>
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
                 <img
-                    className="mt-4 w-20 h-fit mr-8 filter brightness-0 invert"
+                    className={`mt-4 w-20 h-fit ${
+                        language === "ar" ? "ml-8" : "mr-8"
+                    } filter brightness-0 invert`}
                     src="Vector.png"
                     alt="Lixiviation"
                 />
@@ -95,7 +127,9 @@ export default function ProcessSteps() {
 
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
                 <img
-                    className="mt-4 w-20 h-fit mr-8 filter brightness-0 invert"
+                    className={`mt-4 w-20 h-fit ${
+                        language === "ar" ? "ml-8" : "mr-8"
+                    } filter brightness-0 invert`}
                     src="Vector1.png"
                     alt="Purification"
                 />

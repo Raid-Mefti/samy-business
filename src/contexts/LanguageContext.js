@@ -11,11 +11,18 @@ export function LanguageProvider({ children }) {
         // Get language from localStorage or default to French
         const savedLanguage = localStorage.getItem("language") || "fr";
         setLanguage(savedLanguage);
+        // Apply initial lang/dir on mount
+        const initialDir = savedLanguage === "ar" ? "rtl" : "ltr";
+        document.documentElement.setAttribute("lang", savedLanguage);
+        document.documentElement.setAttribute("dir", initialDir);
     }, []);
 
     const toggleLanguage = (newLanguage) => {
         setLanguage(newLanguage);
         localStorage.setItem("language", newLanguage);
+        const dir = newLanguage === "ar" ? "rtl" : "ltr";
+        document.documentElement.setAttribute("lang", newLanguage);
+        document.documentElement.setAttribute("dir", dir);
     };
 
     return (
