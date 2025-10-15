@@ -83,12 +83,22 @@ export default function ProcessSteps() {
             }`}
         >
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
-                <img
-                    className={`mt-4 w-20 h-fit ${
+                <div
+                    className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
-                    } filter brightness-0 invert`}
-                    src="Vector1.png"
-                    alt="Réception et manutention des minerais"
+                    } bg-base-content mask mask-squircle`}
+                    style={{
+                        WebkitMaskImage: 'url("Vector1.png")',
+                        maskImage: 'url("Vector1.png")',
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                    }}
+                    aria-label="Réception et manutention des minerais"
+                    role="img"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{t.step1.title}</h1>
@@ -97,12 +107,22 @@ export default function ProcessSteps() {
                 </div>
             </div>
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
-                <img
-                    className={`mt-4 w-20 h-fit ${
+                <div
+                    className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
-                    } filter brightness-0 invert`}
-                    src="Frame1.png"
-                    alt="Grillage Acide"
+                    } bg-base-content mask mask-squircle`}
+                    style={{
+                        WebkitMaskImage: 'url("Frame1.png")',
+                        maskImage: 'url("Frame1.png")',
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                    }}
+                    aria-label="Grillage Acide"
+                    role="img"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{t.step2.title}</h1>
@@ -111,12 +131,22 @@ export default function ProcessSteps() {
                 </div>
             </div>
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
-                <img
-                    className={`mt-4 w-20 h-fit ${
+                <div
+                    className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
-                    } filter brightness-0 invert`}
-                    src="Vector.png"
-                    alt="Lixiviation"
+                    } bg-base-content mask mask-squircle`}
+                    style={{
+                        WebkitMaskImage: 'url("Vector.png")',
+                        maskImage: 'url("Vector.png")',
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                    }}
+                    aria-label="Lixiviation"
+                    role="img"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{t.step3.title}</h1>
@@ -126,12 +156,22 @@ export default function ProcessSteps() {
             </div>
 
             <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
-                <img
-                    className={`mt-4 w-20 h-fit ${
+                <div
+                    className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
-                    } filter brightness-0 invert`}
-                    src="Vector1.png"
-                    alt="Purification"
+                    } bg-base-content mask mask-squircle`}
+                    style={{
+                        WebkitMaskImage: 'url("Vector1.png")',
+                        maskImage: 'url("Vector1.png")',
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                    }}
+                    aria-label="Purification"
+                    role="img"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{t.step4.title}</h1>
