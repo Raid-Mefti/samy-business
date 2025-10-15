@@ -13,12 +13,14 @@ export default function Home() {
         <>
             <Header />
             <Home1 />
-            <AboutSection />
-            <ProductsGrid />
-            <VideoComp />
-            <ImageCarousel />
-            <ProcessSteps />
-            <ProductsSection />
+            <div className="site-container site-stack">
+                <AboutSection />
+                <ProductsGrid />
+                <VideoComp />
+                <ImageCarousel />
+                <ProcessSteps />
+                <ProductsSection />
+            </div>
             <Footer />
         </>
     );

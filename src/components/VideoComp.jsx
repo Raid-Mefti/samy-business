@@ -1,7 +1,7 @@
 export default function VideoComp() {
     return (
-        <section className="py-16 bg-base-100">
-            <div className="container mx-auto">
+        <section className="bg-base-100">
+            <div className="mx-auto">
                 <h2 className="text-3xl text-base-content md:text-4xl font-bold mb-8 text-center">
                     Image et vidéo de l'entreprise
                 </h2>

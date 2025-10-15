@@ -6,7 +6,7 @@ export default function ProductsGrid() {
     const [isArticleOpen, setIsArticleOpen] = useState(false);
 
     return (
-        <div className="flex flex-col md:flex-row justify-center md:justify-around gap-8 py-8 max-w-7xl mx-auto bg-base-100">
+        <div className="flex flex-col md:flex-row justify-center md:justify-around gap-8 max-w-7xl mx-auto bg-base-100 ">
             <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
                 <figure>
                     <img src="img11.png" alt="xxx" />

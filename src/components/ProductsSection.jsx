@@ -42,7 +42,7 @@ const manufacturedProducts = [
 
 export default function ProductsSection() {
     return (
-        <section className="container mx-auto py-16 text-base-content bg-base-100">
+        <section className=" text-base-content bg-base-100">
             <h2 className="text-3xl font-bold mb-10 text-center text-base-content">
                 LES PRODUITS DE SAMY BUSINESS
             </h2>

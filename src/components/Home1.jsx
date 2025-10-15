@@ -38,10 +38,12 @@ export default function Home1() {
                     src="hero.jpg"
                     alt="Hero background image"
                 />
+                {/* Subtle dark gradient overlay for contrast */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40" />
                 <div
                     // Dynamic Positioning: right-20 for LTR, left-20 for RTL
-                    className={`absolute [top:10%] w-fit bg-base-100/80 text-base-content rounded-lg p-4                        ${
-                        isRtl ? "right-20" : "left-20"
+                    className={`absolute [top:12%] max-w-[80ch] bg-base-100/70 text-base-content/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl ${
+                        isRtl ? "right-8 sm:right-14" : "left-8 sm:left-14"
                     } 
                         ${isRtl ? "text-right" : "text-left"}
                     `}
@@ -49,12 +51,19 @@ export default function Home1() {
                     dir={isRtl ? "rtl" : "ltr"}
                 >
                     <h1
-                        className=" text-4xl font-bold"
-                        style={{ fontSize: "3.5vw", lineHeight: "1.2" }}
+                        className="font-extrabold tracking-tight drop-shadow-sm"
+                        style={{
+                            fontSize: "min(9vw, 64px)",
+                            lineHeight: 1.1,
+                        }}
                     >
-                        {t.line1}
+                        <span className="inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                            {t.line1}
+                        </span>
                         <br />
-                        {t.line2}
+                        <span className="inline text-base-content">
+                            {t.line2}
+                        </span>
                     </h1>
                 </div>
             </div>

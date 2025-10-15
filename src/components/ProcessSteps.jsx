@@ -78,11 +78,11 @@ export default function ProcessSteps() {
 
     return (
         <div
-            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content py-8 bg-base-100 ${
+            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content bg-base-100 ${
                 language === "ar" ? "text-right" : ""
             }`}
         >
-            <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center">
                 <div
                     className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
@@ -106,7 +106,7 @@ export default function ProcessSteps() {
                     <p className="text-xl">{t.step1.description}</p>
                 </div>
             </div>
-            <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center">
                 <div
                     className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
@@ -130,7 +130,7 @@ export default function ProcessSteps() {
                     <p className="text-xl">{t.step2.description}</p>
                 </div>
             </div>
-            <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center">
                 <div
                     className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
@@ -155,7 +155,7 @@ export default function ProcessSteps() {
                 </div>
             </div>
 
-            <div className="p-8 lg:p-12 flex flex-col lg:flex-row justify-center items-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center">
                 <div
                     className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"

@@ -1,6 +1,40 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+:root {
+    /* Responsive site padding variable (slightly larger for breathing room) */
+    --site-padding: clamp(1rem, 3vw + 0.5rem, 3rem);
+    /* Vertical gap between stacked sections (responsive, tasteful) */
+    --site-stack-gap: clamp(1.25rem, 3.5vw + 0.5rem, 4.5rem);
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --site-padding: clamp(1.25rem, 2.5vw + 0.75rem, 3.5rem);
+        --site-stack-gap: clamp(1.5rem, 3vw + 1rem, 5rem);
+    }
+}
+
+/* Utility container that applies global site padding */
+.site-container {
+    padding-left: var(--site-padding);
+    padding-right: var(--site-padding);
+}
+
+/* Vertical spacing utility for stacks between header and footer */
+.site-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--site-stack-gap);
+    padding-top: var(--site-padding);
+    padding-bottom: var(--site-padding);
+}
+
+/* Safety: if gap isn't supported, use sibling margin as fallback */
+.site-stack > * + * {
+    margin-top: var(--site-stack-gap);
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;

@@ -6,7 +6,9 @@ export default function Article() {
     return (
         <>
             <Header />
-            <ArticlePage />;
+            <div className="site-container site-stack">
+                <ArticlePage />
+            </div>
             <Footer />
         </>
     );
