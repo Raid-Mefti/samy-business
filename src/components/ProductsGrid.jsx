@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ProductsGrid() {
-    const [isArticleOpen, setIsArticleOpen] = useState(false);
+    const router = useRouter();
 
     return (
         <div className="flex flex-col md:flex-row justify-center md:justify-around gap-8 max-w-7xl mx-auto bg-base-100 ">
@@ -26,7 +27,7 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end ">
                         <button
                             className="btn btn-primary"
-                            onClick={() => setIsArticleOpen(true)}
+                            onClick={() => router.push("/wiki/zinc-usage")}
                         >
                             plus d'infos
                         </button>
@@ -47,7 +48,7 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end">
                         <button
                             className="btn btn-primary"
-                            onClick={() => setIsArticleOpen(true)}
+                            onClick={() => router.push("/wiki/statistics")}
                         >
                             plus d'infos
                         </button>
@@ -70,49 +71,13 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end">
                         <button
                             className="btn btn-primary"
-                            onClick={() => setIsArticleOpen(true)}
+                            onClick={() => router.push("/wiki/surface-aspects")}
                         >
                             plus d'infos
                         </button>
                     </div>
                 </div>
             </div>
-            {isArticleOpen && (
-                <div
-                    className="fixed inset-0 z-50"
-                    aria-modal="true"
-                    role="dialog"
-                >
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-black/60"
-                        onClick={() => setIsArticleOpen(false)}
-                    />
-
-                    {/* Centered dialog with viewport padding so it clearly feels like a popup */}
-                    <div className="relative h-full w-full p-4 sm:p-8 flex items-center justify-center">
-                        <div className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden">
-                            {/* Header with prominent close button */}
-                            <div className="sticky top-0 z-10 flex items-center justify-end bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
-                                <button
-                                    type="button"
-                                    className="btn btn-error btn-sm btn-circle"
-                                    aria-label="Fermer"
-                                    onClick={() => setIsArticleOpen(false)}
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                            {/* Content area */}
-                            <iframe
-                                src="/article"
-                                title="Article"
-                                className="w-full h-[calc(90vh-52px)] border-0"
-                            />
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
