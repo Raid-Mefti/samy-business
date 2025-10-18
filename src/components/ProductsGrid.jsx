@@ -14,7 +14,7 @@ export default function ProductsGrid() {
                 <div className="card-body">
                     <br />
                     <h2 className="card-title text-4xl ">
-                        l’utilisation du zinc
+                        l'utilisation du zinc
                     </h2>
                     <br />
                     <br />
@@ -28,7 +28,7 @@ export default function ProductsGrid() {
                             className="btn btn-primary"
                             onClick={() => setIsArticleOpen(true)}
                         >
-                            plus d’infos
+                            plus d'infos
                         </button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ export default function ProductsGrid() {
                             className="btn btn-primary"
                             onClick={() => setIsArticleOpen(true)}
                         >
-                            plus d’infos
+                            plus d'infos
                         </button>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ export default function ProductsGrid() {
                             className="btn btn-primary"
                             onClick={() => setIsArticleOpen(true)}
                         >
-                            plus d’infos
+                            plus d'infos
                         </button>
                     </div>
                 </div>

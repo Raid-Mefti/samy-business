@@ -6,13 +6,16 @@ export default function VideoComp() {
                     Image et vidéo de l'entreprise
                 </h2>
 
+                {/* This div correctly sets up the 16:9 aspect ratio for responsiveness */}
                 <div className="relative w-full pb-[56.25%] mb-8">
                     <iframe
                         className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
-                        src="YOUR_YOUTUBE_EMBED_LINK_HERE"
-                        title="Samy Business Video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
+                        src="https://www.youtube.com/embed/KhQGo2IdA9s?si=WoOCDEPoyxrL4EtW"
+                        title="YouTube video player"
+                        frameBorder="0" // Corrected casing
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin" // Corrected casing
+                        allowFullScreen // Corrected casing
                     ></iframe>
                 </div>
             </div>

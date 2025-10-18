@@ -78,11 +78,11 @@ export default function ProcessSteps() {
 
     return (
         <div
-            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content bg-base-100 ${
+            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content bg-base-100 gap-y-10 gap-x-20 ${
                 language === "ar" ? "text-right" : ""
             }`}
         >
-            <div className="flex flex-col lg:flex-row justify-center items-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center  ">
                 <div
                     className={`mt-4 w-20 h-20 ${
                         language === "ar" ? "ml-8" : "mr-8"
@@ -96,6 +96,7 @@ export default function ProcessSteps() {
                         maskSize: "contain",
                         WebkitMaskPosition: "center",
                         maskPosition: "center",
+                        width: 200,
                     }}
                     aria-label="Réception et manutention des minerais"
                     role="img"
@@ -120,6 +121,7 @@ export default function ProcessSteps() {
                         maskSize: "contain",
                         WebkitMaskPosition: "center",
                         maskPosition: "center",
+                        width: 200,
                     }}
                     aria-label="Grillage Acide"
                     role="img"
@@ -144,6 +146,7 @@ export default function ProcessSteps() {
                         maskSize: "contain",
                         WebkitMaskPosition: "center",
                         maskPosition: "center",
+                        width: 200,
                     }}
                     aria-label="Lixiviation"
                     role="img"
@@ -169,6 +172,7 @@ export default function ProcessSteps() {
                         maskSize: "contain",
                         WebkitMaskPosition: "center",
                         maskPosition: "center",
+                        width: 200,
                     }}
                     aria-label="Purification"
                     role="img"
