@@ -51,15 +51,52 @@ const manufacturedProducts = [
 export default function ProductsSection() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleProductClick = (product) => {
+    const handleProductClick = (product, category, index) => {
         setSelectedProduct(product);
+        setSelectedCategory(category);
+        setCurrentIndex(index);
         setIsPopupOpen(true);
     };
 
     const closePopup = () => {
         setIsPopupOpen(false);
         setSelectedProduct(null);
+        setSelectedCategory(null);
+        setCurrentIndex(0);
+    };
+
+    const navigateToNext = () => {
+        if (!selectedCategory) return;
+
+        const products =
+            selectedCategory === "imported"
+                ? importedProducts
+                : selectedCategory === "exported"
+                ? exportedProducts
+                : manufacturedProducts;
+
+        const nextIndex = (currentIndex + 1) % products.length;
+        setCurrentIndex(nextIndex);
+        setSelectedProduct(products[nextIndex]);
+    };
+
+    const navigateToPrevious = () => {
+        if (!selectedCategory) return;
+
+        const products =
+            selectedCategory === "imported"
+                ? importedProducts
+                : selectedCategory === "exported"
+                ? exportedProducts
+                : manufacturedProducts;
+
+        const prevIndex =
+            currentIndex === 0 ? products.length - 1 : currentIndex - 1;
+        setCurrentIndex(prevIndex);
+        setSelectedProduct(products[prevIndex]);
     };
 
     return (
@@ -77,11 +114,17 @@ export default function ProductsSection() {
                             Produits importés
                         </h3>
                         <div className="space-y-3">
-                            {importedProducts.map((product) => (
+                            {importedProducts.map((product, index) => (
                                 <ProductItem
                                     key={product.name}
                                     {...product}
-                                    onClick={() => handleProductClick(product)}
+                                    onClick={() =>
+                                        handleProductClick(
+                                            product,
+                                            "imported",
+                                            index
+                                        )
+                                    }
                                 />
                             ))}
                         </div>
@@ -93,11 +136,17 @@ export default function ProductsSection() {
                             Produits exportés
                         </h3>
                         <div className="space-y-3 text-base-content">
-                            {exportedProducts.map((product) => (
+                            {exportedProducts.map((product, index) => (
                                 <ProductItem
                                     key={product.name}
                                     {...product}
-                                    onClick={() => handleProductClick(product)}
+                                    onClick={() =>
+                                        handleProductClick(
+                                            product,
+                                            "exported",
+                                            index
+                                        )
+                                    }
                                 />
                             ))}
                         </div>
@@ -109,11 +158,17 @@ export default function ProductsSection() {
                             Produits fabriqués
                         </h3>
                         <div className="space-y-3">
-                            {manufacturedProducts.map((product) => (
+                            {manufacturedProducts.map((product, index) => (
                                 <ProductItem
                                     key={product.name}
                                     {...product}
-                                    onClick={() => handleProductClick(product)}
+                                    onClick={() =>
+                                        handleProductClick(
+                                            product,
+                                            "manufactured",
+                                            index
+                                        )
+                                    }
                                 />
                             ))}
                         </div>
@@ -121,7 +176,7 @@ export default function ProductsSection() {
                 </div>
             </section>
 
-            {/* Popup Modal - Same style as ProductsGrid */}
+            {/* Popup Modal - Same style as ProductsGrid with Navigation Arrows */}
             {isPopupOpen && (
                 <div
                     className="fixed inset-0 z-50"
@@ -148,6 +203,54 @@ export default function ProductsSection() {
                                     ✕
                                 </button>
                             </div>
+
+                            {/* Navigation Arrows - Left and Right sides */}
+                            {/* Left Arrow */}
+                            <button
+                                type="button"
+                                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 btn btn-ghost btn-circle bg-base-100/90 backdrop-blur shadow-lg"
+                                aria-label="Produit précédent"
+                                onClick={navigateToPrevious}
+                            >
+                                <svg
+                                    className="w-6 h-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M15 19l-7-7 7-7"
+                                    />
+                                </svg>
+                            </button>
+
+                            {/* Right Arrow */}
+                            <button
+                                type="button"
+                                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 btn btn-ghost btn-circle bg-base-100/90 backdrop-blur shadow-lg"
+                                aria-label="Produit suivant"
+                                onClick={navigateToNext}
+                            >
+                                <svg
+                                    className="w-6 h-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
+
                             {/* Content area */}
                             <iframe
                                 src="/article"
