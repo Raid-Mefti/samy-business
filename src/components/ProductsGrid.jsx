@@ -27,7 +27,9 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end ">
                         <button
                             className="btn btn-primary"
-                            onClick={() => router.push("/wiki/zinc-usage")}
+                            onClick={() =>
+                                window.open("/wiki/statistics", "_blank")
+                            }
                         >
                             plus d'infos
                         </button>
@@ -48,7 +50,9 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end">
                         <button
                             className="btn btn-primary"
-                            onClick={() => router.push("/wiki/statistics")}
+                            onClick={() =>
+                                window.open("/wiki/zinc-usage", "_blank")
+                            }
                         >
                             plus d'infos
                         </button>
@@ -71,7 +75,9 @@ export default function ProductsGrid() {
                     <div className="card-actions justify-end">
                         <button
                             className="btn btn-primary"
-                            onClick={() => router.push("/wiki/surface-aspects")}
+                            onClick={() =>
+                                window.open("/wiki/surface-aspects", "_blank")
+                            }
                         >
                             plus d'infos
                         </button>

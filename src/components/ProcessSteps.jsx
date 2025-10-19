@@ -1,12 +1,16 @@
 "use client";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 export default function ProcessSteps() {
     const { language } = useLanguage();
 
     const translations = {
         fr: {
+            title: "Procédure de fabrication",
+            showMore: "Afficher plus",
+            showLess: "Afficher moins",
             step1: {
                 title: "Réception et manutention des minerais",
                 description:
@@ -29,6 +33,9 @@ export default function ProcessSteps() {
             },
         },
         en: {
+            title: "Fabrication Process",
+            showMore: "Show more",
+            showLess: "Show less",
             step1: {
                 title: "Reception and handling of ores",
                 description:
@@ -51,6 +58,9 @@ export default function ProcessSteps() {
             },
         },
         ar: {
+            title: "عملية التصنيع",
+            showMore: "عرض المزيد",
+            showLess: "إخفاء",
             step1: {
                 title: "استقبال ومناولة الخامات",
                 description:
@@ -76,112 +86,82 @@ export default function ProcessSteps() {
 
     const t = translations[language];
 
-    return (
-        <div
-            className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 text-base-content bg-base-100 gap-y-10 gap-x-20 ${
-                language === "ar" ? "text-right" : ""
-            }`}
-        >
-            <div className="flex flex-col lg:flex-row justify-center items-center  ">
-                <div
-                    className={`mt-4 w-20 h-20 ${
-                        language === "ar" ? "ml-8" : "mr-8"
-                    } bg-base-content mask mask-squircle`}
-                    style={{
-                        WebkitMaskImage: 'url("Vector1.png")',
-                        maskImage: 'url("Vector1.png")',
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                        WebkitMaskPosition: "center",
-                        maskPosition: "center",
-                        width: 200,
-                    }}
-                    aria-label="Réception et manutention des minerais"
-                    role="img"
-                />
-                <div>
-                    <h1 className="text-3xl font-bold">{t.step1.title}</h1>
-                    <br />
-                    <p className="text-xl">{t.step1.description}</p>
-                </div>
-            </div>
-            <div className="flex flex-col lg:flex-row justify-center items-center">
-                <div
-                    className={`mt-4 w-20 h-20 ${
-                        language === "ar" ? "ml-8" : "mr-8"
-                    } bg-base-content mask mask-squircle`}
-                    style={{
-                        WebkitMaskImage: 'url("Frame1.png")',
-                        maskImage: 'url("Frame1.png")',
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                        WebkitMaskPosition: "center",
-                        maskPosition: "center",
-                        width: 200,
-                    }}
-                    aria-label="Grillage Acide"
-                    role="img"
-                />
-                <div>
-                    <h1 className="text-3xl font-bold">{t.step2.title}</h1>
-                    <br />
-                    <p className="text-xl">{t.step2.description}</p>
-                </div>
-            </div>
-            <div className="flex flex-col lg:flex-row justify-center items-center">
-                <div
-                    className={`mt-4 w-20 h-20 ${
-                        language === "ar" ? "ml-8" : "mr-8"
-                    } bg-base-content mask mask-squircle`}
-                    style={{
-                        WebkitMaskImage: 'url("Vector.png")',
-                        maskImage: 'url("Vector.png")',
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                        WebkitMaskPosition: "center",
-                        maskPosition: "center",
-                        width: 200,
-                    }}
-                    aria-label="Lixiviation"
-                    role="img"
-                />
-                <div>
-                    <h1 className="text-3xl font-bold">{t.step3.title}</h1>
-                    <br />
-                    <p className="text-xl">{t.step3.description}</p>
-                </div>
-            </div>
+    const [expanded, setExpanded] = useState({
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+    });
 
-            <div className="flex flex-col lg:flex-row justify-center items-center">
-                <div
-                    className={`mt-4 w-20 h-20 ${
-                        language === "ar" ? "ml-8" : "mr-8"
-                    } bg-base-content mask mask-squircle`}
-                    style={{
-                        WebkitMaskImage: 'url("Vector1.png")',
-                        maskImage: 'url("Vector1.png")',
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                        WebkitMaskPosition: "center",
-                        maskPosition: "center",
-                        width: 200,
-                    }}
-                    aria-label="Purification"
-                    role="img"
-                />
-                <div>
-                    <h1 className="text-3xl font-bold">{t.step4.title}</h1>
-                    <br />
-                    <p className="text-xl">{t.step4.description}</p>
-                </div>
+    const toggleExpanded = (stepNumber) => {
+        setExpanded((prev) => ({
+            ...prev,
+            [stepNumber]: !prev[stepNumber],
+        }));
+    };
+
+    const renderStep = (stepNum, iconSrc, ariaLabelKey) => {
+        const step = t[`step${stepNum}`];
+        const isExpanded = expanded[stepNum];
+        const isArabic = language === "ar";
+
+        const icon = (
+            <div
+                className="w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0 bg-base-content mask mask-squircle"
+                style={{
+                    WebkitMaskImage: `url("${iconSrc}")`,
+                    maskImage: `url("${iconSrc}")`,
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                    WebkitMaskPosition: "center",
+                    maskPosition: "center",
+                }}
+                aria-label={step.title}
+                role="img"
+            />
+        );
+
+        const content = (
+            <div className="flex-1 min-w-0">
+                <h1 className="text-2xl lg:text-3xl font-bold">{step.title}</h1>
+                <br />
+                <p className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${isExpanded ? 'line-clamp-none' : ''}`}>
+                    {step.description}
+                </p>
+                <button
+                    className="block lg:hidden mt-2 btn btn-sm btn-primary"
+                    onClick={() => toggleExpanded(stepNum)}
+                >
+                    {isExpanded ? t.showLess : t.showMore}
+                </button>
+            </div>
+        );
+
+        return (
+            <div className="flex flex-row gap-4 justify-start lg:justify-center items-start lg:items-center">
+                {!isArabic && icon}
+                {content}
+                {isArabic && icon}
+            </div>
+        );
+    };
+
+    return (
+        <div className="w-full bg-base-100 text-base-content">
+            <h2 className={`text-5xl lg:text-6xl font-bold text-center py-8 mb-8 ${language === "ar" ? "text-right" : ""}`}>
+                {t.title}
+            </h2>
+            <div
+                className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 gap-y-10 gap-x-20 ${
+                    language === "ar" ? "text-right" : ""
+                }`}
+            >
+                {renderStep(1, "Vector1.png", "step1")}
+                {renderStep(2, "Frame1.png", "step2")}
+                {renderStep(3, "Vector.png", "step3")}
+                {renderStep(4, "Vector1.png", "step4")}
             </div>
         </div>
     );

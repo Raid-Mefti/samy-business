@@ -11,17 +11,31 @@ import VideoComp from "@/components/VideoComp";
 export default function Home() {
     return (
         <>
-            <Header />
-            <Home1 />
+            <section id="top">
+                <Header />
+                <Home1 />
+            </section>
+
             <div className="site-container site-stack">
-                <AboutSection />
+                <section id="propos" className="py-20 px-4">
+                    <AboutSection />
+                </section>
+
                 <ProductsGrid />
+
                 <VideoComp />
                 <ImageCarousel />
-                <ProcessSteps />
+
+                <section id="services" className="py-20 px-4">
+                    <ProcessSteps />
+                </section>
+                <section id="produits" className="py-20 px-4"></section>
                 <ProductsSection />
             </div>
-            <Footer />
+
+            <section id="contact" className="py-20 px-4">
+                <Footer />
+            </section>
         </>
     );
 }
