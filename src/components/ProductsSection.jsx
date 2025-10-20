@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Reusable component for a single product entry
 const ProductItem = ({ name, iconPath, onClick }) => (
@@ -66,6 +66,37 @@ export default function ProductsSection() {
         setSelectedProduct(null);
         setSelectedCategory(null);
         setCurrentIndex(0);
+    };
+
+    // Handle escape key to close popup
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === "Escape" && isPopupOpen) {
+                closePopup();
+            }
+        };
+
+        if (isPopupOpen) {
+            document.addEventListener("keydown", handleEscapeKey);
+        }
+
+        return () => {
+            document.removeEventListener("keydown", handleEscapeKey);
+        };
+    }, [isPopupOpen]);
+
+    // Get section title based on category
+    const getSectionTitle = (category) => {
+        switch (category) {
+            case "imported":
+                return "Produits importés";
+            case "exported":
+                return "Produits exportés";
+            case "manufactured":
+                return "Produits fabriqués";
+            default:
+                return "";
+        }
     };
 
     const navigateToNext = () => {
@@ -190,10 +221,24 @@ export default function ProductsSection() {
                     />
 
                     {/* Centered dialog with viewport padding so it clearly feels like a popup */}
-                    <div className="relative h-full w-full p-4 sm:p-8 flex items-center justify-center">
-                        <div className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden">
-                            {/* Header with prominent close button */}
-                            <div className="sticky top-0 z-10 flex items-center justify-end bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
+                    <div
+                        className="relative h-full w-full p-4 sm:p-8 flex items-center justify-center"
+                        onClick={closePopup}
+                    >
+                        <div
+                            className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Header with section title and close button */}
+                            <div className="sticky top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
+                                <div className="flex flex-col">
+                                    <h3 className="text-lg font-semibold text-primary">
+                                        {getSectionTitle(selectedCategory)}
+                                    </h3>
+                                    <h4 className="text-sm text-base-content/70">
+                                        {selectedProduct?.name}
+                                    </h4>
+                                </div>
                                 <button
                                     type="button"
                                     className="btn btn-error btn-sm btn-circle"
@@ -253,8 +298,10 @@ export default function ProductsSection() {
 
                             {/* Content area */}
                             <iframe
-                                src="/article"
-                                title="Article"
+                                src={`/article/${selectedProduct?.name
+                                    ?.toLowerCase()
+                                    .replace(/\s+/g, "-")}`}
+                                title={selectedProduct?.name || "Article"}
                                 className="w-full h-[calc(90vh-52px)] border-0"
                             />
                         </div>

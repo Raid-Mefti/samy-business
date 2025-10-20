@@ -1,4 +1,4 @@
-export default function ArticlePage() {
+export default function ArticlePage({ productName = "Article" }) {
     const lang =
         typeof document !== "undefined" ? document.documentElement.lang : "fr";
     const t = {
@@ -59,7 +59,7 @@ export default function ArticlePage() {
                         {t.date}
                     </p>
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-base-content mb-3 sm:mb-4">
-                        {t.article}
+                        {productName}
                     </h1>
                     <p className="text-base-content/60 text-sm font-normal">
                         {t.author}

@@ -50,23 +50,20 @@ export default function NavBar() {
             language === "ar" ? "translateX(-16rem)" : "translateX(16rem)";
     };
 
-   
     const handleLinkClick = (e) => {
-        const targetId = e.currentTarget.getAttribute('href');
+        const targetId = e.currentTarget.getAttribute("href");
         const targetElement = document.querySelector(targetId);
-        
+
         if (targetElement) {
-            
-            targetElement.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start' 
+            targetElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
             });
         }
-        
-        
+
         setTimeout(() => {
             closeMenu();
-        }, 300); 
+        }, 300);
     };
 
     const isArabic = language === "ar";
@@ -77,7 +74,7 @@ export default function NavBar() {
     return (
         <>
             <nav
-                className={`flex ${navFlexClass} items-center w-full px-5 fixed lg:px-8 xl:px-[8%] py-4 z-50 bg-base-100/30 backdrop-blur-sm`}
+                className={`flex ${navFlexClass}  items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-50 bg-base-100/30 backdrop-blur-sm`}
             >
                 <div>
                     <a href="#top">
