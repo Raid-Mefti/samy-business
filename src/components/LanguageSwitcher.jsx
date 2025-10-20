@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const languages = [
@@ -10,9 +10,38 @@ const languages = [
 
 export default function LanguageSwitcher() {
     const { language, toggleLanguage } = useLanguage();
+    const [isRTL, setIsRTL] = useState(false);
+
+    // Effectuer la vérification de la direction du document (dir)
+    useEffect(() => {
+        const updateDirection = () => {
+            // Lis l'attribut 'dir' de l'élément racine du document (<html>)
+            const currentDir =
+                document.documentElement.getAttribute("dir") || "ltr";
+            setIsRTL(currentDir === "rtl");
+        };
+
+        updateDirection(); // Définit l'état initial
+
+        // Utilise un MutationObserver pour réagir si le parent change la direction dynamiquement
+        const observer = new MutationObserver(updateDirection);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["dir"],
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // La correction : utiliser 'dropdown-start' pour RTL
+    // 'dropdown-end' aligne le menu sur la FIN (gauche en LTR, droite en RTL).
+    // 'dropdown-start' aligne le menu sur le DÉBUT (droite en LTR, gauche en RTL).
+    // Pour éviter le débordement à gauche en mode Arabe, on doit forcer l'ouverture à droite, donc 'dropdown-start'.
+    const dropdownClass = isRTL ? "dropdown-start" : "dropdown-end";
 
     return (
-        <div className="dropdown dropdown-end">
+        // Applique la classe dynamique ici
+        <div className={`dropdown ${dropdownClass} z-50`}>
             <div
                 tabIndex={0}
                 role="button"
@@ -32,7 +61,9 @@ export default function LanguageSwitcher() {
             </div>
             <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                // Augmentation du z-index pour s'assurer que le menu est au-dessus
+                className="dropdown-content z-[100] menu p-2 shadow bg-base-100 rounded-box w-52"
+                dir={isRTL ? "rtl" : "ltr"}
             >
                 {languages.map((lang) => (
                     <li key={lang.code}>

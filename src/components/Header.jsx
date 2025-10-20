@@ -168,13 +168,13 @@ export default function NavBar() {
                 {/* Menu latéral pour mobile */}
                 <ul
                     ref={sideMenuRef}
-                    className={`flex md:hidden flex-col gap-4 py-20 px-10 fixed ${
+                    className={`absolute left-auto flex md:hidden flex-col items-end gap-4 pt-20 pb-5 px-5  ${
                         isArabic ? "left-0" : "-right-64"
-                    } top-0 bottom-0 w-64 z-50 h-screen bg-gray-300 transition duration-500 transform`}
+                    } top-0 z-50 bg-blue-100 transition duration-500 transform`}
                     style={{
                         transform: isArabic
-                            ? "translateX(-16rem)"
-                            : "translateX(16rem)",
+                            ? "translateX(100%)"
+                            : "translateX(100%)",
                     }}
                 >
                     <div
@@ -191,7 +191,7 @@ export default function NavBar() {
                             alt="close-window--v1"
                         />
                     </div>
-                    <li>
+                    <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
                         <a
                             href="#propos"
                             onClick={handleLinkClick}
@@ -202,7 +202,7 @@ export default function NavBar() {
                             {t.about}
                         </a>
                     </li>
-                    <li>
+                    <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
                         <a
                             href="#produits"
                             onClick={handleLinkClick}
@@ -213,7 +213,7 @@ export default function NavBar() {
                             {t.products}
                         </a>
                     </li>
-                    <li>
+                    <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
                         <a
                             href="#services"
                             onClick={handleLinkClick}
@@ -224,7 +224,7 @@ export default function NavBar() {
                             {t.services}
                         </a>
                     </li>
-                    <li>
+                    <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
                         <a
                             href="#contact"
                             onClick={handleLinkClick}
