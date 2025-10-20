@@ -33,10 +33,6 @@ export default function LanguageSwitcher() {
         return () => observer.disconnect();
     }, []);
 
-    // La correction : utiliser 'dropdown-start' pour RTL
-    // 'dropdown-end' aligne le menu sur la FIN (gauche en LTR, droite en RTL).
-    // 'dropdown-start' aligne le menu sur le DÉBUT (droite en LTR, gauche en RTL).
-    // Pour éviter le débordement à gauche en mode Arabe, on doit forcer l'ouverture à droite, donc 'dropdown-start'.
     const dropdownClass = isRTL ? "dropdown-start" : "dropdown-end";
 
     return (
