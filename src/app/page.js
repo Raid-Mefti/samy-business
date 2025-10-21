@@ -29,7 +29,6 @@ export default function Home() {
                 <section id="services" className="py-20 px-4">
                     <ProcessSteps />
                 </section>
-                <section id="produits" className="py-20 px-4"></section>
                 <ProductsSection />
             </div>
 
