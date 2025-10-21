@@ -1,14 +1,13 @@
-// src/components/sections/ProductsSection.jsx
-
 "use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import ArticlePage from "@/components/ArticlePage"; // inline article renderer
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Reusable component for a single product entry
 const ProductItem = ({ name, iconPath, onClick }) => (
     <div className="flex items-center space-x-3 p-2">
-        {/* Product Icon/Image */}
         <Image
             src={iconPath}
             alt={name}
@@ -16,7 +15,6 @@ const ProductItem = ({ name, iconPath, onClick }) => (
             height={32}
             className="w-8 h-8 object-contain"
         />
-        {/* Product Name - Now clickable */}
         <span
             className="text-base-content font-bold cursor-pointer hover:text-primary transition-colors"
             onClick={onClick}
@@ -32,7 +30,7 @@ const importedProducts = [
     { name: "Aluminium", iconPath: "/img11.png" },
     { name: "Plomb Doux", iconPath: "/img11.png" },
     { name: "Oxyde de Zinc", iconPath: "/img11.png" },
-    { name: "Oxyde de Zinc 2", iconPath: "/img11.png" },
+    { name: "Oxyde de Zinc 2", iconPath: "/img11.png" }, // duplicate
 ];
 
 const exportedProducts = [
@@ -46,9 +44,15 @@ const manufacturedProducts = [
     { name: "Cuivres", iconPath: "/img11.png" },
 ];
 
-// --- Main Component ---
+const getProductsByCategory = (category) => {
+    if (category === "imported") return importedProducts;
+    if (category === "exported") return exportedProducts;
+    return manufacturedProducts;
+};
 
 export default function ProductsSection() {
+    const { language } = useLanguage();
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -85,7 +89,6 @@ export default function ProductsSection() {
         };
     }, [isPopupOpen]);
 
-    // Get section title based on category
     const getSectionTitle = (category) => {
         switch (category) {
             case "imported":
@@ -101,14 +104,7 @@ export default function ProductsSection() {
 
     const navigateToNext = () => {
         if (!selectedCategory) return;
-
-        const products =
-            selectedCategory === "imported"
-                ? importedProducts
-                : selectedCategory === "exported"
-                ? exportedProducts
-                : manufacturedProducts;
-
+        const products = getProductsByCategory(selectedCategory);
         const nextIndex = (currentIndex + 1) % products.length;
         setCurrentIndex(nextIndex);
         setSelectedProduct(products[nextIndex]);
@@ -116,14 +112,7 @@ export default function ProductsSection() {
 
     const navigateToPrevious = () => {
         if (!selectedCategory) return;
-
-        const products =
-            selectedCategory === "imported"
-                ? importedProducts
-                : selectedCategory === "exported"
-                ? exportedProducts
-                : manufacturedProducts;
-
+        const products = getProductsByCategory(selectedCategory);
         const prevIndex =
             currentIndex === 0 ? products.length - 1 : currentIndex - 1;
         setCurrentIndex(prevIndex);
@@ -132,7 +121,7 @@ export default function ProductsSection() {
 
     return (
         <>
-            <section className=" text-base-content bg-base-100">
+            <section className="text-base-content bg-base-100">
                 <h2 className="text-3xl font-bold mb-10 text-center text-base-content">
                     LES PRODUITS DE SAMY BUSINESS
                 </h2>
@@ -207,10 +196,10 @@ export default function ProductsSection() {
                 </div>
             </section>
 
-            {/* Popup Modal - Same style as ProductsGrid with Navigation Arrows */}
-            {isPopupOpen && (
+            {/* Popup Modal */}
+            {isPopupOpen && selectedProduct && (
                 <div
-                    className="fixed inset-0 z-50"
+                    className="fixed inset-0 z-50 flex items-center justify-center"
                     aria-modal="true"
                     role="dialog"
                 >
@@ -220,90 +209,55 @@ export default function ProductsSection() {
                         onClick={closePopup}
                     />
 
-                    {/* Centered dialog with viewport padding so it clearly feels like a popup */}
+                    {/* Popup Box */}
                     <div
-                        className="relative h-full w-full p-4 sm:p-8 flex items-center justify-center"
-                        onClick={closePopup}
+                        className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <div
-                            className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {/* Header with section title and close button */}
-                            <div className="sticky top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
-                                <div className="flex flex-col">
-                                    <h3 className="text-lg font-semibold text-primary">
-                                        {getSectionTitle(selectedCategory)}
-                                    </h3>
-                                    <h4 className="text-sm text-base-content/70">
-                                        {selectedProduct?.name}
-                                    </h4>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="btn btn-error btn-sm btn-circle"
-                                    aria-label="Fermer"
-                                    onClick={closePopup}
-                                >
-                                    ✕
-                                </button>
+                        {/* Header */}
+                        <div className="sticky top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
+                            <div className="flex flex-col">
+                                <h3 className="text-lg font-semibold text-primary">
+                                    {getSectionTitle(selectedCategory)}
+                                </h3>
+                                <h4 className="text-sm text-base-content/70">
+                                    {selectedProduct.name}
+                                </h4>
                             </div>
-
-                            {/* Navigation Arrows - Left and Right sides */}
-                            {/* Left Arrow */}
                             <button
                                 type="button"
-                                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 btn btn-ghost btn-circle bg-base-100/90 backdrop-blur shadow-lg"
-                                aria-label="Produit précédent"
-                                onClick={navigateToPrevious}
+                                className="btn btn-error btn-sm btn-circle"
+                                aria-label="Fermer"
+                                onClick={closePopup}
                             >
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M15 19l-7-7 7-7"
-                                    />
-                                </svg>
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Article Content */}
+                        <div className="relative flex-1 overflow-auto p-4">
+                            <ArticlePage
+                                productName={selectedProduct.name}
+                                category={selectedCategory}
+                            />
+
+                            {/* Left Arrow */}
+                            <button
+                                onClick={navigateToPrevious}
+                                aria-label="Produit précédent"
+                                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-primary text-white text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                            >
+                                ‹
                             </button>
 
                             {/* Right Arrow */}
                             <button
-                                type="button"
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 btn btn-ghost btn-circle bg-base-100/90 backdrop-blur shadow-lg"
-                                aria-label="Produit suivant"
                                 onClick={navigateToNext}
+                                aria-label="Produit suivant"
+                                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-primary text-white text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center"
                             >
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
+                                ›
                             </button>
-
-                            {/* Content area */}
-                            <iframe
-                                src={`/article/${selectedProduct?.name
-                                    ?.toLowerCase()
-                                    .replace(/\s+/g, "-")}`}
-                                title={selectedProduct?.name || "Article"}
-                                className="w-full h-[calc(90vh-52px)] border-0"
-                            />
                         </div>
                     </div>
                 </div>

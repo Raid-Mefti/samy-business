@@ -2,111 +2,106 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
+import React from "react";
 
 export default function ProcessSteps() {
     const { language } = useLanguage();
 
     const translations = {
         fr: {
-            title: "Procédure de fabrication",
+            title: "Procédé de fabrication de l’oxyde de zinc",
             showMore: "Afficher plus",
             showLess: "Afficher moins",
             step1: {
-                title: "Réception et manutention des minerais",
+                title: "1. Importation et préparation",
                 description:
-                    "Le concentré de zinc (blende) (ZnS) est acheminé par bateau principalement d'Amérique latine (Pérou). Bientôt deux autres sources d'approvisionnements seront mise en place. Il s'agit du minerai d'El Abed et d'Oued Amizour. Les minerais sont déchargés et stockés dans des loges séparées. Le complexe reçoit annuellement plus de 70000 tonnes de minerais.",
+                    "La matière première est soit du zinc métallique haute pureté (souvent SHG ≥ 99,995 %) importé en lingots pour le procédé indirect, afin de minimiser les impuretés et stabiliser la réactivité à l’oxydation.​ Pour le procédé direct, on prépare un mélange zinguifère (minerais, cendres, poussières de four) avec un agent réducteur carboné dosé, ce qui conditionne la formation ultérieure de vapeur de zinc.​ Dans les deux cas, un contrôle d’entrée (pureté, humidité, granulométrie) et un stockage adaptés assurent la constance de l’alimentation en four.​",
             },
             step2: {
-                title: "Grillage Acide",
+                title: "2. Fusion, réduction et vaporisation",
                 description:
-                    "Pour produire du zinc le complexe d'ALZINC utilise comme matière première du Concentré du Zinc contenant en moyenne 54% à 60% de zinc, 32% de soufre, 6% de fer, 1% à 2% de plomb, 3% de SiO2 et une quinzaine d'autres éléments dont les teneurs sont inférieurs à 0,5%. Les opérations de traitement commencent par un grillage du concentré",
+                    "En procédé français, le zinc métallique est fondu puis vaporisé typiquement autour de 910 – 1 100 °C dans des fours dédiés, la stabilité thermique garantissant un flux continu de vapeur de zinc.​ En procédé américain, le mélange zinguifère est réduit carbothermiquement en four (souvent rotatif) pour générer la vapeur de zinc avant l’étape d’oxydation aval.​ La maîtrise de la température, du temps de séjour et du tirage des fumées stabilise le débit de vapeur et limite les réactions parasites.​",
             },
             step3: {
-                title: "Lixiviation",
+                title: "3. Oxydation contrôlée",
                 description:
-                    "La calcine est mise en solution dans l'acide sulfurique, cette opération est appelée lixiviation. La réaction donne une solution de sulfate de zinc qui après purification alimentera les halles de l'électrolyse. La lixiviation s'opère en deux étapes : La lixiviation Neutre consiste",
+                    "La vapeur de zinc est oxydée par l’oxygène de l’air dans une chambre dédiée pour former le ZnO selon la réaction 2 Zn + O₂ → 2 ZnO.​ Le réglage du débit d’air, de la température d’oxydation et du temps de séjour permet d’ajuster la morphologie, la taille et la surface spécifique des particules.​ Les fumées chargées en ZnO sont ensuite refroidies pour éviter l’agglomération avant la séparation particulaire.​",
             },
             step4: {
-                title: "Purification",
+                title: "4. Refroidissement, collecte, contrôle et conditionnement",
                 description:
-                    "La solution de sulfate de zinc provenant de la lixiviation et encore impure et est purifiée en deux étapes successives. D'abord a lieu la cémentation du cuivre, ensuite celle du cobalt et de cadmium. Ces éléments sont précipités à l'état métallique par addition de poudre de zinc et l'antimoine.",
+                    "Le ZnO est récupéré par dépoussiérage à manches et classification, avec éventuelle micronisation pour atteindre la distribution granulométrique spécifiée.​ Le contrôle qualité vérifie la pureté (souvent ≥ 99,8  %), les métaux traces (Pb, Cd, Fe, Cu), la surface spécifique BET et la distribution de taille, conformément aux grades applicatifs (caoutchouc, céramique, pharmaceutique, électronique).​ Après validation, le produit est conditionné (sacs / Big-bags) avec traçabilité de lot, et les lignes intégrées peuvent inclure désulfuration des fumées et ensachage automatisé.​",
             },
         },
         en: {
-            title: "Fabrication Process",
+            title: "Zinc Oxide Manufacturing Process",
             showMore: "Show more",
             showLess: "Show less",
             step1: {
-                title: "Reception and handling of ores",
+                title: "1. Import and Preparation",
                 description:
-                    "Zinc concentrate (sphalerite) (ZnS) is transported by ship mainly from Latin America (Peru). Soon two other supply sources will be put in place. These are the ores from El Abed and Oued Amizour. The ores are unloaded and stored in separate compartments. The complex receives more than 70,000 tons of ores annually.",
+                    "The raw material is either high-purity zinc metal (typically SHG ≥ 99.995 %) imported as ingots for the indirect process, to minimize impurities and stabilize oxidation reactivity.​ For the direct process, a zinc-bearing blend (ores, ashes, furnace dust) is prepared with a controlled carbon-based reducing agent, which determines the later formation of zinc vapor.​ In both cases, entry inspection (purity, moisture, particle size) and proper storage ensure consistent furnace feeding.​",
             },
             step2: {
-                title: "Acid Roasting",
+                title: "2. Melting, Reduction, and Vaporization",
                 description:
-                    "To produce zinc, the ALZINC complex uses Zinc Concentrate as raw material containing on average 54% to 60% zinc, 32% sulfur, 6% iron, 1% to 2% lead, 3% SiO2 and about fifteen other elements whose contents are less than 0.5%. Processing operations begin with roasting the concentrate",
+                    "In the French (indirect) process, metallic zinc is melted and vaporized typically around 910 – 1 100 °C in dedicated furnaces, with thermal stability ensuring a continuous zinc vapor flow.​ In the American (direct) process, the zinc-bearing mixture undergoes carbothermic reduction in a (often rotary) furnace to generate zinc vapor before oxidation.​ Control of temperature, residence time, and gas draft stabilizes vapor flow and limits side reactions.​",
             },
             step3: {
-                title: "Leaching",
+                title: "3. Controlled Oxidation",
                 description:
-                    "The calcine is dissolved in sulfuric acid, this operation is called leaching. The reaction produces a zinc sulfate solution which, after purification, will feed the electrolysis halls. Leaching operates in two stages: Neutral leaching consists",
+                    "Zinc vapor is oxidized by air oxygen in a dedicated chamber to form ZnO according to the reaction 2 Zn + O₂ → 2 ZnO.​ Adjusting air flow, oxidation temperature, and residence time controls the particle morphology, size, and specific surface area.​ The ZnO-laden gas is then cooled to prevent agglomeration before particulate separation.​",
             },
             step4: {
-                title: "Purification",
+                title: "4. Cooling, Collection, Quality Control, and Packaging",
                 description:
-                    "The zinc sulfate solution from leaching, still impure, is purified in two successive stages. First, copper cementation takes place, then that of cobalt and cadmium. These elements are precipitated in metallic state by addition of zinc powder and antimony.",
+                    "ZnO is collected by baghouse filtration and classification, optionally micronized to reach the specified particle-size distribution.​ Quality control verifies purity (often ≥ 99.8 %), trace metals (Pb, Cd, Fe, Cu), BET surface area, and particle-size distribution according to application grades (rubber, ceramics, pharmaceuticals, electronics).​ After validation, the product is packaged (bags / big-bags) with batch traceability, and integrated lines may include fume desulfurization and automated bagging.​",
             },
         },
         ar: {
-            title: "عملية التصنيع",
+            title: "عملية تصنيع أكسيد الزنك",
             showMore: "عرض المزيد",
             showLess: "إخفاء",
             step1: {
-                title: "استقبال ومناولة الخامات",
+                title: "1. الاستيراد والتحضير",
                 description:
-                    "يُنقل مركز الزنك (السفاليريت) (ZnS) بالسفن بشكل أساسي من أمريكا اللاتينية (بيرو). قريبًا سيتم اعتماد مصدرين إضافيين للتوريد، وهما خامات العابد ووادي ميزور. تُفرغ الخامات وتُخزن في حجرات منفصلة. يستقبل المركب سنويًا أكثر من 70,000 طن من الخامات.",
+                    "تكون المادة الخام إما زنك معدني عالي النقاء (عادةً SHG ≥ 99.995 %) يُستورد على شكل سبائك في العملية غير المباشرة لتقليل الشوائب واستقرار تفاعل الأكسدة.​ أما في العملية المباشرة، فيُحضّر خليط غني بالزنك (خامات، رماد، غبار أفران) مع عامل اختزال كربوني مضبوط، مما يحدد لاحقًا تكوين بخار الزنك.​ في كلا الحالتين، يضمن الفحص الأولي (النقاء، الرطوبة، حجم الجسيمات) والتخزين المناسب ثبات تغذية الأفران.​",
             },
             step2: {
-                title: "التحميص الحمضي",
+                title: "2. الانصهار والاختزال والتبخير",
                 description:
-                    "لإنتاج الزنك، يستخدم مركب ALZINC كمادة أولية مركز الزنك الذي يحتوي في المتوسط على 54% إلى 60% من الزنك، 32% كبريت، 6% حديد، 1% إلى 2% رصاص، 3% SiO2 وحوالي خمسة عشر عنصرًا آخر بنسب أقل من 0.5%. تبدأ عمليات المعالجة بتحميص المركز.",
+                    "في العملية الفرنسية (غير المباشرة)، يُصهر الزنك المعدني ثم يُبخَّر عادةً عند درجة حرارة تتراوح بين 910 و 1100 درجة مئوية في أفران مخصصة، مع استقرار حراري يضمن تدفقًا مستمرًا لبخار الزنك.​ في العملية الأمريكية (المباشرة)، يُختزل الخليط الغني بالزنك كربوحراريًا في فرن (غالبًا دوّار) لتوليد بخار الزنك قبل خطوة الأكسدة.​ التحكم في درجة الحرارة، ومدة المكوث، وسحب الغازات يضمن استقرار تدفق البخار ويحد من التفاعلات الجانبية.​",
             },
             step3: {
-                title: "الاستخلاص (الترشيح)",
+                title: "3. الأكسدة المضبوطة",
                 description:
-                    "تُذاب الكالسين في حمض الكبريت، وتسمى هذه العملية بالاستخلاص. تُنتج التفاعل محلول كبريتات الزنك الذي سيغذي بعد التنقية قاعات التحليل الكهربائي. يتم الاستخلاص على مرحلتين: يتضمن الاستخلاص المحايد...",
+                    "يُؤكسد بخار الزنك بواسطة أكسجين الهواء داخل حجرة مخصصة لتكوين ZnO وفق التفاعل: 2 Zn + O₂ → 2 ZnO.​ يسمح ضبط معدل تدفق الهواء ودرجة حرارة الأكسدة ومدة المكوث بالتحكم في شكل الجسيمات وحجمها ومساحتها السطحية.​ ثم تُبرّد الأبخرة المحملة بـ ZnO لمنع التكتل قبل مرحلة الفصل الجسيمي.​",
             },
             step4: {
-                title: "التنقية",
+                title: "4. التبريد والتجميع والفحص والتعبئة",
                 description:
-                    "تُنقّى محلول كبريتات الزنك الناتج عن الاستخلاص —والذي لا يزال غير نقي— على مرحلتين متتاليتين. أولاً تتم إسمنتة النحاس، ثم الكوبالت والكادميوم. تُرسب هذه العناصر في الحالة المعدنية بإضافة مسحوق الزنك والأنتيمون.",
+                    "يُجمع أكسيد الزنك عبر مرشحات الأكياس والتصنيف، مع إمكانية إجراء طحن دقيق لتحقيق التوزيع الحبيبي المطلوب.​ يتحقق قسم الجودة من النقاء (عادةً ≥ 99.8 %)، والمعادن النزرة (الرصاص، الكادميوم، الحديد، النحاس)، والمساحة السطحية BET، وتوزيع الحجم بما يتوافق مع الدرجات التطبيقية (المطاط، السيراميك، الأدوية، الإلكترونيات).​ بعد الموافقة، يُعبأ المنتج (في أكياس أو أكياس كبيرة) مع تتبّع الدُفعات، وقد تشمل الخطوط المتكاملة نزع الكبريت من الأبخرة والتعبئة الآلية.​",
             },
         },
     };
 
     const t = translations[language];
-
     const [expanded, setExpanded] = useState({
         1: false,
         2: false,
         3: false,
         4: false,
     });
+    const toggleExpanded = (stepNumber) =>
+        setExpanded((prev) => ({ ...prev, [stepNumber]: !prev[stepNumber] }));
 
-    const toggleExpanded = (stepNumber) => {
-        setExpanded((prev) => ({
-            ...prev,
-            [stepNumber]: !prev[stepNumber],
-        }));
-    };
-
-    const renderStep = (stepNum, iconSrc, ariaLabelKey) => {
+    const renderStep = (stepNum, iconSrc) => {
         const step = t[`step${stepNum}`];
         const isExpanded = expanded[stepNum];
-        const isArabic = language === "ar";
 
         const icon = (
             <div
+                key="icon"
                 className="w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0 bg-base-content mask mask-squircle"
                 style={{
                     WebkitMaskImage: `url("${iconSrc}")`,
@@ -124,10 +119,14 @@ export default function ProcessSteps() {
         );
 
         const content = (
-            <div className="flex-1 min-w-0">
+            <div key="content" className="flex-1 min-w-0">
                 <h1 className="text-2xl lg:text-3xl font-bold">{step.title}</h1>
                 <br />
-                <p className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${isExpanded ? 'line-clamp-none' : ''}`}>
+                <p
+                    className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${
+                        isExpanded ? "line-clamp-none" : ""
+                    }`}
+                >
                     {step.description}
                 </p>
                 <button
@@ -140,28 +139,65 @@ export default function ProcessSteps() {
         );
 
         return (
-            <div className="flex flex-row gap-4 justify-start lg:justify-center items-start lg:items-center">
-                {!isArabic && icon}
+            <React.Fragment>
                 {content}
-                {isArabic && icon}
-            </div>
+                {icon}
+            </React.Fragment>
         );
     };
 
+    const icons = ["Vector1.png", "Frame1.png", "Vector.png", "Vector1.png"];
+
     return (
         <div className="w-full bg-base-100 text-base-content">
-            <h2 className={`text-5xl lg:text-6xl font-bold text-center py-8 mb-8 ${language === "ar" ? "text-right" : ""}`}>
+            <style jsx="true">{`
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(12px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                .step-card {
+                    transition: transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+                        box-shadow 220ms;
+                }
+                .step-card:hover {
+                    transform: translateY(-6px) scale(1.01);
+                    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.12);
+                }
+            `}</style>
+
+            <h2 className="text-5xl lg:text-6xl font-bold text-center py-8 mb-8">
                 {t.title}
             </h2>
+
             <div
-                className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 gap-y-10 gap-x-20 ${
+                className={`flex flex-col gap-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
                     language === "ar" ? "text-right" : ""
                 }`}
             >
-                {renderStep(1, "Vector1.png", "step1")}
-                {renderStep(2, "Frame1.png", "step2")}
-                {renderStep(3, "Vector.png", "step3")}
-                {renderStep(4, "Vector1.png", "step4")}
+                {[1, 2, 3, 4].map((stepNum, i) => (
+                    <div
+                        key={stepNum}
+                        className={`step-card flex flex-col lg:flex-row items-center gap-10 p-8 rounded-2xl shadow-lg ${
+                            i % 2 === 1
+                                ? "lg:flex-row-reverse bg-gray-100"
+                                : "bg-white"
+                        }`}
+                        style={{
+                            animation: `fadeInUp 600ms cubic-bezier(0.2, 0.9, 0.2, 1) ${
+                                i * 200
+                            }ms forwards`,
+                            opacity: 0,
+                        }}
+                    >
+                        {renderStep(stepNum, icons[i])}
+                    </div>
+                ))}
             </div>
         </div>
     );
