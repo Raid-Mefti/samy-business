@@ -32,9 +32,7 @@ export default function Home() {
                 <ProductsSection />
             </div>
 
-            <section id="contact" className="py-20 px-4">
-                <Footer />
-            </section>
+            <Footer />
         </>
     );
 }
