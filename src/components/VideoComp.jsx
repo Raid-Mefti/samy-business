@@ -2,7 +2,7 @@ export default function VideoComp() {
     return (
         <section className="bg-base-100">
             <div className="mx-auto">
-                <h2 className="text-3xl text-base-content md:text-4xl font-bold mb-8 text-center">
+                <h2 className="text-[rgb(223,126,60)] text-3xl  md:text-4xl font-bold mb-8 text-center">
                     Image et vidéo de l'entreprise
                 </h2>
 

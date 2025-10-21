@@ -125,15 +125,15 @@ export default function ProductsSection() {
                 id="produits"
                 className="text-base-content bg-base-100 scroll-mt-30"
             >
-                <h2 className="text-3xl font-bold mb-10 text-center text-base-content">
-                    LES PRODUITS DE SAMY BUSINESS
+                <h2 className="text-[rgb(223,126,60)] text-4xl font-bold mb-10 text-center pb-4 ">
+                    Les produits de Samy Business
                 </h2>
 
                 {/* Grid Layout for Product Categories */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                     {/* Column 1: Produits Importés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
                             Produits importés
                         </h3>
                         <div className="space-y-3">
@@ -155,7 +155,7 @@ export default function ProductsSection() {
 
                     {/* Column 2: Produits Exportés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
                             Produits exportés
                         </h3>
                         <div className="space-y-3 text-base-content">
@@ -177,7 +177,7 @@ export default function ProductsSection() {
 
                     {/* Column 3: Produits Fabriqués */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b border-primary pb-2 text-primary">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
                             Produits fabriqués
                         </h3>
                         <div className="space-y-3">
@@ -218,23 +218,20 @@ export default function ProductsSection() {
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="sticky top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
-                            <div className="flex flex-col">
-                                <h3 className="text-lg font-semibold text-primary">
-                                    {getSectionTitle(selectedCategory)}
-                                </h3>
-                                <h4 className="text-sm text-base-content/70">
-                                    {selectedProduct.name}
-                                </h4>
+                        <div className="sticky py-6 top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
+                            <h3 className="mx-auto text-4xl font-semibold text-[rgb(223,126,60)]">
+                                {getSectionTitle(selectedCategory)}
+                            </h3>
+                            <div className="absolute top-0 bottom-0 right-10 flex items-center">
+                                <button
+                                    type="button"
+                                    className="btn btn-error btn-sm btn-circle bg-[rgb(223,126,60)] text-white z-20"
+                                    aria-label="Fermer"
+                                    onClick={closePopup}
+                                >
+                                    ✕
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                className="btn btn-error btn-sm btn-circle"
-                                aria-label="Fermer"
-                                onClick={closePopup}
-                            >
-                                ✕
-                            </button>
                         </div>
 
                         {/* Article Content */}
@@ -243,25 +240,27 @@ export default function ProductsSection() {
                                 productName={selectedProduct.name}
                                 category={selectedCategory}
                             />
-
-                            {/* Left Arrow */}
-                            <button
-                                onClick={navigateToPrevious}
-                                aria-label="Produit précédent"
-                                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-primary text-white text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center"
-                            >
-                                ‹
-                            </button>
-
-                            {/* Right Arrow */}
-                            <button
-                                onClick={navigateToNext}
-                                aria-label="Produit suivant"
-                                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-primary text-white text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center"
-                            >
-                                ›
-                            </button>
                         </div>
+
+                        {/* Left Arrow */}
+                        <button
+                            onClick={navigateToPrevious}
+                            aria-label="Produit précédent"
+                            className="fixed top-1/2 transform -translate-y-1/2 text-white bg-[rgb(223,126,60)] text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center z-50"
+                            style={{ left: "calc((100vw - 72rem)/2 + 1rem)" }}
+                        >
+                            ‹
+                        </button>
+
+                        {/* Right Arrow */}
+                        <button
+                            onClick={navigateToNext}
+                            aria-label="Produit suivant"
+                            className="fixed top-1/2 transform -translate-y-1/2 text-white bg-[rgb(223,126,60)] text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center z-50"
+                            style={{ right: "calc((100vw - 72rem)/2 + 1rem)" }}
+                        >
+                            ›
+                        </button>
                     </div>
                 </div>
             )}

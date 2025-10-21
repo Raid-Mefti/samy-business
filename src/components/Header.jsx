@@ -101,7 +101,7 @@ export default function NavBar() {
                         <a
                             href="/#propos"
                             onClick={(e) => handleLinkClick(e, "#propos")}
-                            className="text-gray-700 hover:text-blue-600 transition"
+                            className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
                         >
                             {t.about}
                         </a>
@@ -110,7 +110,7 @@ export default function NavBar() {
                         <a
                             href="/#produits"
                             onClick={(e) => handleLinkClick(e, "#produits")}
-                            className="text-gray-700 hover:text-blue-600 transition"
+                            className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
                         >
                             {t.products}
                         </a>
@@ -119,7 +119,7 @@ export default function NavBar() {
                         <a
                             href="/#services"
                             onClick={(e) => handleLinkClick(e, "#services")}
-                            className="text-gray-700 hover:text-blue-600 transition"
+                            className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
                         >
                             {t.services}
                         </a>
@@ -128,7 +128,7 @@ export default function NavBar() {
                         <a
                             href="/#contact"
                             onClick={(e) => handleLinkClick(e, "#contact")}
-                            className="text-gray-700 hover:text-blue-600 transition"
+                            className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
                         >
                             {t.contact}
                         </a>

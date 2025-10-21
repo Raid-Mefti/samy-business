@@ -144,7 +144,7 @@ export default function AboutSection() {
                     </div>
 
                     <div className="flex flex-col justify-center w-full lg:w-2/3">
-                        <h1 className="text-4xl md:text-6xl font-bold">
+                        <h1 className="text-[rgb(223,126,60)] text-4xl md:text-6xl font-bold">
                             {t.title}
                         </h1>
                         <p

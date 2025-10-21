@@ -102,7 +102,7 @@ export default function ProcessSteps() {
         const icon = (
             <div
                 key="icon"
-                className="w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0 bg-base-content mask mask-squircle"
+                className="bg-[rgb(223,126,60)] w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0  mask mask-squircle"
                 style={{
                     WebkitMaskImage: `url("${iconSrc}")`,
                     maskImage: `url("${iconSrc}")`,
@@ -171,7 +171,7 @@ export default function ProcessSteps() {
                 }
             `}</style>
 
-            <h2 className="text-5xl lg:text-6xl font-bold text-center py-8 mb-8">
+            <h2 className="text-[rgb(223,126,60)] text-4xl lg:text-5xl font-bold text-center py-8 mb-8">
                 {t.title}
             </h2>
 

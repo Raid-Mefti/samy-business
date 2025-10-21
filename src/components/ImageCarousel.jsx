@@ -37,7 +37,7 @@ export default function Comp5() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end justify-start p-8">
                             <div className="text-white max-w-lg">
-                                <h2 className="text-2xl lg:text-4xl font-bold drop-shadow-lg">
+                                <h2 className="text-2xl lg:text-4xl font-bold drop-shadow-lg text-[rgb(223,126,60)]">
                                     {slide.caption}
                                 </h2>
                                 <p className="mt-2 text-sm lg:text-base opacity-90">
@@ -55,7 +55,7 @@ export default function Comp5() {
                     <button
                         key={index}
                         onClick={() => goToSlide(index)}
-                        className={`btn btn-primary btn-sm md:btn-md transition-transform ${
+                        className={`btn btn-primary btn-sm md:btn-md transition-transform bg-[rgb(223,126,60)] border-0 ${
                             current === index ? "scale-110" : "opacity-80"
                         }`}
                     >
