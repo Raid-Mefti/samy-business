@@ -7,22 +7,22 @@ export default function ProductsGrid() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col flex-wrap md:flex-row justify-center md:justify-around gap-8 max-w-7xl mx-auto bg-base-100 ">
+    <div className="flex flex-col flex-wrap md:flex-row justify-center md:justify-around gap-8 max-w-7xl mx-auto bg-base-100">
       <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
         <figure>
           <img src="img11.png" alt="xxx" />
         </figure>
         <div className="card-body">
           <br />
-          <h2 className="card-title text-4xl ">l'utilisation du zinc</h2>
+          <h2 className="card-title text-4xl">l'utilisation du zinc</h2>
           <br />
           <br />
           <br />
           <p className="text-xl">
-            samy business vous propose plusieur solutiion pour mieux exploiter
+            samy business vous propose plusieurs solutions pour mieux exploiter
             le zinc
           </p>
-          <div className="card-actions justify-end ">
+          <div className="card-actions justify-end">
             <button
               className="btn btn-primary"
               onClick={() => window.open("/wiki/zinc-usage", "_blank")}
@@ -32,6 +32,7 @@ export default function ProductsGrid() {
           </div>
         </div>
       </div>
+
       <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
         <figure>
           <img src="img12.jpg" alt="xxx" />
@@ -53,6 +54,7 @@ export default function ProductsGrid() {
           </div>
         </div>
       </div>
+
       <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
         <figure>
           <img src="img13.png" alt="xxx" />
@@ -64,7 +66,7 @@ export default function ProductsGrid() {
           <br />
           <br />
           <p className="text-xl">
-            SAMY BUSINESS PROPOSE PLUSIEURS GAMME POUR SES CLIENTS
+            SAMY BUSINESS PROPOSE PLUSIEURS GAMMES POUR SES CLIENTS
           </p>
           <div className="card-actions justify-end">
             <button
