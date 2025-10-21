@@ -97,12 +97,12 @@ export default function AboutSection() {
                             : "lg:flex-row-reverse"
                     }`}
                 >
-                    {/* Placeholder for an image or logo */}
-                    <div className="w-full lg:w-1/3 flex justify-center items-center p-4">
+                    {/* Placeholder for an image or logo [rgb(223,126,60)] */}
+                    <div className="w-full lg:w-1/3 flex justify-center items-center p-4  ">
                         <svg
-                            className="w-32 h-32 text-primary opacity-70"
-                            viewBox="0 0 24 24"
+                            className="w-32 h-32  opacity-70 text-[rgb(223,126,60)]"
                             fill="none"
+                            viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                         >
                             <path
@@ -161,7 +161,7 @@ export default function AboutSection() {
                             </p>
                         )}
                         <button
-                            className="btn btn-primary mt-4 rounded-full shadow-md hover:shadow-lg transition-shadow self-start"
+                            className="btn btn-primary bg-[rgb(223,126,60)] border-0 mt-4 rounded-full shadow-md hover:shadow-lg transition-shadow self-start"
                             // Aligner le bouton correctement pour RTL/LTR
                             style={{
                                 alignSelf:
@@ -203,7 +203,7 @@ export default function AboutSection() {
                             }`}
                         >
                             <button
-                                className="btn btn-primary rounded-full"
+                                className="btn btn-primary rounded-full bg-[rgb(223,126,60)]"
                                 onClick={() => setIsModalOpen(false)}
                             >
                                 {t.close}

@@ -3,8 +3,8 @@ import ProductsGrid from "@/components/ProductsGrid";
 import ImageCarousel from "@/components/ImageCarousel";
 import ProcessSteps from "@/components/ProcessSteps";
 import Footer from "@/components/Footer";
-import ProductsSection from "@/components/ProductsSection";
 import Header from "@/components/Header";
+import ProductsSection from "@/components/ProductsSection";
 import Home1 from "@/components/Home1";
 import VideoComp from "@/components/VideoComp";
 

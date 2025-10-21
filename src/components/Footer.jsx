@@ -263,7 +263,7 @@ export default function Comp7() {
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="/legal"
                                     className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
                                 >
                                     {t.privacy}
@@ -271,7 +271,7 @@ export default function Comp7() {
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="/legal#conditions"
                                     className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
                                 >
                                     {t.terms}
