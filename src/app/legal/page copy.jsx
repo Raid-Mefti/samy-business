@@ -239,42 +239,40 @@ See contact details in the Legal Notice.
     return (
         <>
             <Header />
-
             <div
-                className={`min-h-screen bg-gradient-to-b from-base-200 via-base-100 to-base-200 px-6 pb-16 pt-24 ${
+                className={`min-h-screen bg-gradient-to-b from-base-200 via-base-100 to-base-200 text-base-content px-6 pb-16 pt-24 ${
                     isRTL ? "text-right" : "text-left"
                 }`}
                 dir={isRTL ? "rtl" : "ltr"}
             >
-                <div className="max-w-5xl mx-auto bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl border border-base-300 p-12">
-                    {/* Page Title */}
-                    <h1 className="text-[rgb(223,126,60)] text-4xl sm:text-5xl font-extrabold mb-14 text-center tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                <div className="max-w-5xl mx-auto bg-white/70 backdrop-blur-md shadow-2xl rounded-3xl border border-base-300 p-10">
+                    <h1 className="text-[rgb(223,126,60)] text-4xl font-bold mb-12 text-center bg-gradient-to-r from-primary to-accent bg-clip-text">
                         {t.title}
                     </h1>
 
                     {/* Mentions légales */}
                     <section
                         id="mentions"
-                        className="mb-16 scroll-mt-32 border-b border-base-300 pb-12"
+                        className="mb-16 scroll-mt-20 border-b border-base-300 pb-10"
                     >
-                        <h2 className="text-[rgb(223,126,60)] text-2xl sm:text-3xl font-bold mb-6">
+                        <h2 className="text-[rgb(223,126,60)] text-2xl font-semibold mb-6 ">
                             {t.mentionsTitle}
                         </h2>
                         <div
-                            className="prose prose-neutral max-w-none text-base sm:text-lg leading-relaxed text-base-content/90 [&_strong]:text-[rgb(223,126,60)] [&_strong]:font-semibold [&_br]:my-2"
+                            className="prose prose-neutral max-w-none leading-relaxed text-base-content/90"
                             dangerouslySetInnerHTML={{
                                 __html: t.mentions.replace(/\n/g, "<br/>"),
                             }}
                         />
                     </section>
 
-                    {/* Conditions Générales */}
-                    <section id="conditions" className="scroll-mt-32">
-                        <h2 className="text-[rgb(223,126,60)] text-2xl sm:text-3xl font-bold mb-6">
+                    {/* Conditions */}
+                    <section id="conditions" className="scroll-mt-20">
+                        <h2 className="text-2xl font-semibold mb-6 text-[rgb(223,126,60)]">
                             {t.conditionsTitle}
                         </h2>
                         <div
-                            className="prose prose-neutral max-w-none text-base sm:text-lg leading-relaxed text-base-content/90 [&_strong]:text-[rgb(223,126,60)] [&_strong]:font-semibold [&_br]:my-2"
+                            className="prose prose-neutral max-w-none leading-relaxed text-base-content/90"
                             dangerouslySetInnerHTML={{
                                 __html: t.conditions.replace(/\n/g, "<br/>"),
                             }}
@@ -282,7 +280,6 @@ See contact details in the Legal Notice.
                     </section>
                 </div>
             </div>
-
             <Footer />
         </>
     );
