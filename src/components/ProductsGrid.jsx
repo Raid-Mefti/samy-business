@@ -28,7 +28,7 @@ export default function ProductsGrid() {
                         <button
                             className="btn btn-primary"
                             onClick={() =>
-                                window.open("/wiki/statistics", "_blank")
+                                window.open("/wiki/zinc-usage", "_blank")
                             }
                         >
                             plus d'infos
@@ -51,7 +51,7 @@ export default function ProductsGrid() {
                         <button
                             className="btn btn-primary"
                             onClick={() =>
-                                window.open("/wiki/zinc-usage", "_blank")
+                                window.open("/wiki/statistics", "_blank")
                             }
                         >
                             plus d'infos

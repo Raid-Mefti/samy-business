@@ -1,45 +1,67 @@
+"use client";
+import { useState, useEffect } from "react";
+
 export default function Comp5() {
+    const slides = [
+        {
+            src: "slideshow1.jpeg",
+            caption: "Haute pureté et performance garantie",
+        },
+        { src: "slideshow2.jpeg", caption: "Procédé industriel maîtrisé" },
+        { src: "slideshow3.jpeg", caption: "Production durable et optimisée" },
+        { src: "slideshow4.jpeg", caption: "Contrôle qualité rigoureux" },
+        { src: "slideshow5.jpeg", caption: "Innovation au cœur du processus" },
+        { src: "slideshow6.jpeg", caption: "Excellence métallique" },
+    ];
+
+    const [current, setCurrent] = useState(0);
+
+    const goToSlide = (index) => {
+        setCurrent(index);
+    };
+
     return (
         <div className="mt-12 overflow-hidden bg-base-100">
-            <div className="carousel w-full rounded-3xl">
-                <div id="item1" className="carousel-item w-full">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-                        className="w-full"
-                    />
-                </div>
-                <div id="item2" className="carousel-item w-full">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
-                        className="w-full"
-                    />
-                </div>
-                <div id="item3" className="carousel-item w-full">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
-                        className="w-full"
-                    />
-                </div>
-                <div id="item4" className="carousel-item w-full">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp"
-                        className="w-full"
-                    />
-                </div>
+            <div className="relative w-full h-[60vh] lg:h-[70vh] rounded-3xl overflow-hidden">
+                {slides.map((slide, index) => (
+                    <div
+                        key={index}
+                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                            index === current ? "opacity-100" : "opacity-0"
+                        }`}
+                    >
+                        <img
+                            src={slide.src}
+                            alt={`Slide ${index + 1}`}
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end justify-start p-8">
+                            <div className="text-white max-w-lg">
+                                <h2 className="text-2xl lg:text-4xl font-bold drop-shadow-lg">
+                                    {slide.caption}
+                                </h2>
+                                <p className="mt-2 text-sm lg:text-base opacity-90">
+                                    Découvrez nos procédés métallurgiques
+                                    alliant précision, durabilité et innovation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
-            <div className="flex w-full justify-center gap-2 py-2">
-                <a href="#item1" className="btn btn-primary btn-md">
-                    1
-                </a>
-                <a href="#item2" className="btn btn-primary btn-md">
-                    2
-                </a>
-                <a href="#item3" className="btn btn-primary btn-md">
-                    3
-                </a>
-                <a href="#item4" className="btn btn-primary btn-md">
-                    4
-                </a>
+
+            <div className="flex w-full justify-center gap-2 py-4">
+                {slides.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`btn btn-primary btn-sm md:btn-md transition-transform ${
+                            current === index ? "scale-110" : "opacity-80"
+                        }`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );
