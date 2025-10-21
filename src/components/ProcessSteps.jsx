@@ -2,8 +2,11 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
+import React from "react"; // Ajout de l'import React pour Fragment
 
 export default function ProcessSteps() {
+    // NOTE: L'import de useLanguage est conservé comme demandé,
+    // en supposant que le contexte de langue est disponible dans votre environnement.
     const { language } = useLanguage();
 
     const translations = {
@@ -103,10 +106,11 @@ export default function ProcessSteps() {
     const renderStep = (stepNum, iconSrc, ariaLabelKey) => {
         const step = t[`step${stepNum}`];
         const isExpanded = expanded[stepNum];
-        const isArabic = language === "ar";
+        // const isArabic = language === "ar"; // Not used directly, but kept for context
 
         const icon = (
             <div
+                key="icon" // Ajout d'une clé pour éviter les avertissements React
                 className="w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0 bg-base-content mask mask-squircle"
                 style={{
                     WebkitMaskImage: `url("${iconSrc}")`,
@@ -124,10 +128,15 @@ export default function ProcessSteps() {
         );
 
         const content = (
-            <div className="flex-1 min-w-0">
+            <div key="content" className="flex-1 min-w-0">
+                {" "}
                 <h1 className="text-2xl lg:text-3xl font-bold">{step.title}</h1>
                 <br />
-                <p className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${isExpanded ? 'line-clamp-none' : ''}`}>
+                <p
+                    className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${
+                        isExpanded ? "line-clamp-none" : ""
+                    }`}
+                >
                     {step.description}
                 </p>
                 <button
@@ -140,28 +149,72 @@ export default function ProcessSteps() {
         );
 
         return (
-            <div className="flex flex-row gap-4 justify-start lg:justify-center items-start lg:items-center">
-                {!isArabic && icon}
+            <React.Fragment>
                 {content}
-                {isArabic && icon}
-            </div>
+                {icon}
+            </React.Fragment>
         );
     };
 
+    const icons = ["Vector1.png", "Frame1.png", "Vector.png", "Vector1.png"];
+
     return (
         <div className="w-full bg-base-100 text-base-content">
-            <h2 className={`text-5xl lg:text-6xl font-bold text-center py-8 mb-8 ${language === "ar" ? "text-right" : ""}`}>
+            {/* INJECTION DU CSS FOURNI */}
+            <style jsx="true">{`
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(12px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                .step-card {
+                    /* Include base transition for smooth hover */
+                    transition: transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+                        box-shadow 220ms;
+                }
+                .step-card:hover {
+                    /* Apply subtle lift effect on hover */
+                    transform: translateY(-6px) scale(1.01);
+                    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.12);
+                }
+            `}</style>
+
+            <h2
+                className={`text-5xl lg:text-6xl font-bold text-center py-8 mb-8 `}
+            >
                 {t.title}
             </h2>
             <div
-                className={`h-fit grid grid-cols-1 lg:grid-cols-2 grid-rows-2 gap-y-10 gap-x-20 ${
+                // Ajout des classes pour centrer et ajouter du padding pour un meilleur affichage
+                className={`flex flex-col gap-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
                     language === "ar" ? "text-right" : ""
                 }`}
             >
-                {renderStep(1, "Vector1.png", "step1")}
-                {renderStep(2, "Frame1.png", "step2")}
-                {renderStep(3, "Vector.png", "step3")}
-                {renderStep(4, "Vector1.png", "step4")}
+                {[1, 2, 3, 4].map((stepNum, i) => (
+                    <div
+                        key={stepNum}
+                        // Application des classes step-card (pour le hover) et shadow-lg
+                        className={`step-card flex flex-col lg:flex-row items-center gap-10 p-8 rounded-2xl shadow-lg ${
+                            i % 2 === 1
+                                ? "lg:flex-row-reverse bg-gray-100"
+                                : "bg-white"
+                        }`}
+                        style={{
+                            // Application de l'animation fadeInUp avec un délai échelonné (staggered delay)
+                            animation: `fadeInUp 600ms cubic-bezier(0.2, 0.9, 0.2, 1) ${
+                                i * 200
+                            }ms forwards`,
+                            opacity: 0, // Commence invisible
+                        }}
+                    >
+                        {renderStep(stepNum, icons[i], `step${stepNum}`)}
+                    </div>
+                ))}
             </div>
         </div>
     );
