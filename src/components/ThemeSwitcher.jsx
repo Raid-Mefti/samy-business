@@ -1,13 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
-// ANCIENNE LIGNE : import { useTheme } from "@/contexts/ThemeContext";
+import React from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-// --- SIMULATION DU CONTEXTE DE THÈME POUR ASSURER LA COMPILATION ---
 const useTheme = () => {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = React.useState("light");
 
-    useEffect(() => {
-        // Applique le thème à l'attribut data-theme de l'élément racine (requis par DaisyUI)
+    React.useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);
     }, [theme]);
 
@@ -17,7 +15,6 @@ const useTheme = () => {
 
     return { theme, toggleTheme };
 };
-// --- FIN DE LA SIMULATION ---
 
 const themes = [
     { name: "light", label: "Light", icon: "☀️" },
@@ -26,26 +23,14 @@ const themes = [
 
 export default function ThemeSwitcher() {
     const { theme, toggleTheme } = useTheme();
-    // 1. État pour stocker la directionnalité du document
-    const [dir, setDir] = useState("ltr");
+    const { language } = useLanguage();
 
-    // 2. Détecter la directionnalité (RTL/LTR) au montage
-    useEffect(() => {
-        // Vérifie la direction du document HTML racine
-        const documentDir =
-            document.documentElement.getAttribute("dir") || "ltr";
-        setDir(documentDir);
-    }, []);
-
-    // 3. Définir la classe de positionnement en fonction de la direction
-    // Si RTL (Arabe), utilise dropdown-start pour ouvrir à droite (vers l'intérieur de l'écran).
-    // Si LTR (Anglais/Français), utilise dropdown-end pour ouvrir à gauche (vers l'intérieur de l'écran).
-    const dropdownClass = dir === "rtl" ? "dropdown-start" : "dropdown-end";
-
-    // NOTE : Augmentation du z-index de z-[1] à z-[50] pour éviter l'occultation dans la barre de navigation.
+    // Set dropdown orientation based on language (RTL vs LTR)
+    const dropdownClass = language === "ar" ? "dropdown-start" : "dropdown-end";
 
     return (
         <div className={`dropdown ${dropdownClass} z-50`}>
+            {/* Button to open dropdown */}
             <div
                 tabIndex={0}
                 role="button"
@@ -65,23 +50,27 @@ export default function ThemeSwitcher() {
                     />
                 </svg>
             </div>
+
+            {/* Dropdown menu */}
             <ul
                 tabIndex={0}
-                className="dropdown-content z-[50] menu p-2 shadow bg-base-100 rounded-box w-52"
+                className={`dropdown-content z-[50] menu p-2 shadow bg-base-100 rounded-box w-52 ${
+                    language === "ar" ? "text-right" : "text-left"
+                }`}
             >
                 {themes.map((themeOption) => (
                     <li key={themeOption.name}>
                         <button
                             onClick={() => toggleTheme(themeOption.name)}
-                            className={`flex items-center gap-2 ${
-                                theme === themeOption.name ? "active" : ""
+                            className={`flex items-center justify-between gap-2 w-full px-2 py-1 rounded hover:bg-base-200 ${
+                                theme === themeOption.name ? "font-bold" : ""
                             }`}
                         >
-                            <span>{themeOption.icon}</span>
-                            <span>{themeOption.label}</span>
-                            {theme === themeOption.name && (
-                                <span className="ml-auto">✓</span>
-                            )}
+                            <div className="flex items-center gap-2">
+                                <span>{themeOption.icon}</span>
+                                <span>{themeOption.label}</span>
+                            </div>
+                            {theme === themeOption.name && <span>✓</span>}
                         </button>
                     </li>
                 ))}
