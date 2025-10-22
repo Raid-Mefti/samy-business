@@ -142,21 +142,20 @@ export default function NavBar() {
                             : "space-x-4"
                     }`}
                 >
-                    <a
-                        href="/#contact"
-                        onClick={(e) => handleLinkClick(e, "#contact")}
+                    <button
+                        onClick={() => router.push("/contact")}
                         className={`hidden lg:flex items-center gap-3 px-10 border bg-white text-black font-bold border-[rgb(223,126,60)] rounded-full ${
                             isArabic ? "mr-4" : "ml-4"
                         }`}
                     >
-                        {t.contact}{" "}
+                        {t.contact}
                         <img
                             width="48"
                             height="48"
                             src="https://img.icons8.com/parakeet-line/48/mail-contact.png"
                             alt="mail-contact"
                         />
-                    </a>
+                    </button>
                     <LanguageSwitcher />
                     <ThemeSwitcher />
                     <button
