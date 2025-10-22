@@ -7,8 +7,8 @@ export default function ProductsGrid() {
     const router = useRouter();
 
     return (
-        <div className="flex flex-col flex-wrap md:flex-row justify-center md:justify-around gap-8 max-w-7xl mx-auto bg-base-100 ">
-            <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
+        <div className="site-container flex flex-col flex-wrap md:flex-row justify-center items-center md:justify-around gap-10  bg-base-100  w-[calc(100%+var(--site-padding)*2)] -mx-[var(--site-padding)] ">
+            <div className="card bg-base-200 image-full shadow-xl rounded-xl flex-1 w-[300px] md:min-w-[400px] md:max-w-[450px] h-[325px]">
                 <figure>
                     <img src="img11.png" alt="xxx" />
                 </figure>
@@ -21,8 +21,8 @@ export default function ProductsGrid() {
                     <br />
                     <br />
                     <p className="text-xl">
-                        samy business vous propose plusieur solutiion pour mieux
-                        exploiter le zinc
+                        Samy Business vous propose plusieurs solutiions pour
+                        mieux exploiter le Zinc
                     </p>
                     <div className="card-actions justify-end ">
                         <button
@@ -37,7 +37,7 @@ export default function ProductsGrid() {
                 </div>
             </div>
 
-            <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
+            <div className="card bg-base-200 image-full shadow-xl rounded-xl flex-1 w-[300px] md:min-w-[400px] md:max-w-[450px]  h-[325px]">
                 <figure>
                     <img src="img12.jpg" alt="xxx" />
                 </figure>
@@ -49,7 +49,9 @@ export default function ProductsGrid() {
                     <br />
                     <br />
                     <br />
-                    <p className="text-xl">Overall stats</p>
+                    <p className="text-xl">
+                        Statistiques générales de l'entreprise
+                    </p>
                     <div className="card-actions justify-end">
                         <button
                             className="btn btn-primary bg-[rgb(223,126,60)] border-0"
@@ -63,7 +65,7 @@ export default function ProductsGrid() {
                 </div>
             </div>
 
-            <div className="card bg-base-200 image-full w-full md:w-96 shadow-xl rounded-xl">
+            <div className="card bg-base-200 image-full shadow-xl rounded-xl flex-1 w-[300px] md:min-w-[400px] md:max-w-[450px] h-[325px]">
                 <figure>
                     <img src="img13.png" alt="xxx" />
                 </figure>
@@ -76,7 +78,7 @@ export default function ProductsGrid() {
                     <br />
                     <br />
                     <p className="text-xl">
-                        SAMY BUSINESS PROPOSE PLUSIEURS GAMMES POUR SES CLIENTS
+                        Samy Business propose plusieurs gammes pour ses clients
                     </p>
                     <div className="card-actions justify-end">
                         <button

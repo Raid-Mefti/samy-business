@@ -120,10 +120,12 @@ export default function ProcessSteps() {
 
         const content = (
             <div key="content" className="flex-1 min-w-0">
-                <h1 className="text-2xl lg:text-3xl font-bold">{step.title}</h1>
+                <h1 className="text-2xl lg:text-3xl font-bold text-base-content">
+                    {step.title}
+                </h1>
                 <br />
                 <p
-                    className={`text-lg lg:text-xl line-clamp-3 lg:line-clamp-none ${
+                    className={`text-lg lg:text-xl text-base-content line-clamp-3 lg:line-clamp-none ${
                         isExpanded ? "line-clamp-none" : ""
                     }`}
                 >
@@ -185,8 +187,8 @@ export default function ProcessSteps() {
                         key={stepNum}
                         className={`step-card flex flex-col lg:flex-row items-center gap-10 p-8 rounded-2xl shadow-lg ${
                             i % 2 === 1
-                                ? "lg:flex-row-reverse bg-gray-100"
-                                : "bg-white"
+                                ? "lg:flex-row-reverse bg-base-200"
+                                : "bg-base-100"
                         }`}
                         style={{
                             animation: `fadeInUp 600ms cubic-bezier(0.2, 0.9, 0.2, 1) ${

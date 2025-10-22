@@ -81,7 +81,8 @@ export default function NavBar() {
     return (
         <>
             <nav
-                className={`flex ${navFlexClass} items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-50 bg-base-100/30 backdrop-blur-sm`}
+                className={`flex ${navFlexClass} shadow-md shadow-gray-300/40 border-b-2 border-[rgb(223,126,60)]
+ items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-50 bg-base-100/30 backdrop-blur-sm`}
             >
                 <div>
                     <a href="/" onClick={(e) => handleLinkClick(e, "#top")}>
@@ -93,7 +94,7 @@ export default function NavBar() {
                     </a>
                 </div>
                 <ul
-                    className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 ${
+                    className={`border-1 border-[rgb(223,126,60)] hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 ${
                         isArabic ? "flex-row-reverse" : ""
                     }`}
                 >
@@ -124,7 +125,7 @@ export default function NavBar() {
                             {t.services}
                         </a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a
                             href="/#contact"
                             onClick={(e) => handleLinkClick(e, "#contact")}
@@ -132,7 +133,7 @@ export default function NavBar() {
                         >
                             {t.contact}
                         </a>
-                    </li>
+                    </li> */}
                 </ul>
                 <div
                     className={`flex ${
@@ -144,7 +145,7 @@ export default function NavBar() {
                     <a
                         href="/#contact"
                         onClick={(e) => handleLinkClick(e, "#contact")}
-                        className={`hidden lg:flex items-center gap-3 px-10 border text-black font-bold border-gray-200 rounded-full ${
+                        className={`hidden lg:flex items-center gap-3 px-10 border bg-white text-black font-bold border-[rgb(223,126,60)] rounded-full ${
                             isArabic ? "mr-4" : "ml-4"
                         }`}
                     >

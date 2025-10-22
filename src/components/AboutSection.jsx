@@ -86,7 +86,7 @@ export default function AboutSection() {
     return (
         <>
             <div
-                className={`hero bg-base-100 min-h-96 mt-12 mb-12 text-base-content rounded-lg shadow-xl ${
+                className={`hero bg-base-100 min-h-96 mt-12  text-base-content rounded-lg shadow-xl ${
                     sanitizedLanguage === "ar" ? "text-right" : ""
                 }`}
             >

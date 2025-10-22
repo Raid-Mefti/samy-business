@@ -1,7 +1,8 @@
+// Comp5Option3.jsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export default function Comp5() {
+export default function Comp5Option3() {
     const slides = [
         {
             src: "slideshow1.jpeg",
@@ -15,52 +16,73 @@ export default function Comp5() {
     ];
 
     const [current, setCurrent] = useState(0);
+    const intervalRef = useRef(null);
+    const SLIDE_DURATION = 10000;
+
+    const startTimer = () => {
+        clearInterval(intervalRef.current);
+        intervalRef.current = setInterval(() => {
+            setCurrent((p) => (p + 1) % slides.length);
+        }, SLIDE_DURATION);
+    };
+
+    useEffect(() => {
+        startTimer();
+        return () => clearInterval(intervalRef.current);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const goToSlide = (index) => {
         setCurrent(index);
+        startTimer();
     };
 
     return (
         <div className="mt-12 overflow-hidden bg-base-100">
             <div className="relative w-full h-[60vh] lg:h-[70vh] rounded-3xl overflow-hidden">
-                {slides.map((slide, index) => (
+                {slides.map((slide, i) => (
                     <div
-                        key={index}
-                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                            index === current ? "opacity-100" : "opacity-0"
+                        key={i}
+                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                            i === current
+                                ? "opacity-100 z-20"
+                                : "opacity-0 z-10"
                         }`}
                     >
                         <img
                             src={slide.src}
-                            alt={`Slide ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            alt={slide.caption}
+                            className="w-full h-full object-cover transform scale-105 transition-transform duration-[10000ms]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end justify-start p-8">
-                            <div className="text-white max-w-lg">
-                                <h2 className="text-2xl lg:text-4xl font-bold drop-shadow-lg text-[rgb(223,126,60)]">
-                                    {slide.caption}
-                                </h2>
-                                <p className="mt-2 text-sm lg:text-base opacity-90">
-                                    Découvrez nos procédés métallurgiques
-                                    alliant précision, durabilité et innovation.
-                                </p>
-                            </div>
+
+                        {/* Light card text box */}
+                        <div className="absolute bottom-8 left-8 max-w-lg rounded-xl bg-white/70 backdrop-blur-lg p-6 shadow-md border border-gray-100/50">
+                            <h2 className="text-2xl lg:text-4xl font-bold text-[rgb(223,126,60)]">
+                                {slide.caption}
+                            </h2>
+                            <p className="mt-3 text-sm lg:text-base text-gray-800 leading-relaxed">
+                                Découvrez nos procédés métallurgiques alliant
+                                précision, durabilité et innovation — au service
+                                de l’excellence.
+                            </p>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="flex w-full justify-center gap-2 py-4">
-                {slides.map((_, index) => (
+            {/* Dots */}
+            <div className="flex w-full justify-center gap-3 py-4">
+                {slides.map((_, idx) => (
                     <button
-                        key={index}
-                        onClick={() => goToSlide(index)}
-                        className={`btn btn-primary btn-sm md:btn-md transition-transform bg-[rgb(223,126,60)] border-0 ${
-                            current === index ? "scale-110" : "opacity-80"
+                        key={idx}
+                        onClick={() => goToSlide(idx)}
+                        aria-label={`Go to slide ${idx + 1}`}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            current === idx
+                                ? "bg-[rgb(223,126,60)] scale-125 shadow-md"
+                                : "bg-black/40 hover:bg-[rgb(223,126,60)]/70"
                         }`}
-                    >
-                        {index + 1}
-                    </button>
+                    />
                 ))}
             </div>
         </div>

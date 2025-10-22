@@ -17,7 +17,7 @@ export default function Home() {
             </section>
 
             <div className="site-container site-stack">
-                <section id="propos" className="py-20 px-4">
+                <section id="propos" className="pt-20 px-4">
                     <AboutSection />
                 </section>
 
@@ -26,9 +26,7 @@ export default function Home() {
                 <VideoComp />
                 <ImageCarousel />
 
-                <section id="services" className="py-20 px-4">
-                    <ProcessSteps />
-                </section>
+                <ProcessSteps />
                 <ProductsSection />
             </div>
 
