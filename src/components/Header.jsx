@@ -144,7 +144,7 @@ export default function NavBar() {
                 >
                     <button
                         onClick={() => router.push("/contact")}
-                        className={`hidden lg:flex items-center gap-3 px-10 border bg-white text-black font-bold border-[rgb(223,126,60)] rounded-full ${
+                        className={`cursor-pointer hidden lg:flex items-center gap-3 px-10 border hover:text-[rgb(223,126,60)]  bg-white text-black font-bold border-[rgb(223,126,60)] rounded-full ${
                             isArabic ? "mr-4" : "ml-4"
                         }`}
                     >
