@@ -1,20 +1,7 @@
 "use client";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const useTheme = () => {
-    const [theme, setTheme] = React.useState("light");
-
-    React.useEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme);
-    }, [theme]);
-
-    const toggleTheme = (newTheme) => {
-        setTheme(newTheme);
-    };
-
-    return { theme, toggleTheme };
-};
+import { useTheme } from "@/contexts/ThemeContext"; // ✅ Use the shared context
 
 const themes = [
     { name: "light", label: "Light", icon: "☀️" },
@@ -25,12 +12,10 @@ export default function ThemeSwitcher() {
     const { theme, toggleTheme } = useTheme();
     const { language } = useLanguage();
 
-    // Set dropdown orientation based on language (RTL vs LTR)
     const dropdownClass = language === "ar" ? "dropdown-start" : "dropdown-end";
 
     return (
         <div className={`dropdown ${dropdownClass} z-50`}>
-            {/* Button to open dropdown */}
             <div
                 tabIndex={0}
                 role="button"
@@ -51,10 +36,9 @@ export default function ThemeSwitcher() {
                 </svg>
             </div>
 
-            {/* Dropdown menu */}
             <ul
                 tabIndex={0}
-                className={`dropdown-content z-[50] menu p-2 shadow bg-base-100 rounded-box w-52 ${
+                className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 ${
                     language === "ar" ? "text-right" : "text-left"
                 }`}
             >

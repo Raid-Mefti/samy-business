@@ -5,7 +5,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
 
-export default function NavBar() {
+export default function NavBar({ children }) {
     const { language } = useLanguage();
     const sideMenuRef = useRef();
     const router = useRouter();
@@ -158,6 +158,8 @@ export default function NavBar() {
                     </button>
                     <LanguageSwitcher />
                     <ThemeSwitcher />
+                    {children}
+
                     <button
                         className={`cursor-pointer block md:hidden ${
                             isArabic ? "mr-3" : "ml-3"

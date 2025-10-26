@@ -5,15 +5,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState("dark"); // Default to dark
 
     useEffect(() => {
-        // Get theme from localStorage or default to light
-        const savedTheme = localStorage.getItem("theme") || "light";
-        setTheme(savedTheme);
-
-        // Apply theme to document
-        document.documentElement.setAttribute("data-theme", savedTheme);
+        const savedTheme = localStorage.getItem("theme");
+        const initialTheme = savedTheme || "dark";
+        setTheme(initialTheme);
+        document.documentElement.setAttribute("data-theme", initialTheme);
     }, []);
 
     const toggleTheme = (newTheme) => {
@@ -36,4 +34,3 @@ export function useTheme() {
     }
     return context;
 }
-
