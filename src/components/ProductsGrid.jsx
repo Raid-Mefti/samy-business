@@ -72,6 +72,9 @@ function AnimatedCard({ card, color, glow, offset }) {
         },
     };
 
+    // Determine if this is the "Statistiques" card
+    const isStatistics = card.title === "Statistiques";
+
     return (
         <motion.div
             ref={ref}
@@ -79,7 +82,7 @@ function AnimatedCard({ card, color, glow, offset }) {
             initial="hidden"
             animate={controls}
             style={{ marginLeft: `${offset * 2}rem` }}
-            className="stair-card group relative flex items-stretch gap-8 transition-transform duration-700 ease-out hover:-translate-y- mb-8"
+            className="stair-card group relative flex items-stretch gap-8 transition-transform duration-700 ease-out mb-8"
         >
             {/* IMAGE SECTION */}
             <motion.div
@@ -95,7 +98,10 @@ function AnimatedCard({ card, color, glow, offset }) {
                     <img
                         src={card.img}
                         alt={card.title}
-                        className="w-full h-[320px] object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
+                        className={`w-full h-[320px] object-cover rounded-2xl transition-all duration-700 group-hover:scale-105`}
+                        style={{
+                            opacity: isStatistics ? 0.6 : 1,
+                        }}
                     />
                 </div>
                 <div className="absolute inset-0 bg-black/30 rounded-2xl pointer-events-none"></div>

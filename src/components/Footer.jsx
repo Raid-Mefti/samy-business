@@ -4,8 +4,7 @@ import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Comp7() {
-    const { language } = useLanguage(); // ✅ use global language
-    // Remove internal useState — it’s now global
+    const { language } = useLanguage();
 
     const translations = {
         fr: {
@@ -14,15 +13,14 @@ export default function Comp7() {
             terms: "Conditions générales",
             contact_title: "Nous Contacter",
             contactText: "Pour toutes demandes de sourcing et de partenariat :",
-            nav: "Navigation & Liens Rapides",
             products: "Nos Produits",
             about: "À propos de Samy Business",
             contact: "Contactez-nous",
             rights: "Tous droits réservés.",
             columns: {
-                c1: "Liens Utiles",
                 c2: "Nos Activités",
-                c3: "Services & Support",
+                c3: "FAQ",
+                c4: "Mentions Légales",
             },
         },
         en: {
@@ -31,15 +29,14 @@ export default function Comp7() {
             terms: "Terms and Conditions",
             contact_title: "Contact Us",
             contactText: "For all sourcing and partnership requests:",
-            nav: "Navigation & Quick Links",
             products: "Our Products",
             about: "About Samy Business",
             contact: "Contact Us",
             rights: "All rights reserved.",
             columns: {
-                c1: "Quick Links",
                 c2: "Our Activities",
-                c3: "Services & Support",
+                c3: "FAQ",
+                c4: "Legal Mentions",
             },
         },
         ar: {
@@ -48,15 +45,14 @@ export default function Comp7() {
             terms: "الشروط والأحكام",
             contact_title: "تواصل معنا",
             contactText: "لجميع طلبات التوريد والشراكات:",
-            nav: "التنقل والروابط السريعة",
             products: "منتجاتنا",
             about: "من نحن",
             contact: "اتصل بنا",
             rights: "جميع الحقوق محفوظة.",
             columns: {
-                c1: "روابط مفيدة",
                 c2: "أنشطتنا",
-                c3: "الخدمات والدعم",
+                c3: "الأسئلة الشائعة",
+                c4: "البيانات القانونية",
             },
         },
     };
@@ -148,14 +144,6 @@ export default function Comp7() {
 
     const linkColumns = [
         {
-            title: t.columns.c1,
-            links: [
-                { name: t.products, href: "/products" },
-                { name: t.about, href: "/about" },
-                { name: t.contact, href: "/contact" },
-            ],
-        },
-        {
             title: t.columns.c2,
             links: [
                 { name: "Sourcing Matières", href: "#" },
@@ -165,10 +153,14 @@ export default function Comp7() {
         },
         {
             title: t.columns.c3,
+            links: [{ name: "FAQ", href: "#" }],
+        },
+        {
+            title: t.columns.c4,
             links: [
-                { name: "Assistance Technique", href: "#" },
-                { name: "FAQ", href: "#" },
-                { name: "Espace Presse", href: "#" },
+                { name: t.legal, href: "/legal" },
+                { name: t.terms, href: "/legal#conditions" },
+                { name: t.privacy, href: "/legal#privacy" },
             ],
         },
     ];
@@ -218,7 +210,22 @@ export default function Comp7() {
                 </div>
 
                 {/* COLUMNS */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+                    {/* Contact */}
+                    <div className="col-span-2 md:col-span-1">
+                        <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
+                            {t.contact_title}
+                        </h5>
+                        <p className="text-gray-400 mb-2">{t.contactText}</p>
+                        <a
+                            href="mailto:contact@samybusiness.dz"
+                            className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
+                        >
+                            contact@samybusiness.dz
+                        </a>
+                    </div>
+
+                    {/* Remaining Columns */}
                     {linkColumns.map((col, index) => (
                         <div key={index} className="col-span-1">
                             <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
@@ -229,7 +236,7 @@ export default function Comp7() {
                                     <li key={linkIndex}>
                                         <a
                                             href={link.href}
-                                            className="hover:[rgb(223,126,60)] transition-colors text-gray-400"
+                                            className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
                                         >
                                             {link.name}
                                         </a>
@@ -238,47 +245,6 @@ export default function Comp7() {
                             </ul>
                         </div>
                     ))}
-
-                    {/* Contact / Legal */}
-                    <div className="col-span-2 md:col-span-1">
-                        <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
-                            {t.contact_title}
-                        </h5>
-                        <ul className="space-y-3">
-                            <li>
-                                <p className="text-gray-400">{t.contactText}</p>
-                            </li>
-                            <li>
-                                <a
-                                    href="mailto:contact@samybusiness.dz"
-                                    className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
-                                >
-                                    contact@samybusiness.dz
-                                </a>
-                            </li>
-                            <li className="pt-2">
-                                <h5 className="font-semibold text-white mb-2 uppercase tracking-wider text-base">
-                                    {t.legal}
-                                </h5>
-                            </li>
-                            <li>
-                                <a
-                                    href="/legal"
-                                    className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
-                                >
-                                    {t.privacy}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/legal#conditions"
-                                    className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
-                                >
-                                    {t.terms}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
 
                 {/* COPYRIGHT */}

@@ -82,7 +82,7 @@ export default function NavBar({ children }) {
             <div>
                 <a href="/" onClick={(e) => handleLinkClick(e, "#top")}>
                     <img
-                        src="logo2.png"
+                        src="/logo2.png"
                         alt="logo"
                         className="w-48 cursor-pointer"
                     />

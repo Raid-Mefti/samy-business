@@ -27,21 +27,27 @@ const ProductItem = ({ name, iconPath, onClick }) => (
 // --- Static Data Definitions ---
 
 const importedProducts = [
-    { name: "Aluminium", iconPath: "/img11.png" },
-    { name: "Plomb Doux", iconPath: "/img11.png" },
-    { name: "Oxyde de Zinc", iconPath: "/img11.png" },
-    { name: "Oxyde de Zinc 2", iconPath: "/img11.png" }, // duplicate
+    {
+        name: "Aluminium",
+        iconPath: "/product_section/aluminium-en-lingots.avif",
+    },
+    { name: "Plomb Doux", iconPath: "/product_section/plomb-doux.png" },
+    { name: "Oxyde de Zinc", iconPath: "/product_section/oxyde de zinc.avif" },
+    {
+        name: "Oxyde de Zinc 2",
+        iconPath: "/product_section/oxyde de zinc.avif",
+    }, // duplicate
 ];
 
 const exportedProducts = [
-    { name: "Zinc SHG", iconPath: "/img11.png" },
-    { name: "ZAMAK", iconPath: "/img11.png" },
+    { name: "Zinc SHG", iconPath: "/product_section/SHG-99.995.png" },
+    { name: "ZAMAK", iconPath: "/product_section/lingots-du-zamak.webp" },
     { name: "Carton", iconPath: "/img11.png" },
 ];
 
 const manufacturedProducts = [
-    { name: "Zinc Allumié", iconPath: "/img11.png" },
-    { name: "Cuivres", iconPath: "/img11.png" },
+    { name: "Zinc Allumié", iconPath: "/product_section/zinc-aluminé.jpg" },
+    { name: "Cuivres", iconPath: "/product_section/lingot-de-cuivre.jpg" },
 ];
 
 const getProductsByCategory = (category) => {
