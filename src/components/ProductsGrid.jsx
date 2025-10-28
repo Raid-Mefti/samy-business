@@ -1,7 +1,23 @@
 "use client";
 
 import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react"; // Added useState
+
+// NOUVEAU HOOK : Détecte si l'écran est de taille 'lg' ou plus (desktop)
+const useIsLg = () => {
+    const [isLg, setIsLg] = useState(false);
+    useEffect(() => {
+        // 1024px est le point de rupture 'lg' par défaut de Tailwind
+        const mediaQuery = window.matchMedia("(min-width: 1024px)");
+        const handleResize = () => setIsLg(mediaQuery.matches);
+
+        handleResize(); // Définir l'état initial
+        mediaQuery.addEventListener("change", handleResize); // Écouter les changements
+
+        return () => mediaQuery.removeEventListener("change", handleResize);
+    }, []);
+    return isLg;
+};
 
 export default function ProductsGrid() {
     const cards = [
@@ -35,7 +51,7 @@ export default function ProductsGrid() {
     };
 
     return (
-        <div className="relative flex flex-col items-start bg-base-100 overflow-hidden py-28 space-y-0">
+        <div className="relative flex flex-col items-center lg:items-start bg-base-100 overflow-x-hidden py-12 lg:py-28 space-y-8 lg:space-y-0">
             {cards.map((card, index) => {
                 const { main, glow } = themes[card.theme];
                 return (
@@ -59,6 +75,9 @@ function AnimatedCard({ card, color, glow, offset }) {
     const inView = useInView(ref, { once: true, margin: "-100px" });
     const controls = useAnimation();
 
+    // Utilisation du hook pour le décalage conditionnel
+    const isLg = useIsLg();
+
     useEffect(() => {
         if (inView) controls.start("visible");
     }, [inView, controls]);
@@ -72,6 +91,9 @@ function AnimatedCard({ card, color, glow, offset }) {
         },
     };
 
+    // Définition du style de décalage uniquement si nous sommes sur un grand écran
+    const staggerStyle = isLg ? { marginLeft: `${offset * 2}rem` } : {};
+
     // Determine if this is the "Statistiques" card
     const isStatistics = card.title === "Statistiques";
 
@@ -81,14 +103,16 @@ function AnimatedCard({ card, color, glow, offset }) {
             variants={variants}
             initial="hidden"
             animate={controls}
-            style={{ marginLeft: `${offset * 2}rem` }}
-            className="stair-card group relative flex items-stretch gap-8 transition-transform duration-700 ease-out mb-8"
+            // Le style est appliqué uniquement si isLg est true
+            style={staggerStyle}
+            // La classe gère l'empilement (flex-col) par défaut et le passage en ligne (lg:flex-row)
+            className="stair-card group relative flex flex-col lg:flex-row items-center lg:items-stretch gap-8 transition-transform duration-700 ease-out mb-8 w-full max-w-sm sm:max-w-xl lg:max-w-7xl px-4"
         >
             {/* IMAGE SECTION */}
             <motion.div
                 whileHover={{ scale: 1.015 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative flex-shrink-0 w-[460px] md:w-[520px] rounded-3xl overflow-hidden shadow-lg"
+                className="relative flex-shrink-0 w-full lg:w-[460px] rounded-3xl overflow-hidden shadow-lg"
                 style={{
                     border: `5px solid ${color}`,
                     boxShadow: `0 0 16px ${glow}`,
@@ -121,7 +145,7 @@ function AnimatedCard({ card, color, glow, offset }) {
                 initial={{ opacity: 0, x: 40 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.5, duration: 1 }}
-                className="flex flex-col justify-center bg-white rounded-3xl shadow-lg px-8 py-10 backdrop-blur-sm w-full md:max-w-[600px]"
+                className="flex flex-col justify-center bg-white rounded-3xl shadow-lg px-8 py-10 backdrop-blur-sm w-full lg:max-w-[600px]"
                 style={{ borderLeft: `6px solid ${color}` }}
             >
                 <h2
