@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import ProductsSection from "@/components/ProductsSection";
 import Home1 from "@/components/Home1";
 import VideoComp from "@/components/VideoComp";
+import Services from "@/components/Services";
 
 export default function Home() {
     return (
@@ -22,6 +23,7 @@ export default function Home() {
                 </section>
 
                 <ProductsGrid />
+                <Services />
 
                 <VideoComp />
                 <ImageCarousel />

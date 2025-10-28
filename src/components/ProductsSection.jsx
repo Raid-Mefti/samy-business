@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import ArticlePage from "@/components/ArticlePage"; // inline article renderer
+import ArticlePage from "@/components/ArticlePage";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Reusable component for a single product entry
@@ -16,7 +16,7 @@ const ProductItem = ({ name, iconPath, onClick }) => (
             className="w-8 h-8 object-contain"
         />
         <span
-            className="text-base-content font-bold cursor-pointer hover:text-primary transition-colors"
+            className="text-base-content font-bold cursor-pointer hover:text-[rgb(223,126,60)] transition-colors"
             onClick={onClick}
         >
             {name}
@@ -25,7 +25,6 @@ const ProductItem = ({ name, iconPath, onClick }) => (
 );
 
 // --- Static Data Definitions ---
-
 const importedProducts = [
     {
         name: "Aluminium",
@@ -36,7 +35,7 @@ const importedProducts = [
     {
         name: "Oxyde de Zinc 2",
         iconPath: "/product_section/oxyde de zinc.avif",
-    }, // duplicate
+    },
 ];
 
 const exportedProducts = [
@@ -78,7 +77,7 @@ export default function ProductsSection() {
         setCurrentIndex(0);
     };
 
-    // Handle escape key to close popup
+    // Escape key closes popup
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === "Escape" && isPopupOpen) {
@@ -86,13 +85,8 @@ export default function ProductsSection() {
             }
         };
 
-        if (isPopupOpen) {
-            document.addEventListener("keydown", handleEscapeKey);
-        }
-
-        return () => {
-            document.removeEventListener("keydown", handleEscapeKey);
-        };
+        if (isPopupOpen) document.addEventListener("keydown", handleEscapeKey);
+        return () => document.removeEventListener("keydown", handleEscapeKey);
     }, [isPopupOpen]);
 
     const getSectionTitle = (category) => {
@@ -131,15 +125,15 @@ export default function ProductsSection() {
                 id="produits"
                 className="text-base-content bg-base-100 scroll-mt-30"
             >
-                <h2 className="text-[rgb(223,126,60)] text-4xl font-bold mb-10 text-center pb-4 ">
+                <h2 className="text-[rgb(223,126,60)] text-4xl font-bold mb-10 text-center pb-4">
                     Les produits de Samy Business
                 </h2>
 
-                {/* Grid Layout for Product Categories */}
+                {/* Product Categories */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    {/* Column 1: Produits Importés */}
+                    {/* Importés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
                             Produits importés
                         </h3>
                         <div className="space-y-3">
@@ -159,9 +153,9 @@ export default function ProductsSection() {
                         </div>
                     </div>
 
-                    {/* Column 2: Produits Exportés */}
+                    {/* Exportés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
                             Produits exportés
                         </h3>
                         <div className="space-y-3 text-base-content">
@@ -181,9 +175,9 @@ export default function ProductsSection() {
                         </div>
                     </div>
 
-                    {/* Column 3: Produits Fabriqués */}
+                    {/* Fabriqués */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)]  text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
                             Produits fabriqués
                         </h3>
                         <div className="space-y-3">
@@ -220,7 +214,7 @@ export default function ProductsSection() {
 
                     {/* Popup Box */}
                     <div
-                        className="relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                        className="mt-20 relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
@@ -240,15 +234,18 @@ export default function ProductsSection() {
                             </div>
                         </div>
 
+                        {/* Product Image */}
+
                         {/* Article Content */}
-                        <div className="relative flex-1 overflow-auto p-4">
+                        <div className=" relative flex-1 overflow-auto p-4">
                             <ArticlePage
                                 productName={selectedProduct.name}
+                                imageSrc={selectedProduct.iconPath} // ✅ pass the image path here
                                 category={selectedCategory}
                             />
                         </div>
 
-                        {/* Left Arrow */}
+                        {/* Arrows */}
                         <button
                             onClick={navigateToPrevious}
                             aria-label="Produit précédent"
@@ -257,8 +254,6 @@ export default function ProductsSection() {
                         >
                             ‹
                         </button>
-
-                        {/* Right Arrow */}
                         <button
                             onClick={navigateToNext}
                             aria-label="Produit suivant"

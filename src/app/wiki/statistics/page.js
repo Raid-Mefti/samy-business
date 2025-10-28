@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import StatisticsHero from "@/components/StatisticsHero";
+import Header from "@/components/Header";
 
 // --- 1. Content Data Structure (FULL 9 PAGES EXTRACTED, INCLUDING ALL REFERENCES) ---
 // Note: Citations (e.g., ¹, ³, ¹⁷) are preserved in the text content.
@@ -581,87 +583,93 @@ export default function Statistics() {
     );
 
     return (
-        <div className="min-h-screen bg-base-100 font-[Inter] flex flex-col pt-16">
-            {/* Fixed Header */}
-            <header className="fixed top-0 left-0 right-0 z-40 bg-base-300 shadow-lg p-4 flex justify-center">
-                <div className="flex items-center space-x-2 text-xl font-bold text-base-content">
-                    <span className="text-2xl text-primary">📈</span>
-                    <span className="truncate max-w-xs md:max-w-none">
-                        {reportContent[0].text}
-                    </span>
-                </div>
-            </header>
+        <>
+            <Header />
 
-            <div className="flex flex-grow w-full max-w-7xl mx-auto">
-                {/* Sidebar (Independent Scroll - Lg+) */}
-                <div className="hidden lg:block">
-                    <Sidebar />
-                </div>
+            <StatisticsHero />
 
-                {/* Main Content Area (Independent Scroll) */}
-                <main
-                    ref={contentRef}
-                    className="flex-grow p-8 md:p-12 overflow-y-auto custom-scrollbar-lg"
-                    style={{ height: "calc(100vh - 4rem)" }}
-                >
-                    <div className="max-w-4xl mx-auto">
-                        {/* Mobile TOC Hint */}
-                        <div className="lg:hidden text-center mb-8 p-4 bg-base-200 rounded-lg shadow-md">
-                            <h2 className="text-3xl font-extrabold text-secondary mb-2">
-                                Rapport d'Analyse
-                            </h2>
-                            <p className="text-base-content/70 text-sm">
-                                Défilez vers le bas pour lire le rapport
-                                complet, y compris les **9 pages de
-                                références**.
-                            </p>
-                        </div>
-
-                        {/* Render all content blocks */}
-                        {reportContent.map((item, index) => (
-                            <ContentBlock
-                                key={index}
-                                item={{ ...item, id: item.id }}
-                            />
-                        ))}
-
-                        <div className="pt-20 text-center text-sm text-base-content/50">
-                            --- Fin du Rapport d'Analyse Stratégique -
-                            Réplication Intégrale (9 Pages) ---
-                        </div>
+            <div className="min-h-screen bg-base-100 font-[Inter] flex flex-col pt-16">
+                {/* Fixed Header */}
+                <header className="fixed top-0 left-0 right-0 z-40 bg-base-300 shadow-lg p-4 flex justify-center">
+                    <div className="flex items-center space-x-2 text-xl font-bold text-base-content">
+                        <span className="text-2xl text-primary">📈</span>
+                        <span className="truncate max-w-xs md:max-w-none">
+                            {reportContent[0].text}
+                        </span>
                     </div>
-                </main>
+                </header>
+
+                <div className="flex flex-grow w-full max-w-7xl mx-auto">
+                    {/* Sidebar (Independent Scroll - Lg+) */}
+                    <div className="hidden lg:block">
+                        <Sidebar />
+                    </div>
+
+                    {/* Main Content Area (Independent Scroll) */}
+                    <main
+                        ref={contentRef}
+                        className="flex-grow p-8 md:p-12 overflow-y-auto custom-scrollbar-lg"
+                        style={{ height: "calc(100vh - 4rem)" }}
+                    >
+                        <div className="max-w-4xl mx-auto">
+                            {/* Mobile TOC Hint */}
+                            <div className="lg:hidden text-center mb-8 p-4 bg-base-200 rounded-lg shadow-md">
+                                <h2 className="text-3xl font-extrabold text-secondary mb-2">
+                                    Rapport d'Analyse
+                                </h2>
+                                <p className="text-base-content/70 text-sm">
+                                    Défilez vers le bas pour lire le rapport
+                                    complet, y compris les **9 pages de
+                                    références**.
+                                </p>
+                            </div>
+
+                            {/* Render all content blocks */}
+                            {reportContent.map((item, index) => (
+                                <ContentBlock
+                                    key={index}
+                                    item={{ ...item, id: item.id }}
+                                />
+                            ))}
+
+                            <div className="pt-20 text-center text-sm text-base-content/50">
+                                --- Fin du Rapport d'Analyse Stratégique -
+                                Réplication Intégrale (9 Pages) ---
+                            </div>
+                        </div>
+                    </main>
+                </div>
+
+                {/* Custom Scrollbar Styling (required for dual independent scrolling) */}
+                <style jsx="true">{`
+                    /* Ensure independent scrolling is visually distinct */
+                    .custom-scrollbar-lg::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    .custom-scrollbar-lg::-webkit-scrollbar-thumb {
+                        background-color: var(
+                            --fallback-p,
+                            #38bdf8
+                        ); /* Tailwind primary blue */
+                        border-radius: 4px;
+                    }
+                    .custom-scrollbar-lg::-webkit-scrollbar-track {
+                        background-color: var(
+                            --fallback-b3,
+                            #d1d5db
+                        ); /* Tailwind base-300 */
+                    }
+
+                    /* Target the Sidebar Scrollbar specifically */
+                    .lg\\:w-72::-webkit-scrollbar-thumb,
+                    .xl\\:w-80::-webkit-scrollbar-thumb {
+                        background-color: var(
+                            --fallback-s,
+                            #fb923c
+                        ); /* Tailwind secondary color */
+                    }
+                `}</style>
             </div>
-
-            {/* Custom Scrollbar Styling (required for dual independent scrolling) */}
-            <style jsx="true">{`
-                /* Ensure independent scrolling is visually distinct */
-                .custom-scrollbar-lg::-webkit-scrollbar {
-                    width: 8px;
-                }
-                .custom-scrollbar-lg::-webkit-scrollbar-thumb {
-                    background-color: var(
-                        --fallback-p,
-                        #38bdf8
-                    ); /* Tailwind primary blue */
-                    border-radius: 4px;
-                }
-                .custom-scrollbar-lg::-webkit-scrollbar-track {
-                    background-color: var(
-                        --fallback-b3,
-                        #d1d5db
-                    ); /* Tailwind base-300 */
-                }
-
-                /* Target the Sidebar Scrollbar specifically */
-                .lg\\:w-72::-webkit-scrollbar-thumb,
-                .xl\\:w-80::-webkit-scrollbar-thumb {
-                    background-color: var(
-                        --fallback-s,
-                        #fb923c
-                    ); /* Tailwind secondary color */
-                }
-            `}</style>
-        </div>
+        </>
     );
 }

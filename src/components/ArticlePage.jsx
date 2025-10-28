@@ -3,34 +3,39 @@
 import React from "react";
 
 /**
- * ArticlePage
- * Props:
- *  - productName: string (e.g. "ZAMAK", "Aluminium")
- *  - category: optional (not strictly used here, but allowed)
+ * ArticlePage.jsx
  *
- * This component keeps your layout and replaces the placeholder content
- * by product-specific content in FR / EN / AR. It uses document.documentElement.lang
- * to pick the language, consistent with your existing approach.
+ * Props:
+ *  - productName: string (default: "Article")
+ *  - category: optional (not strictly used here)
+ *  - imageSrc: optional string -> when provided, uses this image in place of default /images/products/{slug}.jpg
+ *  - themeColor: optional string -> when provided, uses this color for the bottom band (keeps popup color continuity)
+ *
+ * This file includes the full productData (FR/EN/AR) and forces the image to remain in normal document flow.
  */
 
-export default function ArticlePage({ productName = "Article", category }) {
-    // Use document lang if available, otherwise default to 'fr'
+export default function ArticlePage({
+    productName = "Article",
+    category,
+    imageSrc = null,
+    themeColor = null,
+}) {
+    // Determine language from document (fallback to 'fr')
     const lang =
         typeof document !== "undefined"
             ? (document.documentElement.lang || "fr").split("-")[0]
             : "fr";
 
-    // canonical slug generator (match what ProductsSection used)
+    // slugify product name (same approach your ProductsSection used)
     const slugify = (name) =>
         String(name || "")
             .toLowerCase()
             .replace(/\s+/g, "-")
-            .replace(/[^a-z0-9\-ء-ي]/g, ""); // allow basic arabic letters too
+            .replace(/[^a-z0-9\-ء-ي]/g, ""); // allow basic Arabic letters too
 
     const slug = slugify(productName);
 
     // Product content database (per slug, per language).
-    // For longer tables we output preformatted blocks or simple HTML that respects your existing layout.
     const productData = {
         zamak: {
             fr: {
@@ -44,7 +49,6 @@ Résistance à la traction : 280 – 320 MPa
 Allongement : ≈10 %
 Conductivité thermique : ~110 W/m·K
 Utilisations : pièces de précision, connectique, outillage, pièces automobiles</pre>`,
-                tableMarkdown: null,
             },
             en: {
                 shortTitle: "Zamak",
@@ -171,9 +175,6 @@ Applications: rubber, ceramics, pharmaceutical, electronics</pre>`,
             },
         },
 
-        // duplicate for Oxyde de Zinc 2; will be assigned below
-        "oxyde-de-zinc-2": null,
-
         "zinc-shg": {
             fr: {
                 shortTitle: "Zinc SHG",
@@ -205,7 +206,6 @@ Uses: galvanizing, alloys, chemical industry</pre>`,
         },
 
         "zinc-allumie": {
-            // you asked to keep short and long same for this one
             fr: {
                 shortTitle: "Zinc aluminé",
                 longTitle: "Zinc aluminé",
@@ -296,11 +296,6 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
         },
     };
 
-    // duplicate Oxyde de Zinc 2 from oxyde-de-zinc
-    if (!productData["oxyde-de-zinc-2"]) {
-        productData["oxyde-de-zinc-2"] = productData["oxyde-de-zinc"];
-    }
-
     // fallback product if slug not found
     const fallback = {
         fr: {
@@ -327,50 +322,54 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
         ? productData[slug][lang] || productData[slug].fr
         : fallback[lang];
 
-    // // small metadata / author block (kept from your original)
-    // const meta = {
-    //     fr: { date: "1 janvier 2025", author: "Auteur, Fondateur de Namedly" },
-    //     en: { date: "January 1, 2025", author: "Author, Founder of Namedly" },
-    //     ar: { date: "1 يناير 2025", author: "الكاتب، مؤسس Namedly" },
-    // }[lang];
+    // determine image source: prefer passed-in imageSrc then /images/products/{slug}.jpg
+    const imgSrcDefault = `/images/products/${slug}.jpg`;
+    const displayImage = imageSrc || imgSrcDefault;
+
+    // determine themeColor fallback
+    const bandColor = themeColor || "#DF7E3C"; // default orange
 
     return (
-        <div className="min-h-screen bg-base-100">
+        <div
+            className="min-h-screen bg-base-100"
+            style={{
+                // Ensure normal flow and allow scrolling inside modals/popups
+                position: "relative",
+                overflowY: "auto",
+                WebkitOverflowScrolling: "touch",
+            }}
+        >
             <div
-                className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 ${
-                    lang === "ar" ? "text-right" : ""
+                className={` max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 ${
+                    lang === "ar" ? "text-right" : "text-left"
                 }`}
             >
                 {/* Metadata Section */}
                 <div className="text-center mb-6 sm:mb-8">
-                    {/* <p className="text-base-content/60 text-sm font-normal mb-3 sm:mb-4">
-                        {meta.date}
-                    </p> */}
-
-                    {/* SHORT TITLE (big) */}
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-base-content mb-3 sm:mb-4">
                         {data.shortTitle}
                     </h1>
 
-                    {/* LONG TITLE (sub-heading, where original title appeared as well) */}
                     <h4 className="text-base-content/60 text-sm font-normal mb-2">
                         {data.longTitle}
                     </h4>
-
-                    {/* <p className="text-base-content/60 text-sm font-normal">
-                        {meta.author}
-                    </p> */}
                 </div>
 
-                {/* Image Section (placeholder image; you can map per product) */}
+                {/* Image Section (in normal flow, directly under title) */}
                 <div className="mb-8 sm:mb-10 lg:mb-12">
                     <img
-                        src={`/images/products/${slug}.jpg`}
-                        onError={(e) =>
-                            (e.currentTarget.src = "couvertureIMG.jpg")
-                        }
+                        src={displayImage}
+                        onError={(e) => {
+                            // fallback: if imageSrc failed, try slug path; otherwise use couvertureIMG
+                            if (e.currentTarget.src !== imgSrcDefault) {
+                                e.currentTarget.src = imgSrcDefault;
+                            } else {
+                                e.currentTarget.src = "/couvertureIMG.jpg";
+                            }
+                        }}
                         alt={data.longTitle}
                         className="w-full h-auto rounded-lg object-cover"
+                        style={{ display: "block", position: "relative" }}
                     />
                 </div>
 
@@ -384,7 +383,6 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                         {data.intro}
                     </p>
 
-                    {/* If specsHtml present, render it */}
                     {data.specsHtml && (
                         <div className="mb-8">
                             <h3 className="text-lg font-semibold mb-3">
@@ -402,7 +400,6 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                         </div>
                     )}
 
-                    {/* closing paragraph placeholder */}
                     <p className="text-base-content leading-relaxed mb-12 sm:mb-14 lg:mb-16">
                         {lang === "fr"
                             ? "Pour toute demande technique ou commerciale, contactez notre service commercial pour obtenir fiches techniques, certificats d'analyse et offres personnalisées."
@@ -412,13 +409,12 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                     </p>
                 </div>
 
-                {/* Red Section (keeps original band) */}
+                {/* Colored band — uses themeColor if provided to maintain color continuity */}
                 <div
-                    className={`bg-primary w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center ${
-                        lang === "ar" ? "text-right" : ""
-                    }`}
+                    className="w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center"
+                    style={{ backgroundColor: bandColor }}
                 >
-                    <div className="text-primary-content font-serif text-2xl sm:text-3xl lg:text-4xl leading-tight">
+                    <div className="text-white font-serif text-2xl sm:text-3xl lg:text-4xl leading-tight">
                         <div>
                             {lang === "fr"
                                 ? "tableau"

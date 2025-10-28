@@ -9,8 +9,6 @@ export default function NavBar({ children }) {
     const { language } = useLanguage();
     const sideMenuRef = useRef();
     const router = useRouter();
-    const [openDropdown, setOpenDropdown] = useState(false);
-    const [mobileDropdown, setMobileDropdown] = useState(false);
 
     const translations = {
         fr: {
@@ -18,24 +16,18 @@ export default function NavBar({ children }) {
             products: "Produits",
             services: "Services",
             contact: "Contactez nous",
-            consulting: "Conseil",
-            sales: "Vente",
         },
         en: {
             about: "About Us",
             products: "Products",
             services: "Services",
             contact: "Contact",
-            consulting: "Consulting",
-            sales: "Sales",
         },
         ar: {
             about: "من نحن",
             products: "المنتجات",
             services: "الخدمات",
             contact: "اتصل بنا",
-            consulting: "استشارات",
-            sales: "مبيعات",
         },
     };
 
@@ -77,8 +69,9 @@ export default function NavBar({ children }) {
     return (
         <nav
             className={`flex ${navFlexClass} shadow-md shadow-gray-300/40 border-b-2 border-[rgb(223,126,60)]
- items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-50 bg-base-100/30 backdrop-blur-sm`}
+ items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-[60] bg-base-100/30 backdrop-blur-sm`}
         >
+            {/* Logo */}
             <div>
                 <a href="/" onClick={(e) => handleLinkClick(e, "#top")}>
                     <img
@@ -115,67 +108,15 @@ export default function NavBar({ children }) {
                     </a>
                 </li>
 
-                {/* Services Dropdown: parent <li> controls hover state — menu sits flush under button */}
-                <li
-                    className="relative"
-                    onMouseEnter={() => setOpenDropdown(true)}
-                    onMouseLeave={() => setOpenDropdown(false)}
-                    aria-haspopup="true"
-                    aria-expanded={openDropdown}
-                >
-                    <button
-                        type="button"
-                        className="inline-flex items-center gap-1 text-gray-700 hover:text-[rgb(223,126,60)] transition px-2 py-1"
+                {/* Services — now a direct button */}
+                <li>
+                    <a
+                        href="/#services"
+                        onClick={(e) => handleLinkClick(e, "#services")}
+                        className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.services}
-                        <svg
-                            className={`w-4 h-4 transition-transform ${
-                                openDropdown ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-
-                    {/* IMPORTANT: top-full and mt-0 -> flush placement (no gap) */}
-                    {openDropdown && (
-                        <ul
-                            className={`absolute top-full mt-0 ${
-                                isArabic ? "right-0" : "left-0"
-                            } w-48 bg-white shadow-md rounded-lg border border-gray-200 z-50`}
-                            role="menu"
-                        >
-                            <li>
-                                <a
-                                    href="/#consulting"
-                                    onClick={(e) =>
-                                        handleLinkClick(e, "#consulting")
-                                    }
-                                    className="block px-4 py-2 hover:bg-gray-100 text-gray-700"
-                                    role="menuitem"
-                                >
-                                    {t.consulting}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/#sales"
-                                    onClick={(e) =>
-                                        handleLinkClick(e, "#sales")
-                                    }
-                                    className="block px-4 py-2 hover:bg-gray-100 text-gray-700"
-                                    role="menuitem"
-                                >
-                                    {t.sales}
-                                </a>
-                            </li>
-                        </ul>
-                    )}
+                    </a>
                 </li>
             </ul>
 
@@ -269,43 +210,16 @@ export default function NavBar({ children }) {
                     </a>
                 </li>
 
-                {/* Mobile Dropdown */}
                 <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
-                    <button
-                        onClick={() => setMobileDropdown(!mobileDropdown)}
-                        className={`w-full text-gray-800 hover:text-blue-600 py-2 flex justify-between items-center ${
-                            isArabic ? "flex-row-reverse" : ""
+                    <a
+                        href="/#services"
+                        onClick={(e) => handleLinkClick(e, "#services")}
+                        className={`text-gray-800 hover:text-blue-600 block py-2 ${
+                            isArabic ? "text-right" : ""
                         }`}
                     >
                         {t.services}
-                        <span>{mobileDropdown ? "▲" : "▼"}</span>
-                    </button>
-                    {mobileDropdown && (
-                        <ul className="pl-4">
-                            <li>
-                                <a
-                                    href="/#consulting"
-                                    onClick={(e) =>
-                                        handleLinkClick(e, "#consulting")
-                                    }
-                                    className="block py-2 text-gray-700 hover:text-blue-600"
-                                >
-                                    {t.consulting}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/#sales"
-                                    onClick={(e) =>
-                                        handleLinkClick(e, "#sales")
-                                    }
-                                    className="block py-2 text-gray-700 hover:text-blue-600"
-                                >
-                                    {t.sales}
-                                </a>
-                            </li>
-                        </ul>
-                    )}
+                    </a>
                 </li>
             </ul>
         </nav>
