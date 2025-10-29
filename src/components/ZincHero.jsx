@@ -27,7 +27,7 @@ export default function ZincHero() {
             {/* Background image */}
             <img
                 className="w-full h-full object-cover"
-                src="/couvertureIMG.jpg"
+                src="/zincHero.jpg"
                 alt="Hero background image"
             />
 
