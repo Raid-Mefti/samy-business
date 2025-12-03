@@ -32,10 +32,6 @@ const importedProducts = [
     },
     { name: "Plomb Doux", iconPath: "/product_section/plomb-doux.png" },
     { name: "Oxyde de Zinc", iconPath: "/product_section/oxyde de zinc.avif" },
-    {
-        name: "Oxyde de Zinc 2",
-        iconPath: "/product_section/oxyde de zinc.avif",
-    },
 ];
 
 const exportedProducts = [
@@ -45,7 +41,7 @@ const exportedProducts = [
 ];
 
 const manufacturedProducts = [
-    { name: "Zinc Allumié", iconPath: "/product_section/zinc-aluminé.jpg" },
+    { name: "Zinc Alluminé", iconPath: "/product_section/zinc-aluminé.jpg" },
     { name: "Cuivres", iconPath: "/product_section/lingot-de-cuivre.jpg" },
 ];
 

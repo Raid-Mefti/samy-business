@@ -38,6 +38,7 @@ export default function ArticlePage({
     // Product content database (per slug, per language).
     const productData = {
         zamak: {
+            image: "tableaux/tableau_zamak.jpeg", // NEW
             fr: {
                 shortTitle: "Zamak",
                 longTitle: "Zamak (Zamak 5)",
@@ -77,6 +78,7 @@ Uses: precision die-casting, connectors, tooling, automotive parts</pre>`,
         },
 
         "plomb-doux": {
+            image: "tableaux/tableau_plombDoux.jpeg", // NEW
             fr: {
                 shortTitle: "Plomb doux",
                 longTitle: "Plomb doux pur ≥ 99 %",
@@ -110,6 +112,7 @@ Uses: sheathing, anti-corrosion coatings, radiation protection</pre>`,
         },
 
         aluminium: {
+            image: "tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
                 shortTitle: "Aluminium",
                 longTitle: "Aluminium (lingots / feuilles)",
@@ -146,6 +149,7 @@ Uses: sheet metal, aerospace, packaging, extrusion</pre>`,
         },
 
         "oxyde-de-zinc": {
+            image: "tableaux/tableau_oxideZinc.jpeg", // NEW
             fr: {
                 shortTitle: "Oxyde de Zinc",
                 longTitle: "Oxyde de Zinc (ZnO)",
@@ -176,6 +180,7 @@ Applications: rubber, ceramics, pharmaceutical, electronics</pre>`,
         },
 
         "zinc-shg": {
+            image: "tableaux/tableau_zincSHG99.jpeg", // NEW
             fr: {
                 shortTitle: "Zinc SHG",
                 longTitle: "Zinc SHG 99.995% (Super High Grade)",
@@ -205,10 +210,11 @@ Uses: galvanizing, alloys, chemical industry</pre>`,
             },
         },
 
-        "zinc-allumie": {
+        "zinc-alluminé": {
+            image: "tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
-                shortTitle: "Zinc aluminé",
-                longTitle: "Zinc aluminé",
+                shortTitle: "Zinc alluminé",
+                longTitle: "Zinc alluminé",
                 intro: "Alliage de zinc (≈95 %) et d'aluminium (≈5 %), utilisé pour le revêtement anticorrosion (galvanisation) et tôlerie acier.",
                 specsHtml: `<pre class="whitespace-pre-wrap text-sm">Composition : Zn ≈95%, Al ≈5%
 Densité : ≈6,5 – 7 g/cm³
@@ -236,6 +242,7 @@ Uses: anticorrosion coatings, steel sheets</pre>`,
         },
 
         cuivres: {
+            image: "tableaux/tableau_cuivre.jpeg", // NEW
             fr: {
                 shortTitle: "Cuivre",
                 longTitle: "Cuivre (cathodes / plaques)",
@@ -244,12 +251,12 @@ Uses: anticorrosion coatings, steel sheets</pre>`,
 Densité : 8,96 g/cm³
 Température de fusion : 1084 °C
 Conductivité électrique : ≈58 MS/m
-Utilisation : câblage, tuyauterie, alliages</pre>`,
+Utilisation : câblage، tuyauterie، alliages</pre>`,
             },
             en: {
                 shortTitle: "Copper",
                 longTitle: "Copper (cathodes / plates)",
-                intro: "Industrial copper (≥ 99.9%) available as cathodes or plates, with excellent electrical and thermal conductivity.",
+                intro: "Industrial copper (≥ 99.9%) available as cathodes or plates, excellent in electrical and thermal conductivity.",
                 specsHtml: `<pre class="whitespace-pre-wrap text-sm">Purity: ≥99.9%
 Density: 8.96 g/cm³
 Melting point: 1084 °C
@@ -269,6 +276,7 @@ Uses: wiring, piping, alloys</pre>`,
         },
 
         carton: {
+            image: "", // NEW
             fr: {
                 shortTitle: "Carton",
                 longTitle: "Carton industriel (emballage)",
@@ -323,11 +331,13 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
         : fallback[lang];
 
     // determine image source: prefer passed-in imageSrc then /images/products/{slug}.jpg
-    const imgSrcDefault = `/images/products/${slug}.jpg`;
-    const displayImage = imageSrc || imgSrcDefault;
+    const mainImage =
+        imageSrc ||
+        (productData[slug]?.image ?? "tableaux/tableau_aluminium.jpeg");
+    const bandImage =
+        productData[slug]?.image ?? "tableaux/tableau_aluminium.jpeg";
 
-    // determine themeColor fallback
-    const bandColor = themeColor || "#DF7E3C"; // default orange
+    const bandColor = themeColor || "#DF7E3C";
 
     return (
         <div
@@ -356,16 +366,13 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                 </div>
 
                 {/* Image Section (in normal flow, directly under title) */}
+                {/* Image Section (in normal flow, directly under title) */}
                 <div className="mb-8 sm:mb-10 lg:mb-12">
                     <img
-                        src={displayImage}
+                        src={mainImage}
                         onError={(e) => {
-                            // fallback: if imageSrc failed, try slug path; otherwise use couvertureIMG
-                            if (e.currentTarget.src !== imgSrcDefault) {
-                                e.currentTarget.src = imgSrcDefault;
-                            } else {
-                                e.currentTarget.src = "/couvertureIMG.jpg";
-                            }
+                            // fallback: if mainImage fails, use generic couvertureIMG
+                            e.currentTarget.src = "/couvertureIMG.jpg";
                         }}
                         alt={data.longTitle}
                         className="w-full h-auto rounded-lg object-cover"
@@ -410,33 +417,20 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                 </div>
 
                 {/* Colored band — uses themeColor if provided to maintain color continuity */}
-                <div
-                    className="w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center"
-                    style={{ backgroundColor: bandColor }}
-                >
-                    <div className="text-white font-serif text-2xl sm:text-3xl lg:text-4xl leading-tight">
-                        <div>
-                            {lang === "fr"
-                                ? "tableau"
-                                : lang === "ar"
-                                ? "جدول"
-                                : "table"}
+                <div className="w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center">
+                    {bandImage && bandImage.trim() !== "" && (
+                        <div className="w-full flex justify-center mb-6 border-2">
+                            <img
+                                src={bandImage}
+                                alt={data.longTitle}
+                                style={{
+                                    width: "auto",
+                                    height: "auto",
+                                    display: "inline-block",
+                                }}
+                            />
                         </div>
-                        <div>
-                            {lang === "fr"
-                                ? "d'analyse"
-                                : lang === "ar"
-                                ? "تحليل"
-                                : "analysis"}
-                        </div>
-                        <div>
-                            {lang === "fr"
-                                ? "du produit"
-                                : lang === "ar"
-                                ? "المنتج"
-                                : "of the product"}
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>

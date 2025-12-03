@@ -26,7 +26,7 @@ export default function StatisticsHero() {
         <div className="relative h-[90vh] overflow-hidden">
             {/* Background image */}
             <img
-                className="w-full h-full object-cover opacity-50"
+                className="w-full h-full object-cover"
                 src="/statistics.jpg"
                 alt="Hero background image"
             />
