@@ -37,7 +37,7 @@ const importedProducts = [
 const exportedProducts = [
     { name: "Zinc SHG", iconPath: "/product_section/SHG-99.995.png" },
     { name: "ZAMAK", iconPath: "/product_section/lingots-du-zamak.webp" },
-    { name: "Carton", iconPath: "/img11.png" },
+    { name: "Carton", iconPath: "/carton.avif" },
 ];
 
 const manufacturedProducts = [
