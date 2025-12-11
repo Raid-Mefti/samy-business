@@ -18,12 +18,15 @@ Samy Business EURL
 Siège social : Quartier Said Hamdine, Alger  
 Capital social : 250 000 000 DZD  
 Immatriculée au Registre du Commerce d’Alger (N° à compléter)  
-NIF : (à compléter)  
+RC NR : 16/00 0977512B07
+NIF : 000716097751278
+NIS : 000716090133849
+ARTICLE : 16098906013
 Gérant : M. Rabah Bourrai  
 
 **Contact**  
-E-mail : (à compléter)  
-Téléphone : (à compléter)  
+E-mail : contact@samybusiness.dz  
+Téléphone : 044-80-84-19 / 0540-34-28-40 
 
 **Activité**  
 Importation, transformation et commercialisation de produits sidérurgiques ferreux et non ferreux.  
