@@ -32,17 +32,18 @@ export default function NavBar({ children }) {
     };
 
     const t = translations[language];
+    const isArabic = language === "ar";
 
     const openMenu = () => {
         if (!sideMenuRef.current) return;
-        sideMenuRef.current.style.transform =
-            language === "ar" ? "translateX(16rem)" : "translateX(-16rem)";
+        sideMenuRef.current.style.transform = "translateX(0)";
     };
 
     const closeMenu = () => {
         if (!sideMenuRef.current) return;
-        sideMenuRef.current.style.transform =
-            language === "ar" ? "translateX(-16rem)" : "translateX(16rem)";
+        sideMenuRef.current.style.transform = isArabic
+            ? "translateX(-100%)"
+            : "translateX(100%)";
     };
 
     const handleLinkClick = (e, hash) => {
@@ -61,7 +62,6 @@ export default function NavBar({ children }) {
         setTimeout(() => closeMenu(), 300);
     };
 
-    const isArabic = language === "ar";
     const navFlexClass = `${
         isArabic ? "flex-row-reverse " : ""
     }justify-between`;
@@ -162,60 +162,61 @@ export default function NavBar({ children }) {
             {/* Mobile Menu */}
             <ul
                 ref={sideMenuRef}
-                className={`absolute left-auto flex md:hidden flex-col items-end gap-4 pt-20 pb-5 px-5 ${
-                    isArabic ? "left-0" : "-right-64"
-                } top-0 z-50 bg-blue-100 transition duration-500 transform`}
+                className={`fixed top-0 ${
+                    isArabic ? "left-0" : "right-0"
+                } w-72 sm:w-80 flex md:hidden flex-col items-stretch gap-4 pt-24 pb-6 px-6 bg-base-100/95 border-[rgb(223,126,60)] border-l-2 shadow-2xl z-50`}
                 style={{
                     transform: isArabic
-                        ? "translateX(100%)"
+                        ? "translateX(-100%)"
                         : "translateX(100%)",
+                    transition: "transform 0.4s ease-out",
                 }}
             >
                 <div
                     className={`absolute ${
-                        isArabic ? "left-6" : "right-6"
-                    } top-6`}
+                        isArabic ? "left-5" : "right-5"
+                    } top-5`}
                     onClick={closeMenu}
                 >
                     <img
                         className="cursor-pointer"
-                        width="50"
-                        height="50"
+                        width="40"
+                        height="40"
                         src="https://img.icons8.com/ios/50/close-window--v1.png"
                         alt="close-window--v1"
                     />
                 </div>
 
-                <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
                     <a
                         href="/#propos"
                         onClick={(e) => handleLinkClick(e, "#propos")}
-                        className={`text-gray-800 hover:text-blue-600 block py-2 ${
-                            isArabic ? "text-right" : ""
+                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
+                            isArabic ? "text-right" : "text-left"
                         }`}
                     >
                         {t.about}
                     </a>
                 </li>
 
-                <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
                     <a
                         href="/#produits"
                         onClick={(e) => handleLinkClick(e, "#produits")}
-                        className={`text-gray-800 hover:text-blue-600 block py-2 ${
-                            isArabic ? "text-right" : ""
+                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
+                            isArabic ? "text-right" : "text-left"
                         }`}
                     >
                         {t.products}
                     </a>
                 </li>
 
-                <li className="border-blue-600 border-1 rounded-2xl w-full text-center px-4">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
                     <a
                         href="/#services"
                         onClick={(e) => handleLinkClick(e, "#services")}
-                        className={`text-gray-800 hover:text-blue-600 block py-2 ${
-                            isArabic ? "text-right" : ""
+                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
+                            isArabic ? "text-right" : "text-left"
                         }`}
                     >
                         {t.services}

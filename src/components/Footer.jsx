@@ -13,14 +13,15 @@ export default function Comp7() {
             terms: "Conditions générales",
             contact_title: "Nous Contacter",
             contactText: "Pour toutes demandes de sourcing et de partenariat :",
+            faq: "Questions fréquemment posées",
             products: "Nos Produits",
             about: "À propos de Samy Business",
             contact: "Contactez-nous",
             rights: "Tous droits réservés.",
             columns: {
-                c2: "Nos Activités",
                 c3: "FAQ",
                 c4: "Mentions Légales",
+                social: "Suivez-nous",
             },
         },
         en: {
@@ -29,6 +30,7 @@ export default function Comp7() {
             terms: "Terms and Conditions",
             contact_title: "Contact Us",
             contactText: "For all sourcing and partnership requests:",
+            faq: "Frequently asked questions",
             products: "Our Products",
             about: "About Samy Business",
             contact: "Contact Us",
@@ -37,6 +39,7 @@ export default function Comp7() {
                 c2: "Our Activities",
                 c3: "FAQ",
                 c4: "Legal Mentions",
+                social: "Follow Us",
             },
         },
         ar: {
@@ -45,6 +48,7 @@ export default function Comp7() {
             terms: "الشروط والأحكام",
             contact_title: "تواصل معنا",
             contactText: "لجميع طلبات التوريد والشراكات:",
+            faq: "الأسئلة المتداولة",
             products: "منتجاتنا",
             about: "من نحن",
             contact: "اتصل بنا",
@@ -53,6 +57,7 @@ export default function Comp7() {
                 c2: "أنشطتنا",
                 c3: "الأسئلة الشائعة",
                 c4: "البيانات القانونية",
+                social: "تابعنا",
             },
         },
     };
@@ -144,16 +149,8 @@ export default function Comp7() {
 
     const linkColumns = [
         {
-            title: t.columns.c2,
-            links: [
-                { name: "Sourcing Matières", href: "#" },
-                { name: "Partenariats B2B", href: "#" },
-                { name: "Logistique", href: "#" },
-            ],
-        },
-        {
             title: t.columns.c3,
-            links: [{ name: "FAQ", href: "#" }],
+            links: [{ name: t.faq, href: "#" }],
         },
         {
             title: t.columns.c4,
@@ -162,6 +159,14 @@ export default function Comp7() {
                 { name: t.terms, href: "/legal#conditions" },
                 { name: t.privacy, href: "/legal#privacy" },
             ],
+        },
+        {
+            title: t.columns.social,
+            links: socialLinks.map((link) => ({
+                name: link.name,
+                href: link.href,
+                icon: link.icon,
+            })),
         },
     ];
 
@@ -172,7 +177,7 @@ export default function Comp7() {
             }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                {/* HEADER (Logo + Socials) */}
+                {/* HEADER (Logo) */}
                 <div
                     className={`flex flex-col md:flex-row justify-between items-center pb-8 border-b border-[rgb(223,126,60)] mb-8 ${
                         language === "ar" ? "md:flex-row-reverse" : ""
@@ -183,29 +188,17 @@ export default function Comp7() {
                             language === "ar" ? "space-x-reverse" : ""
                         } mb-6 md:mb-0`}
                     >
-                        <svg
+                        <img src="logo-planet.svg" alt="" />
+                        {/* <svg
                             className="w-6 h-6 text-[rgb(223,126,60)]"
                             viewBox="0 0 24 24"
                             fill="currentColor"
                         >
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z" />
-                        </svg>
+                        </svg> */}
                         <span className="text-2xl font-extrabold text-white uppercase tracking-widest">
                             Samy Business
                         </span>
-                    </div>
-
-                    <div className="flex space-x-4">
-                        {socialLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                aria-label={link.name}
-                                className="text-[rgb(223,126,60)] hover:text-white transition-colors"
-                            >
-                                {link.icon}
-                            </a>
-                        ))}
                     </div>
                 </div>
 
@@ -236,8 +229,13 @@ export default function Comp7() {
                                     <li key={linkIndex}>
                                         <a
                                             href={link.href}
-                                            className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
+                                            className={`${
+                                                link.icon
+                                                    ? "flex items-center gap-2 hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
+                                                    : "hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
+                                            }`}
                                         >
+                                            {link.icon && link.icon}
                                             {link.name}
                                         </a>
                                     </li>
@@ -257,11 +255,7 @@ export default function Comp7() {
                         className={`flex items-center space-x-2 ${
                             language === "ar" ? "space-x-reverse" : ""
                         }`}
-                    >
-                        <span className="text-[rgb(223,126,60)] font-bold text-sm tracking-wider">
-                            BUILDING SOLUTIONS
-                        </span>
-                    </div>
+                    ></div>
                 </div>
             </div>
         </footer>

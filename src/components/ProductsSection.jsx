@@ -41,7 +41,7 @@ const exportedProducts = [
 ];
 
 const manufacturedProducts = [
-    { name: "Zinc Alluminé", iconPath: "/product_section/zinc-aluminé.jpg" },
+    { name: "Zinc Aluminé", iconPath: "/product_section/zinc-aluminé.jpg" },
     { name: "Cuivres", iconPath: "/product_section/lingot-de-cuivre.jpg" },
 ];
 

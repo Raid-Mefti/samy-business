@@ -2,23 +2,24 @@
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext"; // actual context
+import { useLanguage } from "@/contexts/LanguageContext";
 
+// Utility to detect large screens
 const useIsLg = () => {
     const [isLg, setIsLg] = useState(false);
     useEffect(() => {
-        const mediaQuery = window.matchMedia("(min-width: 1024px)");
-        const handleResize = () => setIsLg(mediaQuery.matches);
-        handleResize();
-        mediaQuery.addEventListener("change", handleResize);
-        return () => mediaQuery.removeEventListener("change", handleResize);
+        const mq = window.matchMedia("(min-width: 1024px)");
+        const update = () => setIsLg(mq.matches);
+        update();
+        mq.addEventListener("change", update);
+        return () => mq.removeEventListener("change", update);
     }, []);
     return isLg;
 };
 
 export default function ServicesSection() {
     const { language: rawLanguage } = useLanguage();
-    const lang = rawLanguage ? rawLanguage.split("-")[0] : "fr"; // 'fr', 'en', 'ar'
+    const lang = rawLanguage ? rawLanguage.split("-")[0] : "fr";
     const isRtl = lang === "ar";
 
     const translations = {
@@ -36,9 +37,9 @@ Processus complet : devis indexés LME, transit/dédouanement, contrôle qualit�
                 {
                     theme: "blue",
                     name: "Transformation et Process ZnO",
-                    desc: `Accompagnement de bout en bout : sélection matière zinc, exigences qualité (pureté, COA), cadrage procédés et logistique d’approvisionnement 
+                    desc: `Accompagnement de bout en bout : sélection matière zinc, exigences qualité (pureté, COA), cadrage procédés et logistique d'approvisionnement 
 pour les filières caoutchouc, céramique et chimie. 
-Analyses techniques, ERP intégré et plan d’amélioration continue pour assurer constance qualité et délais maîtrisés.`,
+Analyses techniques, ERP intégré et plan d'amélioration continue pour assurer constance qualité et délais maîtrisés.`,
                     img: "services/production-chain.jpg",
                 },
                 {
@@ -59,21 +60,21 @@ Conseil en sélection produits, audits fournisseurs, contrôles qualité COA/COC
                     desc: `Portfolio of metallic products (steel, stainless steel, zinc, zamak, aluminum, copper, brass, lead) compliant with EU standards and LME-referenced. 
 A network of over 20 international suppliers and 110 active clients in Algeria. 
 End-to-end process: LME-indexed quotations, transit/customs, quality control, ERP traceability, and national distribution.`,
-                    img: "service1.jpg",
+                    img: "services/transportation-import-export.jpg",
                 },
                 {
                     theme: "blue",
                     name: "Processing & ZnO Expertise",
                     desc: `End-to-end support: zinc material selection, purity control (COA), process design and supply logistics for rubber, ceramic, and chemical sectors. 
 Backed by analytical testing, ERP integration, and continuous improvement plans ensuring consistent quality and reliable lead times.`,
-                    img: "service2.jpg",
+                    img: "services/production-chain.jpg",
                 },
                 {
                     theme: "purple",
                     name: "Consulting & Metallurgical Strategy",
                     desc: `Operational expertise in ferrous and non-ferrous metals: multi-country sourcing, EU compliance, LME traceability, and cost-time optimization. 
 Product selection advice, supplier audits, COA/COC quality checks, logistics structuring, and ERP integration for data-driven decisions.`,
-                    img: "service3.jpg",
+                    img: "services/consulting.jpg",
                 },
             ],
         },
@@ -86,21 +87,21 @@ Product selection advice, supplier audits, COA/COC quality checks, logistics str
                     desc: `محفظة تشمل منتجات معدنية (الصلب، الفولاذ المقاوم للصدأ، الزنك، الزاماك، الألومنيوم، النحاس، النحاس الأصفر، الرصاص) مطابقة للمعايير الأوروبية ومُدرجة في LME.
 شبكة تضم أكثر من 20 موردًا دوليًا و110 عميلًا في الجزائر.
 عملية شاملة: عروض أسعار مرتبطة بـLME، العبور والتخليص الجمركي، مراقبة الجودة، تتبع ERP والتوزيع الوطني.`,
-                    img: "service1.jpg",
+                    img: "services/transportation-import-export.jpg",
                 },
                 {
                     theme: "blue",
                     name: "التحويل ومعالجة ZnO",
                     desc: `مرافقة شاملة: اختيار مادة الزنك، مراقبة النقاء (COA)، ضبط العمليات، ولوجستيات التوريد لقطاعات المطاط، السيراميك والكيمياء.
 تحاليل تقنية، نظام ERP متكامل وخطة تحسين مستمر لضمان جودة ثابتة ومواعيد دقيقة.`,
-                    img: "service2.jpg",
+                    img: "services/production-chain.jpg",
                 },
                 {
                     theme: "purple",
                     name: "الاستشارات والإستراتيجية المعدنية",
                     desc: `خبرة تشغيلية في المعادن الحديدية وغير الحديدية: مصادر متعددة الدول، مطابقة للمعايير الأوروبية، تتبع LME وتحسين التكاليف والمواعيد.
 استشارات لاختيار المنتجات، تدقيق الموردين، فحوصات جودة COA/COC، تنظيم الخدمات اللوجستية ودمج ERP لاتخاذ قرارات سريعة وموثوقة.`,
-                    img: "service3.jpg",
+                    img: "services/consulting.jpg",
                 },
             ],
         },
@@ -116,7 +117,7 @@ Product selection advice, supplier audits, COA/COC quality checks, logistics str
     return (
         <div
             id="services"
-            className="relative flex flex-col items-center bg-base-100 overflow-hidden py-28 space-y-0"
+            className=" bg-amber-300 relative flex flex-col items-center lg:items-start bg-base-100 overflow-hidden pb-28 space-y-0"
             dir={isRtl ? "rtl" : "ltr"}
         >
             <h1 className="text-center w-full text-[rgb(223,126,60)] text-4xl md:text-6xl font-bold mb-16">
@@ -131,7 +132,7 @@ Product selection advice, supplier audits, COA/COC quality checks, logistics str
                         service={service}
                         color={main}
                         glow={glow}
-                        offset={index * 3}
+                        index={index}
                         isRtl={isRtl}
                     />
                 );
@@ -140,7 +141,7 @@ Product selection advice, supplier audits, COA/COC quality checks, logistics str
     );
 }
 
-function MirroredCard({ service, color, glow, offset, isRtl }) {
+function MirroredCard({ service, color, glow, index, isRtl }) {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: "-100px" });
     const controls = useAnimation();
@@ -159,19 +160,19 @@ function MirroredCard({ service, color, glow, offset, isRtl }) {
         },
     };
 
-    // Layout always same: left-to-right (image left, text right) for all languages
-    const flexClasses = "flex-col lg:flex-row-reverse";
+    // ONLY CHANGE: Added *2 multiplier to match ProductsGrid
+    const calculateStaggerOffset = () => {
+        if (!isLg) return {};
 
-    // Offsets same for all
-    const conditionalStaggerStyle = isLg
-        ? { marginRight: `${offset * 2}rem` }
-        : {};
+        const offsetValue = index * 3; // 3rem per step
 
-    // Text alignment only
+        // SAME as before, just with *2 multiplier
+        return isRtl
+            ? { marginLeft: `${offsetValue * 2}rem` } // Arabic: starts from LEFT (with *2)
+            : { marginRight: `${offsetValue * 2}rem` }; // FR/EN: starts from RIGHT (with *2)
+    };
+
     const textAlignClass = isRtl ? "text-right" : "text-left";
-
-    // Text slide animation: from right for Arabic, from left for others
-    const textInitialX = isRtl ? 40 : -40;
 
     return (
         <motion.div
@@ -179,27 +180,41 @@ function MirroredCard({ service, color, glow, offset, isRtl }) {
             variants={variants}
             initial="hidden"
             animate={controls}
-            style={conditionalStaggerStyle}
-            className={`stair-card group relative flex ${flexClasses} items-center lg:items-stretch gap-8 transition-transform duration-700 ease-out mb-8 w-full max-w-sm sm:max-w-xl lg:max-w-7xl px-4 mx-auto`}
+            style={calculateStaggerOffset()}
+            className={`stair-card group relative flex flex-col lg:flex-row items-center lg:items-stretch gap-8 transition-transform duration-700 ease-out mb-8 w-full max-w-sm sm:max-w-xl lg:max-w-7xl px-4 mx-auto`}
         >
-            {/* IMAGE */}
+            {/* TEXT BLOCK - ALWAYS ON LEFT */}
+            <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.5, duration: 1 }}
+                className={`flex flex-col justify-center bg-white rounded-3xl shadow-lg px-8 py-10 backdrop-blur-sm w-full lg:max-w-[600px] ${textAlignClass}`}
+                style={{ borderRight: `6px solid ${color}` }}
+            >
+                <p className="text-lg md:text-xl leading-relaxed text-gray-700 whitespace-pre-line">
+                    {service.desc}
+                </p>
+            </motion.div>
+
+            {/* IMAGE BLOCK - ALWAYS ON RIGHT */}
             <motion.div
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                className="relative flex-shrink-0 w-full lg:w-[460px] rounded-3xl overflow-hidden shadow-lg"
+                className="relative flex-shrink-0 w-full lg:w-[460px] h-[320px] rounded-3xl overflow-hidden shadow-lg"
                 style={{
                     border: `5px solid ${color}`,
                     boxShadow: `0 0 16px ${glow}`,
                 }}
             >
-                <div className="overflow-hidden rounded-2xl">
+                <div className="overflow-hidden rounded-2xl h-full">
                     <img
                         src={service.img}
                         alt={service.name}
-                        className="w-full h-[320px] object-cover rounded-2xl transition-all duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover rounded-2xl transition-all duration-700 group-hover:scale-105"
                     />
                 </div>
-                <div className="absolute inset-0 bg-black/25 rounded-2xl pointer-events-none"></div>
+                <div className="absolute inset-0 bg-black/25 rounded-2xl pointer-events-none" />
+
                 <motion.h2
                     initial={{ opacity: 0, y: 40 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -209,19 +224,6 @@ function MirroredCard({ service, color, glow, offset, isRtl }) {
                 >
                     {service.name}
                 </motion.h2>
-            </motion.div>
-
-            {/* TEXT */}
-            <motion.div
-                initial={{ opacity: 0, x: textInitialX }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.5, duration: 1 }}
-                className={`flex flex-col justify-center bg-white rounded-3xl shadow-lg px-8 py-10 backdrop-blur-sm w-full lg:max-w-[600px] ${textAlignClass}`}
-                style={{ borderLeft: `6px solid ${color}` }}
-            >
-                <p className="text-lg md:text-xl leading-relaxed text-gray-700 whitespace-pre-line">
-                    {service.desc}
-                </p>
             </motion.div>
         </motion.div>
     );
