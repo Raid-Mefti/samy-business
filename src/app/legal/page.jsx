@@ -15,14 +15,20 @@ export default function LegalPage() {
             mentions: `
 **Éditeur du site**  
 Samy Business EURL  
-Siège social : Quartier Said Hamdine, Alger  
+Gérant : M. Rabah Bourrai  
+
+Siège social : CITE 108 LOGTS BT 06 A NR 01 SAID HAMDINE BIR MOURAD RAIS ALGER
 Capital social : 250 000 000 DZD  
-Immatriculée au Registre du Commerce d’Alger (N° à compléter)  
 RC NR : 16/00 0977512B07
 NIF : 000716097751278
 NIS : 000716090133849
 ARTICLE : 16098906013
-Gérant : M. Rabah Bourrai  
+
+Dépot : CITE FETTEL SECTION 03 GROUPE 317 NR 01 BENI MERED BLIDA
+RC NR : 09/04 0977512B07
+NIF : 00071609775127809004
+NIS : 000716090133849004
+ARTICLE : 09251303040
 
 **Contact**  
 E-mail : contact@samybusiness.dz  

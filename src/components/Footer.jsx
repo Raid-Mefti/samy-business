@@ -210,12 +210,37 @@ export default function Comp7() {
                             {t.contact_title}
                         </h5>
                         <p className="text-gray-400 mb-2">{t.contactText}</p>
-                        <a
+                        <p
                             href="mailto:contact@samybusiness.dz"
                             className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
                         >
+                            Tel :
+                        </p>
+                        <p
+                            href="mailto:contact@samybusiness.dz"
+                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
+                        >
+                            044-80-84-19
+                        </p>
+                        <p
+                            href="mailto:contact@samybusiness.dz"
+                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
+                        >
+                            0540-34-28-40
+                        </p>
+
+                        <p
+                            href="mailto:contact@samybusiness.dz"
+                            className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
+                        >
+                            Email :
+                        </p>
+                        <p
+                            href="mailto:contact@samybusiness.dz"
+                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
+                        >
                             contact@samybusiness.dz
-                        </a>
+                        </p>
                     </div>
 
                     {/* Remaining Columns */}
