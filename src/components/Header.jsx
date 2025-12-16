@@ -16,18 +16,21 @@ export default function NavBar({ children }) {
             products: "Produits",
             services: "Services",
             contact: "Contactez nous",
+            devis: "Demander un devis",
         },
         en: {
             about: "About Us",
             products: "Products",
             services: "Services",
             contact: "Contact",
+            devis: "Request a Quote",
         },
         ar: {
             about: "من نحن",
             products: "المنتجات",
             services: "الخدمات",
             contact: "اتصل بنا",
+            devis: "طلب عرض سعر",
         },
     };
 
@@ -68,8 +71,7 @@ export default function NavBar({ children }) {
 
     return (
         <nav
-            className={`flex ${navFlexClass} shadow-md shadow-gray-300/40 border-b-2 border-[rgb(223,126,60)]
- items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-[60] bg-base-100/30 backdrop-blur-sm`}
+            className={`flex ${navFlexClass} items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-[60] bg-[#38367F] text-white border-b border-[#4E6BA4] shadow-lg`}
         >
             {/* Logo */}
             <div>
@@ -84,7 +86,7 @@ export default function NavBar({ children }) {
 
             {/* Desktop Menu */}
             <ul
-                className={`border-1 border-[rgb(223,126,60)] hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 ${
+                className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white/10 border border-white/20 backdrop-blur ${
                     isArabic ? "flex-row-reverse" : ""
                 }`}
             >
@@ -92,7 +94,7 @@ export default function NavBar({ children }) {
                     <a
                         href="/#propos"
                         onClick={(e) => handleLinkClick(e, "#propos")}
-                        className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
+                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.about}
                     </a>
@@ -102,7 +104,7 @@ export default function NavBar({ children }) {
                     <a
                         href="/#produits"
                         onClick={(e) => handleLinkClick(e, "#produits")}
-                        className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
+                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.products}
                     </a>
@@ -113,7 +115,7 @@ export default function NavBar({ children }) {
                     <a
                         href="/#services"
                         onClick={(e) => handleLinkClick(e, "#services")}
-                        className="text-gray-700 hover:text-[rgb(223,126,60)] transition"
+                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.services}
                     </a>
@@ -126,16 +128,25 @@ export default function NavBar({ children }) {
                     isArabic ? "flex-row-reverse space-x-reverse" : "space-x-4"
                 }`}
             >
+                {/* Devis button */}
                 <button
                     onClick={() => router.push("/contact")}
-                    className={`cursor-pointer hidden lg:flex items-center gap-3 px-10 border hover:text-[rgb(223,126,60)] bg-white text-black font-bold border-[rgb(223,126,60)] rounded-full ${
+                    className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white hover:text-[rgb(223,126,60)] transition ${
+                        isArabic ? "mr-2" : "ml-2"
+                    }`}
+                >
+                    {t.devis}
+                </button>
+                <button
+                    onClick={() => router.push("/contact")}
+                    className={`cursor-pointer hidden lg:flex items-center gap-3 px-6 font-bold rounded-full border border-white/60 bg-transparent text-white hover:bg-white hover:text-[rgb(223,126,60)] transition ${
                         isArabic ? "mr-4" : "ml-4"
                     }`}
                 >
                     {t.contact}
                     <img
-                        width="48"
-                        height="48"
+                        width="28"
+                        height="28"
                         src="https://img.icons8.com/parakeet-line/48/mail-contact.png"
                         alt="mail-contact"
                     />
@@ -164,7 +175,7 @@ export default function NavBar({ children }) {
                 ref={sideMenuRef}
                 className={`fixed top-0 ${
                     isArabic ? "left-0" : "right-0"
-                } w-72 sm:w-80 flex md:hidden flex-col items-stretch gap-4 pt-24 pb-6 px-6 bg-base-100/95 border-[rgb(223,126,60)] border-l-2 shadow-2xl z-50`}
+                } w-72 sm:w-80 flex md:hidden flex-col items-stretch gap-4 pt-24 pb-6 px-6 bg-[#38367F] text-white border-[rgb(223,126,60)] border-l-2 shadow-2xl z-50`}
                 style={{
                     transform: isArabic
                         ? "translateX(-100%)"
@@ -187,7 +198,7 @@ export default function NavBar({ children }) {
                     />
                 </div>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
                     <a
                         href="/#propos"
                         onClick={(e) => handleLinkClick(e, "#propos")}
@@ -199,7 +210,7 @@ export default function NavBar({ children }) {
                     </a>
                 </li>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
                     <a
                         href="/#produits"
                         onClick={(e) => handleLinkClick(e, "#produits")}
@@ -211,7 +222,7 @@ export default function NavBar({ children }) {
                     </a>
                 </li>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/90 shadow-sm">
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
                     <a
                         href="/#services"
                         onClick={(e) => handleLinkClick(e, "#services")}
@@ -220,6 +231,22 @@ export default function NavBar({ children }) {
                         }`}
                     >
                         {t.services}
+                    </a>
+                </li>
+
+                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
+                    <a
+                        href="/contact"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.push("/contact");
+                            closeMenu();
+                        }}
+                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
+                            isArabic ? "text-right" : "text-left"
+                        }`}
+                    >
+                        {t.contact}
                     </a>
                 </li>
             </ul>

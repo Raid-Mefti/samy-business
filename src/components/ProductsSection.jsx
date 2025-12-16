@@ -1,28 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import ArticlePage from "@/components/ArticlePage";
+import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-// Reusable component for a single product entry
-const ProductItem = ({ name, iconPath, onClick }) => (
-    <div className="flex items-center space-x-3 p-2">
-        <Image
-            src={iconPath}
-            alt={name}
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
-        />
-        <span
-            className="text-base-content font-bold cursor-pointer hover:text-[rgb(223,126,60)] transition-colors"
-            onClick={onClick}
-        >
-            {name}
-        </span>
-    </div>
-);
 
 // --- Static Data Definitions ---
 const importedProducts = [
@@ -45,6 +25,54 @@ const manufacturedProducts = [
     { name: "Cuivres", iconPath: "/product_section/lingot-de-cuivre.jpg" },
 ];
 
+// Helper: turn product name into URL slug
+const slugify = (name) =>
+    String(name || "")
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-ء-ي]/g, "");
+
+// Reusable card for a single product (bigger, grid-style)
+const ProductCard = ({ name, iconPath, category }) => {
+    const slug = slugify(name);
+    const href = `/article/${slug}`;
+
+    return (
+        <Link
+            href={href}
+            className="group relative flex flex-col rounded-2xl overflow-hidden shadow-lg bg-base-100 border border-base-200 hover:border-[rgb(223,126,60)] hover:shadow-2xl transition-all duration-300"
+        >
+            <div className="relative w-full h-48 bg-base-200">
+                <Image
+                    src={iconPath}
+                    alt={name}
+                    fill
+                    sizes="(min-width: 1024px) 300px, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+                <span className="absolute bottom-3 left-4 right-4 text-sm font-semibold text-white/90 uppercase tracking-wide">
+                    {category}
+                </span>
+            </div>
+
+            <div className="p-4 flex flex-col gap-2">
+                <h3 className="text-lg font-bold text-base-content group-hover:text-[rgb(223,126,60)] transition-colors">
+                    {name}
+                </h3>
+                <p className="text-sm text-base-content/70">
+                    Cliquez pour découvrir la fiche technique détaillée de ce
+                    produit.
+                </p>
+                <span className="mt-2 inline-flex items-center text-sm font-semibold text-[rgb(223,126,60)] group-hover:translate-x-1 transition-transform">
+                    Voir le produit
+                    <span className="ml-1">›</span>
+                </span>
+            </div>
+        </Link>
+    );
+};
+
 const getProductsByCategory = (category) => {
     if (category === "imported") return importedProducts;
     if (category === "exported") return exportedProducts;
@@ -53,97 +81,43 @@ const getProductsByCategory = (category) => {
 
 export default function ProductsSection() {
     const { language } = useLanguage();
-
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const handleProductClick = (product, category, index) => {
-        setSelectedProduct(product);
-        setSelectedCategory(category);
-        setCurrentIndex(index);
-        setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
-        setSelectedProduct(null);
-        setSelectedCategory(null);
-        setCurrentIndex(0);
-    };
-
-    // Escape key closes popup
-    useEffect(() => {
-        const handleEscapeKey = (event) => {
-            if (event.key === "Escape" && isPopupOpen) {
-                closePopup();
-            }
-        };
-
-        if (isPopupOpen) document.addEventListener("keydown", handleEscapeKey);
-        return () => document.removeEventListener("keydown", handleEscapeKey);
-    }, [isPopupOpen]);
-
-    const getSectionTitle = (category) => {
-        switch (category) {
-            case "imported":
-                return "Produits importés";
-            case "exported":
-                return "Produits exportés";
-            case "manufactured":
-                return "Produits fabriqués";
-            default:
-                return "";
-        }
-    };
-
-    const navigateToNext = () => {
-        if (!selectedCategory) return;
-        const products = getProductsByCategory(selectedCategory);
-        const nextIndex = (currentIndex + 1) % products.length;
-        setCurrentIndex(nextIndex);
-        setSelectedProduct(products[nextIndex]);
-    };
-
-    const navigateToPrevious = () => {
-        if (!selectedCategory) return;
-        const products = getProductsByCategory(selectedCategory);
-        const prevIndex =
-            currentIndex === 0 ? products.length - 1 : currentIndex - 1;
-        setCurrentIndex(prevIndex);
-        setSelectedProduct(products[prevIndex]);
-    };
+    const isArabic = language === "ar";
 
     return (
-        <>
-            <section
-                id="produits"
-                className="text-base-content bg-base-100 scroll-mt-30"
-            >
-                <h2 className="text-[rgb(223,126,60)] text-4xl font-bold mb-10 text-center pb-4">
-                    Les produits de Samy Business
-                </h2>
+        <section
+            id="produits"
+            className="text-base-content bg-base-100 scroll-mt-30 py-16"
+            dir={isArabic ? "rtl" : "ltr"}
+        >
+            <div className="max-w-6xl mx-auto px-4">
+                <div
+                    className={`flex flex-col gap-4 mb-10 ${
+                        isArabic ? "text-right" : "text-left"
+                    }`}
+                >
+                    <h2 className="text-[rgb(223,126,60)] text-4xl md:text-5xl font-extrabold tracking-tight">
+                        Les produits de Samy Business
+                    </h2>
+                    <p className="text-base md:text-lg text-base-content/80 max-w-2xl">
+                        Une sélection de métaux et produits industriels pour vos
+                        besoins en import, export et transformation. Cliquez sur
+                        un produit pour découvrir sa fiche détaillée.
+                    </p>
+                </div>
 
-                {/* Product Categories */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                {/* Product grid, grouped by category but visually homogoneous */}
+                <div className="space-y-10">
                     {/* Importés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 text-[rgb(223,126,60)]">
                             Produits importés
                         </h3>
-                        <div className="space-y-3">
-                            {importedProducts.map((product, index) => (
-                                <ProductItem
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {importedProducts.map((product) => (
+                                <ProductCard
                                     key={product.name}
                                     {...product}
-                                    onClick={() =>
-                                        handleProductClick(
-                                            product,
-                                            "imported",
-                                            index
-                                        )
-                                    }
+                                    category="Importés"
                                 />
                             ))}
                         </div>
@@ -151,21 +125,15 @@ export default function ProductsSection() {
 
                     {/* Exportés */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 text-[rgb(223,126,60)]">
                             Produits exportés
                         </h3>
-                        <div className="space-y-3 text-base-content">
-                            {exportedProducts.map((product, index) => (
-                                <ProductItem
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {exportedProducts.map((product) => (
+                                <ProductCard
                                     key={product.name}
                                     {...product}
-                                    onClick={() =>
-                                        handleProductClick(
-                                            product,
-                                            "exported",
-                                            index
-                                        )
-                                    }
+                                    category="Exportés"
                                 />
                             ))}
                         </div>
@@ -173,94 +141,21 @@ export default function ProductsSection() {
 
                     {/* Fabriqués */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-[rgb(223,126,60)] text-[rgb(223,126,60)]">
+                        <h3 className="text-xl font-semibold mb-4 text-[rgb(223,126,60)]">
                             Produits fabriqués
                         </h3>
-                        <div className="space-y-3">
-                            {manufacturedProducts.map((product, index) => (
-                                <ProductItem
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {manufacturedProducts.map((product) => (
+                                <ProductCard
                                     key={product.name}
                                     {...product}
-                                    onClick={() =>
-                                        handleProductClick(
-                                            product,
-                                            "manufactured",
-                                            index
-                                        )
-                                    }
+                                    category="Fabriqués"
                                 />
                             ))}
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* Popup Modal */}
-            {isPopupOpen && selectedProduct && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center"
-                    aria-modal="true"
-                    role="dialog"
-                >
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-black/60"
-                        onClick={closePopup}
-                    />
-
-                    {/* Popup Box */}
-                    <div
-                        className="mt-20 relative w-full max-w-6xl max-h-[90vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {/* Header */}
-                        <div className="sticky py-6 top-0 z-10 flex items-center justify-between bg-base-100/90 backdrop-blur p-3 border-b border-base-300">
-                            <h3 className="mx-auto text-4xl font-semibold text-[rgb(223,126,60)]">
-                                {getSectionTitle(selectedCategory)}
-                            </h3>
-                            <div className="absolute top-0 bottom-0 right-10 flex items-center">
-                                <button
-                                    type="button"
-                                    className="btn btn-error btn-sm btn-circle bg-[rgb(223,126,60)] text-white z-20"
-                                    aria-label="Fermer"
-                                    onClick={closePopup}
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Product Image */}
-
-                        {/* Article Content */}
-                        <div className=" relative flex-1 overflow-auto p-4">
-                            <ArticlePage
-                                productName={selectedProduct.name}
-                                imageSrc={selectedProduct.iconPath} // ✅ pass the image path here
-                                category={selectedCategory}
-                            />
-                        </div>
-
-                        {/* Arrows */}
-                        <button
-                            onClick={navigateToPrevious}
-                            aria-label="Produit précédent"
-                            className="fixed top-1/2 transform -translate-y-1/2 text-white bg-[rgb(223,126,60)] text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center z-50"
-                            style={{ left: "calc((100vw - 72rem)/2 + 1rem)" }}
-                        >
-                            ‹
-                        </button>
-                        <button
-                            onClick={navigateToNext}
-                            aria-label="Produit suivant"
-                            className="fixed top-1/2 transform -translate-y-1/2 text-white bg-[rgb(223,126,60)] text-3xl font-bold w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center z-50"
-                            style={{ right: "calc((100vw - 72rem)/2 + 1rem)" }}
-                        >
-                            ›
-                        </button>
-                    </div>
-                </div>
-            )}
-        </>
+            </div>
+        </section>
     );
 }

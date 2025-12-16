@@ -18,6 +18,9 @@ export default function Home() {
             </section>
 
             <div className="site-container site-stack">
+                {/* Products section directly under the hero, as requested */}
+                <ProductsSection />
+
                 <section id="propos" className="pt-20 px-4">
                     <AboutSection />
                 </section>
@@ -29,7 +32,6 @@ export default function Home() {
                 <ImageCarousel />
 
                 <ProcessSteps />
-                <ProductsSection />
             </div>
 
             <Footer />

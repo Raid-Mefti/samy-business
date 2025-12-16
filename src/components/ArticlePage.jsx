@@ -38,7 +38,7 @@ export default function ArticlePage({
     // Product content database (per slug, per language).
     const productData = {
         zamak: {
-            image: "tableaux/tableau_zamak.jpeg", // NEW
+            image: "/tableaux/tableau_zamak.jpeg", // NEW
             fr: {
                 shortTitle: "Zamak",
                 longTitle: "Zamak (Zamak 5)",
@@ -78,7 +78,7 @@ Uses: precision die-casting, connectors, tooling, automotive parts</pre>`,
         },
 
         "plomb-doux": {
-            image: "tableaux/tableau_plombDoux.jpeg", // NEW
+            image: "/tableaux/tableau_plombDoux.jpeg", // NEW
             fr: {
                 shortTitle: "Plomb doux",
                 longTitle: "Plomb doux pur ≥ 99 %",
@@ -112,7 +112,7 @@ Uses: sheathing, anti-corrosion coatings, radiation protection</pre>`,
         },
 
         aluminium: {
-            image: "tableaux/tableau_aluminium.jpeg", // NEW
+            image: "/tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
                 shortTitle: "Aluminium",
                 longTitle: "Aluminium (lingots / feuilles)",
@@ -149,7 +149,7 @@ Uses: sheet metal, aerospace, packaging, extrusion</pre>`,
         },
 
         "oxyde-de-zinc": {
-            image: "tableaux/tableau_oxideZinc.jpeg", // NEW
+            image: "/tableaux/tableau_oxideZinc.jpeg", // NEW
             fr: {
                 shortTitle: "Oxyde de Zinc",
                 longTitle: "Oxyde de Zinc (ZnO)",
@@ -180,7 +180,7 @@ Applications: rubber, ceramics, pharmaceutical, electronics</pre>`,
         },
 
         "zinc-shg": {
-            image: "tableaux/tableau_zincSHG99.jpeg", // NEW
+            image: "/tableaux/tableau_zincSHG99.jpeg", // NEW
             fr: {
                 shortTitle: "Zinc SHG",
                 longTitle: "Zinc SHG 99.995% (Super High Grade)",
@@ -210,8 +210,8 @@ Uses: galvanizing, alloys, chemical industry</pre>`,
             },
         },
 
-        "zinc-alluminé": {
-            image: "tableaux/tableau_aluminium.jpeg", // NEW
+        "zinc-aluminé": {
+            image: "/tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
                 shortTitle: "Zinc alluminé",
                 longTitle: "Zinc alluminé",
@@ -242,7 +242,7 @@ Uses: anticorrosion coatings, steel sheets</pre>`,
         },
 
         cuivres: {
-            image: "tableaux/tableau_cuivre.jpeg", // NEW
+            image: "/tableaux/tableau_cuivre.jpeg", // NEW
             fr: {
                 shortTitle: "Cuivre",
                 longTitle: "Cuivre (cathodes / plaques)",

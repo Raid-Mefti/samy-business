@@ -32,7 +32,7 @@ export default function Home1() {
             {/* Background image */}
             <img
                 className="w-full h-full object-cover"
-                src="couvertureIMG.jpg"
+                src="/couvertureIMG.jpg"
                 alt="Hero background image"
             />
 
