@@ -12,28 +12,27 @@ export default function NavBar({ children }) {
 
     const translations = {
         fr: {
-            about: "A propos de nous",
+            about: "Oxyde de Zinc",
             products: "Produits",
             services: "Services",
             contact: "Contactez nous",
             devis: "Demander un devis",
         },
         en: {
-            about: "About Us",
+            about: "Zinc Oxide",
             products: "Products",
             services: "Services",
             contact: "Contact",
             devis: "Request a Quote",
         },
         ar: {
-            about: "من نحن",
+            about: "أكسيد الزنك",
             products: "المنتجات",
             services: "الخدمات",
             contact: "اتصل بنا",
             devis: "طلب عرض سعر",
         },
     };
-
     const t = translations[language];
     const isArabic = language === "ar";
 
@@ -92,23 +91,27 @@ export default function NavBar({ children }) {
             >
                 <li>
                     <a
-                        href="/#propos"
-                        onClick={(e) => handleLinkClick(e, "#propos")}
+                        href="/zinc-oxyde"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.push("/zinc-oxyde");
+                        }}
                         className="text-white/90 hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.about}
                     </a>
                 </li>
 
-                <li>
-                    <a
-                        href="/#produits"
-                        onClick={(e) => handleLinkClick(e, "#produits")}
-                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
-                    >
-                        {t.products}
-                    </a>
-                </li>
+                <a
+                    href="/produits"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        router.push("/produits");
+                    }}
+                    className="text-white/90 hover:text-[rgb(223,126,60)] transition"
+                >
+                    {t.products}
+                </a>
 
                 {/* Services — now a direct button */}
                 <li>
@@ -130,7 +133,7 @@ export default function NavBar({ children }) {
             >
                 {/* Devis button */}
                 <button
-                    onClick={() => router.push("/contact")}
+                    onClick={() => router.push("/devis")}
                     className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white hover:text-[rgb(223,126,60)] transition ${
                         isArabic ? "mr-2" : "ml-2"
                     }`}
@@ -200,8 +203,12 @@ export default function NavBar({ children }) {
 
                 <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
                     <a
-                        href="/#propos"
-                        onClick={(e) => handleLinkClick(e, "#propos")}
+                        href="/zinc-oxyde"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.push("/zinc-oxyde");
+                            closeMenu();
+                        }}
                         className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
                             isArabic ? "text-right" : "text-left"
                         }`}
@@ -210,17 +217,19 @@ export default function NavBar({ children }) {
                     </a>
                 </li>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
-                    <a
-                        href="/#produits"
-                        onClick={(e) => handleLinkClick(e, "#produits")}
-                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
-                            isArabic ? "text-right" : "text-left"
-                        }`}
-                    >
-                        {t.products}
-                    </a>
-                </li>
+                <a
+                    href="/produits"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        router.push("/produits");
+                        closeMenu();
+                    }}
+                    className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
+                        isArabic ? "text-right" : "text-left"
+                    }`}
+                >
+                    {t.products}
+                </a>
 
                 <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
                     <a
