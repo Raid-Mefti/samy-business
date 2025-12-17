@@ -74,7 +74,7 @@ export default function ZincOxideIntro() {
                     </ul>
 
                     <Link
-                        href="/produits/oxyde-de-zinc"
+                        href="/zinc-oxyde"
                         className="inline-flex items-center rounded-full bg-[rgb(223,126,60)] px-8 py-4 text-white font-semibold transition hover:opacity-90"
                     >
                         {c.cta}
