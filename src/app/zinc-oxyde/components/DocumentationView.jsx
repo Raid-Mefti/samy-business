@@ -8,75 +8,58 @@ import MarketAnalysis from "./MarketAnalysis";
 import PDFExport from "./PDFExport";
 
 export default function DocumentationView() {
-  const [activeTab, setActiveTab] = useState("specs");
+    const [activeTab, setActiveTab] = useState("specs");
 
-  const tabs = [
-    { id: "specs", label: "Propriétés Chimiques", icon: "⚗️" },
-    { id: "manufacturing", label: "Procédés de Fabrication", icon: "🏭" },
-    { id: "applications", label: "Applications par Secteur", icon: "🚗" },
-    { id: "market", label: "Marché & Tendances", icon: "📊" },
-  ];
+    const tabs = [
+        { id: "specs", label: "Propriétés chimiques" },
+        { id: "manufacturing", label: "Fabrication" },
+        { id: "applications", label: "Applications" },
+        { id: "market", label: "Marché & tendances" },
+    ];
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case "specs":
-        return <TechnicalSpecs />;
-      case "manufacturing":
-        return <ManufacturingProcess />;
-      case "applications":
-        return <ApplicationsByIndustry />;
-      case "market":
-        return <MarketAnalysis />;
-      default:
-        return <TechnicalSpecs />;
-    }
-  };
+    return (
+        <section className="py-20 bg-base-100">
+            <div className="max-w-6xl mx-auto px-4 space-y-12">
+                {/* Header */}
+                <header className="text-center">
+                    <h1 className="text-5xl font-extrabold text-base-content mb-4">
+                        Oxyde de Zinc (ZnO)
+                    </h1>
+                    <p className="text-base-content/70 max-w-2xl mx-auto">
+                        Documentation technique et industrielle destinée aux
+                        professionnels.
+                    </p>
+                </header>
 
-  return (
-    <div className="min-h-screen p-6 md:p-12">
-      {/* Header */}
-      <div className="max-w-6xl mx-auto mb-12">
-        <div className="text-center mb-8">
-          <h1 className="text-5xl md:text-6xl font-bold text-sky-400 mb-4">
-            OXYDE DE ZINC
-          </h1>
-          <p className="text-xl text-slate-300 mb-2">
-            Documentation Technique & Stratégique Complète
-          </p>
-          <p className="text-sm text-slate-400">Samy Business - 2025</p>
-        </div>
+                <div className="flex justify-center">
+                    <PDFExport />
+                </div>
 
-        {/* PDF Export Button */}
-        <div className="flex justify-center mb-8">
-          <PDFExport />
-        </div>
-      </div>
+                {/* Tabs */}
+                <div className="flex flex-wrap justify-center gap-3">
+                    {tabs.map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-5 py-2 rounded-full text-sm font-semibold border transition ${
+                                activeTab === tab.id
+                                    ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
+                                    : "bg-base-100 border-base-300 text-base-content hover:border-[rgb(223,126,60)]"
+                            }`}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
+                </div>
 
-      {/* Tab Navigation */}
-      <div className="max-w-6xl mx-auto mb-8">
-        <div className="flex flex-wrap gap-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all whitespace-nowrap ${
-                activeTab === tab.id
-                  ? "bg-sky-500 text-white shadow-lg shadow-sky-500/50"
-                  : "bg-slate-700 text-slate-300 hover:bg-slate-600"
-              }`}
-            >
-              {tab.icon} {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Content Area */}
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
-          {renderContent()}
-        </div>
-      </div>
-    </div>
-  );
+                {/* Content */}
+                <div className="rounded-3xl border border-base-200 bg-base-100 p-8 md:p-12 shadow-sm">
+                    {activeTab === "specs" && <TechnicalSpecs />}
+                    {activeTab === "manufacturing" && <ManufacturingProcess />}
+                    {activeTab === "applications" && <ApplicationsByIndustry />}
+                    {activeTab === "market" && <MarketAnalysis />}
+                </div>
+            </div>
+        </section>
+    );
 }

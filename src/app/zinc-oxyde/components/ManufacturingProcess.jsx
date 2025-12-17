@@ -1,103 +1,95 @@
 "use client";
 
 export default function ManufacturingProcess() {
-  const processes = [
-    {
-      name: "Procédé Français (Indirect)",
-      market: "58% du marché",
-      color: "from-blue-500/10 to-blue-600/10",
-      icon: "🔵",
-      principle: "Fusion du zinc métal → Vaporisation → Oxydation à l'air",
-      material: "Zinc métal pur (99.995%)",
-      quality: "99.5% - 99.9% pureté",
-      applications: "Pharma, Cosmétique, Caoutchouc haute performance",
-      advantage: "Contrôle précis de pureté et taille de particules",
-    },
-    {
-      name: "Procédé Américain (Direct)",
-      market: "Industrie Lourde",
-      color: "from-amber-500/10 to-orange-600/10",
-      icon: "🟠",
-      principle: "Réduction du minerai → Réoxydation immédiate",
-      material: "Minerais, concentrés, résidus",
-      quality: "Pureté variable (< 99%)",
-      applications: "Caoutchouc standard, Céramiques, Peintures",
-      advantage: "Coût de production plus faible",
-    },
-    {
-      name: "Procédé Chimique (Voie Humide)",
-      market: "Spécialités",
-      color: "from-green-500/10 to-emerald-600/10",
-      icon: "🟢",
-      principle: "Précipitation de sels → Calcination",
-      material: "Solutions de sels, résidus purifiés",
-      quality: "Surface spécifique très élevée",
-      applications: "Nano-ZnO, Catalyseurs, Désulfuration",
-      advantage: "Production de particules nanométriques",
-    },
-  ];
+    const processes = [
+        {
+            name: "Procédé Français (Indirect)",
+            market: "58% du marché",
+            icon: "🔵",
+            principle:
+                "Fusion du zinc métal → Vaporisation → Oxydation à l'air",
+            material: "Zinc métal pur (99.995%)",
+            quality: "99.5% – 99.9% pureté",
+            applications: "Pharma, Cosmétique, Caoutchouc haute performance",
+            advantage: "Contrôle précis de la pureté et de la granulométrie",
+        },
+        {
+            name: "Procédé Américain (Direct)",
+            market: "Industrie lourde",
+            icon: "🟠",
+            principle: "Réduction du minerai → Réoxydation immédiate",
+            material: "Minerais et concentrés",
+            quality: "Pureté variable (< 99%)",
+            applications: "Caoutchouc standard, Céramiques, Peintures",
+            advantage: "Coût de production optimisé",
+        },
+        {
+            name: "Procédé Chimique (Voie Humide)",
+            market: "Applications spécialisées",
+            icon: "🟢",
+            principle: "Précipitation chimique → Calcination",
+            material: "Solutions purifiées",
+            quality: "Surface spécifique très élevée",
+            applications: "Nano-ZnO, Catalyse, chimie fine",
+            advantage: "Contrôle nanométrique des particules",
+        },
+    ];
 
-  return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-sky-400 mb-4">
-          Procédés de Fabrication Industriels
-        </h2>
-        <p className="text-slate-300 text-lg">
-          Comparatif des trois méthodes dominantes sur le marché mondial en
-          2025.
-        </p>
-      </div>
-
-      <div className="grid gap-6">
-        {processes.map((process, idx) => (
-          <div
-            key={idx}
-            className={`bg-gradient-to-br ${process.color} border border-slate-600 rounded-xl p-6 md:p-8 hover:border-sky-400/50 transition`}
-          >
-            <div className="flex items-start gap-4 mb-6">
-              <span className="text-4xl">{process.icon}</span>
-              <div>
-                <h3 className="text-2xl font-bold text-sky-300">
-                  {process.name}
-                </h3>
-                <p className="text-slate-400 text-sm mt-1">{process.market}</p>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4 text-sm md:text-base">
-              <div>
-                <p className="text-sky-300 font-semibold mb-2">Principe</p>
-                <p className="text-slate-300">{process.principle}</p>
-              </div>
-              <div>
-                <p className="text-sky-300 font-semibold mb-2">
-                  Matière Première
+    return (
+        <section className="space-y-10">
+            <header className="max-w-2xl">
+                <h2 className="text-3xl font-extrabold text-base-content mb-3">
+                    Procédés de fabrication
+                </h2>
+                <p className="text-base-content/70">
+                    Les principales méthodes industrielles de production de
+                    l’oxyde de zinc et leurs domaines d’excellence.
                 </p>
-                <p className="text-slate-300">{process.material}</p>
-              </div>
-              <div>
-                <p className="text-sky-300 font-semibold mb-2">
-                  Qualité Obtenue
-                </p>
-                <p className="text-slate-300">{process.quality}</p>
-              </div>
-              <div>
-                <p className="text-sky-300 font-semibold mb-2">
-                  Applications Cibles
-                </p>
-                <p className="text-slate-300">{process.applications}</p>
-              </div>
-            </div>
+            </header>
 
-            <div className="mt-4 pt-4 border-t border-slate-600">
-              <p className="text-sky-200 font-semibold">
-                ✓ {process.advantage}
-              </p>
+            <div className="grid gap-8">
+                {processes.map((p, i) => (
+                    <div
+                        key={i}
+                        className="relative rounded-3xl border border-base-200 bg-base-100 p-8 shadow-sm hover:shadow-md transition"
+                    >
+                        {/* Accent */}
+                        <span className="absolute left-0 top-8 h-12 w-1 rounded-full bg-[rgb(223,126,60)]" />
+
+                        <div className="flex items-start gap-4 mb-6">
+                            <span className="text-3xl">{p.icon}</span>
+                            <div>
+                                <h3 className="text-xl font-bold text-base-content">
+                                    {p.name}
+                                </h3>
+                                <p className="text-sm text-base-content/60">
+                                    {p.market}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-5 text-sm">
+                            <Info label="Principe" value={p.principle} />
+                            <Info label="Matière première" value={p.material} />
+                            <Info label="Qualité obtenue" value={p.quality} />
+                            <Info label="Applications" value={p.applications} />
+                        </div>
+
+                        <p className="mt-6 text-sm font-semibold text-[rgb(223,126,60)]">
+                            ✓ {p.advantage}
+                        </p>
+                    </div>
+                ))}
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+        </section>
+    );
+}
+
+function Info({ label, value }) {
+    return (
+        <div>
+            <p className="font-semibold text-base-content mb-1">{label}</p>
+            <p className="text-base-content/70">{value}</p>
+        </div>
+    );
 }
