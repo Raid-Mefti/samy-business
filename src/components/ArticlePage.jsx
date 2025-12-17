@@ -2,43 +2,32 @@
 
 import React from "react";
 
-/**
- * ArticlePage.jsx
- *
- * Props:
- *  - productName: string (default: "Article")
- *  - category: optional (not strictly used here)
- *  - imageSrc: optional string -> when provided, uses this image in place of default /images/products/{slug}.jpg
- *  - themeColor: optional string -> when provided, uses this color for the bottom band (keeps popup color continuity)
- *
- * This file includes the full productData (FR/EN/AR) and forces the image to remain in normal document flow.
- */
-
 export default function ArticlePage({
     productName = "Article",
     category,
     imageSrc = null,
     themeColor = null,
 }) {
-    // Determine language from document (fallback to 'fr')
     const lang =
         typeof document !== "undefined"
             ? (document.documentElement.lang || "fr").split("-")[0]
             : "fr";
 
-    // slugify product name (same approach your ProductsSection used)
+    const isRTL = lang === "ar";
+
     const slugify = (name) =>
         String(name || "")
             .toLowerCase()
             .replace(/\s+/g, "-")
-            .replace(/[^a-z0-9\-ء-ي]/g, ""); // allow basic Arabic letters too
+            .replace(/[^a-z0-9\-ء-ي]/g, "");
 
     const slug = slugify(productName);
 
     // Product content database (per slug, per language).
     const productData = {
         zamak: {
-            image: "/tableaux/tableau_zamak.jpeg", // NEW
+            image: "/product_section/lingots-du-zamak.webp", // NEW
+            imageTableau: "/tableaux/tableau_zamak.jpeg", // NEW
             fr: {
                 shortTitle: "Zamak",
                 longTitle: "Zamak (Zamak 5)",
@@ -78,7 +67,8 @@ Uses: precision die-casting, connectors, tooling, automotive parts</pre>`,
         },
 
         "plomb-doux": {
-            image: "/tableaux/tableau_plombDoux.jpeg", // NEW
+            image: "/product_section/plomb-doux.png", // NEW
+            imageTableau: "/tableaux/tableau_plombDoux.jpeg", // NEW
             fr: {
                 shortTitle: "Plomb doux",
                 longTitle: "Plomb doux pur ≥ 99 %",
@@ -112,7 +102,8 @@ Uses: sheathing, anti-corrosion coatings, radiation protection</pre>`,
         },
 
         aluminium: {
-            image: "/tableaux/tableau_aluminium.jpeg", // NEW
+            image: "/product_section/aluminium-en-lingots.avif", // NEW
+            imageTableau: "/tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
                 shortTitle: "Aluminium",
                 longTitle: "Aluminium (lingots / feuilles)",
@@ -149,7 +140,8 @@ Uses: sheet metal, aerospace, packaging, extrusion</pre>`,
         },
 
         "oxyde-de-zinc": {
-            image: "/tableaux/tableau_oxideZinc.jpeg", // NEW
+            image: "/product_section/oxyde de zinc.avif", // NEW
+            imageTableau: "/tableaux/tableau_oxideZinc.jpeg", // NEW
             fr: {
                 shortTitle: "Oxyde de Zinc",
                 longTitle: "Oxyde de Zinc (ZnO)",
@@ -180,7 +172,8 @@ Applications: rubber, ceramics, pharmaceutical, electronics</pre>`,
         },
 
         "zinc-shg": {
-            image: "/tableaux/tableau_zincSHG99.jpeg", // NEW
+            image: "/product_section/SHG-99.995.png", // NEW
+            imageTableau: "/tableaux/tableau_zincSHG99.jpeg", // NEW
             fr: {
                 shortTitle: "Zinc SHG",
                 longTitle: "Zinc SHG 99.995% (Super High Grade)",
@@ -211,7 +204,8 @@ Uses: galvanizing, alloys, chemical industry</pre>`,
         },
 
         "zinc-aluminé": {
-            image: "/tableaux/tableau_aluminium.jpeg", // NEW
+            image: "/product_section/zinc-aluminé.jpg", // NEW
+            imageTableau: "/tableaux/tableau_aluminium.jpeg", // NEW
             fr: {
                 shortTitle: "Zinc alluminé",
                 longTitle: "Zinc alluminé",
@@ -242,7 +236,8 @@ Uses: anticorrosion coatings, steel sheets</pre>`,
         },
 
         cuivres: {
-            image: "/tableaux/tableau_cuivre.jpeg", // NEW
+            image: "/product_section/lingot-de-cuivre.jpg", // NEW
+            imageTableau: "/tableaux/tableau_cuivre.jpeg", // NEW
             fr: {
                 shortTitle: "Cuivre",
                 longTitle: "Cuivre (cathodes / plaques)",
@@ -277,6 +272,7 @@ Uses: wiring, piping, alloys</pre>`,
 
         carton: {
             image: "", // NEW
+            imageTableau: "", // NEW
             fr: {
                 shortTitle: "Carton",
                 longTitle: "Carton industriel (emballage)",
@@ -330,109 +326,108 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
         ? productData[slug][lang] || productData[slug].fr
         : fallback[lang];
 
-    // determine image source: prefer passed-in imageSrc then /images/products/{slug}.jpg
     const mainImage =
         imageSrc ||
-        (productData[slug]?.image ?? "tableaux/tableau_aluminium.jpeg");
-    const bandImage =
-        productData[slug]?.image ?? "tableaux/tableau_aluminium.jpeg";
+        productData[slug]?.image ||
+        "/tableaux/tableau_aluminium.jpeg";
 
+    const bandImageTableau = productData[slug]?.imageTableau;
     const bandColor = themeColor || "#DF7E3C";
 
     return (
-        <div
+        <section
             className="min-h-screen bg-base-100"
-            style={{
-                // Ensure normal flow and allow scrolling inside modals/popups
-                position: "relative",
-                overflowY: "auto",
-                WebkitOverflowScrolling: "touch",
-            }}
+            dir={isRTL ? "rtl" : "ltr"}
         >
-            <div
-                className={` max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 ${
-                    lang === "ar" ? "text-right" : "text-left"
-                }`}
-            >
-                {/* Metadata Section */}
-                <div className="text-center mb-6 sm:mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-base-content mb-3 sm:mb-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                {/* ================= HERO ================= */}
+                <header className="max-w-3xl mx-auto text-center mb-20">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
                         {data.shortTitle}
                     </h1>
-
-                    <h4 className="text-base-content/60 text-sm font-normal mb-2">
+                    <p className="text-base-content/60 text-base">
                         {data.longTitle}
-                    </h4>
-                </div>
-
-                {/* Image Section (in normal flow, directly under title) */}
-                {/* Image Section (in normal flow, directly under title) */}
-                <div className="mb-8 sm:mb-10 lg:mb-12">
-                    <img
-                        src={mainImage}
-                        onError={(e) => {
-                            // fallback: if mainImage fails, use generic couvertureIMG
-                            e.currentTarget.src = "/couvertureIMG.jpg";
-                        }}
-                        alt={data.longTitle}
-                        className="w-full h-auto rounded-lg object-cover"
-                        style={{ display: "block", position: "relative" }}
-                    />
-                </div>
-
-                {/* Article Content */}
-                <div className="prose prose-lg max-w-none">
-                    <h2 className="text-xl sm:text-2xl font-bold text-base-content mb-4 sm:mb-6">
-                        {data.longTitle}
-                    </h2>
-
-                    <p className="text-base-content leading-relaxed mb-6 sm:mb-8 whitespace-pre-line">
-                        {data.intro}
                     </p>
+                </header>
 
-                    {data.specsHtml && (
-                        <div className="mb-8">
-                            <h3 className="text-lg font-semibold mb-3">
-                                {lang === "fr"
-                                    ? "Fiche technique"
-                                    : lang === "ar"
-                                    ? "البيانات الفنية"
-                                    : "Technical sheet"}
-                            </h3>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: data.specsHtml,
-                                }}
-                            />
-                        </div>
-                    )}
-
-                    <p className="text-base-content leading-relaxed mb-12 sm:mb-14 lg:mb-16">
-                        {lang === "fr"
-                            ? "Pour toute demande technique ou commerciale, contactez notre service commercial pour obtenir fiches techniques, certificats d'analyse et offres personnalisées."
-                            : lang === "ar"
-                            ? "لأي استفسار فني أو تجاري، يرجى التواصل مع قسم المبيعات للحصول على نشرة فنية وشهادات التحليل وعروض مخصصة."
-                            : "For technical or commercial inquiries, contact our sales team to obtain datasheets, certificates of analysis and tailored quotations."}
-                    </p>
-                </div>
-
-                {/* Colored band — uses themeColor if provided to maintain color continuity */}
-                <div className="w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 text-center">
-                    {bandImage && bandImage.trim() !== "" && (
-                        <div className="w-full flex justify-center mb-6 border-2">
+                {/* ================= CONTENT GRID ================= */}
+                <div
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-14 items-start ${
+                        isRTL ? "lg:[direction:rtl]" : ""
+                    }`}
+                >
+                    {/* IMAGE COLUMN */}
+                    <div className="w-full">
+                        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-neutral-200">
                             <img
-                                src={bandImage}
-                                alt={data.longTitle}
-                                style={{
-                                    width: "auto",
-                                    height: "auto",
-                                    display: "inline-block",
+                                src={mainImage}
+                                onError={(e) => {
+                                    e.currentTarget.src = "/couvertureIMG.jpg";
                                 }}
+                                alt={data.longTitle}
+                                className="w-full h-full object-cover"
                             />
                         </div>
-                    )}
+                    </div>
+
+                    {/* TEXT COLUMN */}
+                    <div
+                        className={`max-w-xl ${
+                            isRTL ? "text-right mr-auto" : "text-left ml-auto"
+                        }`}
+                    >
+                        <h2 className="text-2xl font-bold mb-6">
+                            {data.longTitle}
+                        </h2>
+
+                        <p className="leading-relaxed text-base-content/90 mb-8 whitespace-pre-line">
+                            {data.intro}
+                        </p>
+
+                        {data.specsHtml && (
+                            <div className="mb-10">
+                                <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 text-base-content/70">
+                                    {lang === "fr"
+                                        ? "Fiche technique"
+                                        : lang === "ar"
+                                        ? "البيانات الفنية"
+                                        : "Technical sheet"}
+                                </h3>
+
+                                <div className="bg-base-200 rounded-xl p-5 text-sm leading-relaxed">
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: data.specsHtml,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        <p className="text-base-content/80">
+                            {lang === "fr"
+                                ? "Pour toute demande technique ou commerciale, contactez notre service commercial."
+                                : lang === "ar"
+                                ? "لأي استفسار فني أو تجاري، يرجى التواصل مع قسم المبيعات."
+                                : "For technical or commercial inquiries, please contact our sales team."}
+                        </p>
+                    </div>
                 </div>
+
+                {/* ================= MATERIAL BAND ================= */}
+                {bandImageTableau && (
+                    <div
+                        className="mt-28 rounded-2xl py-14 px-6 flex justify-center"
+                        style={{ backgroundColor: bandColor }}
+                    >
+                        <img
+                            src={bandImageTableau}
+                            alt={data.longTitle}
+                            className="max-h-72 object-contain"
+                        />
+                    </div>
+                )}
             </div>
-        </div>
+        </section>
     );
 }
