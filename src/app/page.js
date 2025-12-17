@@ -4,7 +4,6 @@ import ImageCarousel from "@/components/ImageCarousel";
 import ProcessSteps from "@/components/ProcessSteps";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ProductsSection from "@/components/ProductsSection";
 import Home1 from "@/components/Home1";
 import VideoComp from "@/components/VideoComp";
 import Services from "@/components/Services";
@@ -19,7 +18,6 @@ export default function Home() {
 
             <div className="site-container site-stack">
                 {/* Products section directly under the hero, as requested */}
-                <ProductsSection />
                 <ProcessSteps />
 
                 <section id="propos" className="pt-20 px-4">
