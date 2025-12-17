@@ -9,7 +9,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 
 /* ------------------ TRANSLATIONS ------------------ */
-
 const TRANSLATIONS = {
     fr: {
         title: "Nos Produits",
@@ -55,7 +54,6 @@ const TRANSLATIONS = {
 };
 
 /* ------------------ DATA ------------------ */
-
 const PRODUCTS = [
     {
         name: "Aluminium",
@@ -102,9 +100,9 @@ const slugify = (name) =>
         .replace(/[^a-z0-9\-ء-ي]/g, "");
 
 /* ------------------ PRODUCT ROW ------------------ */
-
 const ProductRow = ({ name, iconPath, category, t }) => {
-    const href = `/article/${slugify(name)}`;
+    const slug = slugify(name);
+    const href = `/produits/${slug}`;
 
     return (
         <motion.div
@@ -144,7 +142,6 @@ const ProductRow = ({ name, iconPath, category, t }) => {
 };
 
 /* ------------------ PAGE ------------------ */
-
 export default function ProduitsClient() {
     const { language } = useLanguage();
     const t = TRANSLATIONS[language];
@@ -174,6 +171,7 @@ export default function ProduitsClient() {
                 dir={isArabic ? "rtl" : "ltr"}
             >
                 <div className="max-w-6xl mx-auto px-4">
+                    {/* Title */}
                     <h1 className="text-5xl font-extrabold text-[rgb(223,126,60)]">
                         {t.title}
                     </h1>
@@ -181,15 +179,39 @@ export default function ProduitsClient() {
                         {t.subtitle}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 mt-10 mb-12">
+                    {/* Search */}
+                    <div className="flex flex-col sm:flex-row gap-4 mt-10 mb-6">
                         <input
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder={t.search}
                             className="px-4 py-2 border rounded-lg"
                         />
+
+                        {/* Category buttons */}
+                        <div className="flex gap-2 flex-wrap">
+                            {[
+                                "all",
+                                "imported",
+                                "exported",
+                                "manufactured",
+                            ].map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
+                                        activeCategory === cat
+                                            ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
+                                            : "bg-white border-gray-300 text-gray-700 hover:border-[rgb(223,126,60)]"
+                                    }`}
+                                >
+                                    {cat === "all" ? t.all : t[cat]}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
+                    {/* Product list */}
                     <div className="space-y-8">
                         {filteredProducts.length === 0 && <p>{t.empty}</p>}
                         {filteredProducts.map((p) => (
