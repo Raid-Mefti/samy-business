@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import Home1 from "@/components/Home1";
 import VideoComp from "@/components/VideoComp";
 import Services from "@/components/Services";
-
+import ZincOxyde from "@/components/ZincOxyde";
 export default function Home() {
     return (
         <>
@@ -18,6 +18,7 @@ export default function Home() {
 
             <div className="site-container site-stack">
                 {/* Products section directly under the hero, as requested */}
+                <ZincOxyde />
                 <ProcessSteps />
 
                 <section id="propos" className="pt-20 px-4">
