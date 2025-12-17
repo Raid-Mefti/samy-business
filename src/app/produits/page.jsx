@@ -8,6 +8,52 @@ import Home1 from "@/components/Home1";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 
+/* ------------------ TRANSLATIONS ------------------ */
+
+const TRANSLATIONS = {
+    fr: {
+        title: "Nos Produits",
+        subtitle:
+            "Catalogue de métaux et produits industriels destinés à l’import, l’export et la transformation.",
+        search: "Rechercher un produit…",
+        all: "Tous",
+        imported: "Importés",
+        exported: "Exportés",
+        manufactured: "Fabriqués",
+        cta: "Voir le produit →",
+        empty: "Aucun produit trouvé.",
+        description:
+            "Découvrez les caractéristiques techniques et applications industrielles de ce produit.",
+    },
+    en: {
+        title: "Our Products",
+        subtitle:
+            "Catalog of metals and industrial products for import, export, and manufacturing.",
+        search: "Search for a product…",
+        all: "All",
+        imported: "Imported",
+        exported: "Exported",
+        manufactured: "Manufactured",
+        cta: "View product →",
+        empty: "No products found.",
+        description:
+            "Discover technical specifications and industrial applications of this product.",
+    },
+    ar: {
+        title: "منتجاتنا",
+        subtitle:
+            "مجموعة من المعادن والمنتجات الصناعية المخصصة للاستيراد والتصدير والتصنيع.",
+        search: "ابحث عن منتج…",
+        all: "الكل",
+        imported: "مستوردة",
+        exported: "مصدرة",
+        manufactured: "مصنّعة",
+        cta: "عرض المنتج ←",
+        empty: "لا توجد منتجات.",
+        description: "اكتشف الخصائص التقنية والتطبيقات الصناعية لهذا المنتج.",
+    },
+};
+
 /* ------------------ DATA ------------------ */
 
 const PRODUCTS = [
@@ -26,7 +72,6 @@ const PRODUCTS = [
         iconPath: "/product_section/oxyde de zinc.avif",
         category: "imported",
     },
-
     {
         name: "Zinc SHG",
         iconPath: "/product_section/SHG-99.995.png",
@@ -38,7 +83,6 @@ const PRODUCTS = [
         category: "exported",
     },
     { name: "Carton", iconPath: "/carton.avif", category: "exported" },
-
     {
         name: "Zinc Aluminé",
         iconPath: "/product_section/zinc-aluminé.jpg",
@@ -51,14 +95,6 @@ const PRODUCTS = [
     },
 ];
 
-const CATEGORY_LABELS = {
-    imported: "Importés",
-    exported: "Exportés",
-    manufactured: "Fabriqués",
-};
-
-/* ------------------ HELPERS ------------------ */
-
 const slugify = (name) =>
     String(name || "")
         .toLowerCase()
@@ -67,46 +103,39 @@ const slugify = (name) =>
 
 /* ------------------ PRODUCT ROW ------------------ */
 
-const ProductRow = ({ name, iconPath, category }) => {
+const ProductRow = ({ name, iconPath, category, t }) => {
     const href = `/article/${slugify(name)}`;
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
         >
             <Link
                 href={href}
-                className="group flex flex-col md:flex-row rounded-3xl overflow-hidden bg-base-100 border border-base-200 shadow-md hover:shadow-xl transition-all duration-300"
+                className="group flex flex-col md:flex-row rounded-3xl overflow-hidden bg-base-100 border border-base-200 shadow-md hover:shadow-xl transition"
             >
-                <div className="relative w-full md:w-80 h-56 md:h-auto">
+                <div className="relative w-full md:w-96 h-64">
                     <Image
                         src={iconPath}
                         alt={name}
                         fill
-                        sizes="(min-width: 768px) 320px, 100vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover"
                     />
-                    <span className="absolute top-4 left-4 text-xs font-semibold px-3 py-1 rounded-full bg-black/60 text-white">
-                        {CATEGORY_LABELS[category]}
-                    </span>
                 </div>
 
-                <div className="flex flex-col justify-between p-6 flex-1">
-                    <div className="space-y-2">
-                        <h3 className="text-2xl font-extrabold text-base-content">
-                            {name}
-                        </h3>
-                        <p className="text-base text-base-content/70 max-w-xl">
-                            Découvrez les caractéristiques techniques et
-                            applications industrielles de ce produit.
+                <div className="flex flex-col justify-between p-8 flex-1">
+                    <div>
+                        <h3 className="text-3xl font-extrabold">{name}</h3>
+                        <p className="mt-2 text-base-content/70 max-w-xl">
+                            {t.description}
                         </p>
                     </div>
 
-                    <span className="mt-6 inline-flex items-center justify-center w-full md:w-fit px-6 py-3 rounded-full text-sm font-semibold text-white bg-[rgb(223,126,60)] transition-all duration-300 group-hover:translate-x-1">
-                        Voir le produit →
+                    <span className="mt-6 inline-block px-6 py-3 rounded-full bg-[rgb(223,126,60)] text-white font-semibold w-fit">
+                        {t.cta}
                     </span>
                 </div>
             </Link>
@@ -116,8 +145,9 @@ const ProductRow = ({ name, iconPath, category }) => {
 
 /* ------------------ PAGE ------------------ */
 
-export default function ProduitsPage() {
+export default function ProduitsClient() {
     const { language } = useLanguage();
+    const t = TRANSLATIONS[language];
     const isArabic = language === "ar";
 
     const [search, setSearch] = useState("");
@@ -137,60 +167,33 @@ export default function ProduitsPage() {
     return (
         <>
             <Header />
-
-            <section id="article-hero">
-                <Home1 />
-            </section>
+            <Home1 />
 
             <section
-                className="bg-base-100 py-16"
+                className="py-16 bg-base-100"
                 dir={isArabic ? "rtl" : "ltr"}
             >
                 <div className="max-w-6xl mx-auto px-4">
-                    {/* Filters */}
-                    <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between mb-10">
+                    <h1 className="text-5xl font-extrabold text-[rgb(223,126,60)]">
+                        {t.title}
+                    </h1>
+                    <p className="mt-3 max-w-2xl text-base-content/70">
+                        {t.subtitle}
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4 mt-10 mb-12">
                         <input
-                            type="text"
-                            placeholder="Rechercher un produit…"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full sm:max-w-sm px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-[rgb(223,126,60)]"
+                            placeholder={t.search}
+                            className="px-4 py-2 border rounded-lg"
                         />
-
-                        <div className="flex gap-2 flex-wrap">
-                            {[
-                                "all",
-                                "imported",
-                                "exported",
-                                "manufactured",
-                            ].map((cat) => (
-                                <button
-                                    key={cat}
-                                    onClick={() => setActiveCategory(cat)}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
-                                        activeCategory === cat
-                                            ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
-                                            : "bg-white border-gray-300 text-gray-700 hover:border-[rgb(223,126,60)]"
-                                    }`}
-                                >
-                                    {cat === "all"
-                                        ? "Tous"
-                                        : CATEGORY_LABELS[cat]}
-                                </button>
-                            ))}
-                        </div>
                     </div>
 
-                    {/* Products */}
-                    <div className="space-y-6">
-                        {filteredProducts.length === 0 && (
-                            <p className="text-gray-500">
-                                Aucun produit trouvé.
-                            </p>
-                        )}
-
-                        {filteredProducts.map((product) => (
-                            <ProductRow key={product.name} {...product} />
+                    <div className="space-y-8">
+                        {filteredProducts.length === 0 && <p>{t.empty}</p>}
+                        {filteredProducts.map((p) => (
+                            <ProductRow key={p.name} {...p} t={t} />
                         ))}
                     </div>
                 </div>

@@ -20,6 +20,7 @@ export default function Home() {
             <div className="site-container site-stack">
                 {/* Products section directly under the hero, as requested */}
                 <ProductsSection />
+                <ProcessSteps />
 
                 <section id="propos" className="pt-20 px-4">
                     <AboutSection />
@@ -30,8 +31,6 @@ export default function Home() {
 
                 <VideoComp />
                 <ImageCarousel />
-
-                <ProcessSteps />
             </div>
 
             <Footer />
