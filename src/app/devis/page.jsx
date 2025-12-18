@@ -23,17 +23,19 @@ export default function DevisPage() {
         <>
             <Header />
 
-            <section className="py-20 bg-base-100">
-                <div className="max-w-5xl mx-auto px-4 mt-20">
-
+            <section className="py-20 bg-gray-100">
+                <div className="max-w-5xl bg-gray-200 px-16 py-5 rounded-2xl mx-auto px-4 mt-20">
                     {/* Title */}
-                    <h1 className="text-4xl font-extrabold text-[rgb(223,126,60)]">
+                    <div className="text-center">
+                        <h1 className="text-4xl font-extrabold text-[rgb(223,126,60)]">
                         Demande de devis
                     </h1>
-                    <p className="mt-3 text-base-content/70 max-w-2xl">
+                    <p className="mt-3 text-base-content/70 max-w-2xl text-center mx-auto text-lg">
                         Envoyez votre demande de produit et nous vous contacterons
                         dans les plus brefs délais.
                     </p>
+                    </div>
+                    
 
                     {/* Form */}
                     <form className="mt-12 space-y-10">
@@ -165,16 +167,16 @@ export default function DevisPage() {
                         </div>
 
                         {/* Submit */}
-                        <div className="flex justify-end">
+                        <div className="flex justify-center ">
                             <button
                                 type="submit"
-                                className="px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-bold hover:opacity-90 transition"
+                                className="px-8 py-4 rounded-full cursor-pointer bg-[rgb(223,126,60)] text-white font-bold hover:opacity-90 transition"
                             >
                                 Envoyer la demande
                             </button>
                         </div>
 
-                        <p className="text-sm text-base-content/60">
+                        <p className="text-sm text-center text-base-content/60">
                             Les champs marqués * sont obligatoires.
                         </p>
                     </form>

@@ -46,7 +46,7 @@ export default function ZincOxideIntro() {
                 {/* Visual */}
                 <div className="relative h-96 rounded-3xl overflow-hidden bg-base-200">
                     <img
-                        src="/images/zinc-oxide-industrial.jpg"
+                        src="Zinc_fragment_sublimed_and_1cm3_cube.jpg"
                         alt="Oxyde de zinc industriel de haute qualité"
                         className="w-full h-full object-cover"
                     />

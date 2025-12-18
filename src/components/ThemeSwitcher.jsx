@@ -47,7 +47,7 @@ export default function ThemeSwitcher() {
                         <button
                             onClick={() => toggleTheme(themeOption.name)}
                             className={`flex items-center justify-between gap-2 w-full px-2 py-1 rounded hover:bg-base-200 ${
-                                theme === themeOption.name ? "font-bold" : ""
+                                theme === themeOption.name ? "font-bold " : ""
                             }`}
                         >
                             <div className="flex items-center gap-2">

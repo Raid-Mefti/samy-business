@@ -96,7 +96,7 @@ export default function NavBar({ children }) {
                             e.preventDefault();
                             router.push("/zinc-oxyde");
                         }}
-                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
+                        className="text-white text-lg font-bold hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.about}
                     </a>
@@ -108,7 +108,7 @@ export default function NavBar({ children }) {
                         e.preventDefault();
                         router.push("/produits");
                     }}
-                    className="text-white/90 hover:text-[rgb(223,126,60)] transition"
+                    className="text-white text-lg hover:text-[rgb(223,126,60)] transition"
                 >
                     {t.products}
                 </a>
@@ -118,7 +118,7 @@ export default function NavBar({ children }) {
                     <a
                         href="/#services"
                         onClick={(e) => handleLinkClick(e, "#services")}
-                        className="text-white/90 hover:text-[rgb(223,126,60)] transition"
+                        className="text-white text-lg hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.services}
                     </a>
@@ -134,16 +134,20 @@ export default function NavBar({ children }) {
                 {/* Devis button */}
                 <button
                     onClick={() => router.push("/devis")}
-                    className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white hover:text-[rgb(223,126,60)] transition ${
-                        isArabic ? "mr-2" : "ml-2"
+                    className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border
+                         border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white 
+                         hover:text-[rgb(223,126,60)] transition ${
+                        isArabic ? "mr-1" : "ml-2"
                     }`}
                 >
                     {t.devis}
                 </button>
                 <button
                     onClick={() => router.push("/contact")}
-                    className={`cursor-pointer hidden lg:flex items-center gap-3 px-6 font-bold rounded-full border border-white/60 bg-transparent text-white hover:bg-white hover:text-[rgb(223,126,60)] transition ${
-                        isArabic ? "mr-4" : "ml-4"
+                    className={`cursor-pointer hidden lg:flex items-center gap-3 px-6 font-bold rounded-full bg-white
+                        border border-white/60 bg-transparent text-[rgb(223,126,60)] hover:bg-[rgb(223,126,60)] 
+                        hover:text-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] hover:text-white transition ${
+                        isArabic ? "mr-4" : "ml-1"
                     }`}
                 >
                     {t.contact}

@@ -3,266 +3,234 @@
 import React, { useState, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
 import { useLanguage } from "@/contexts/LanguageContext";
+import Link from "next/link";
 
-// ==========================================================
-// --- TRANSLATIONS ---
-// ==========================================================
+/* ==========================================================
+   TRANSLATIONS
+========================================================== */
 const translations = {
-    fr: {
-        contact_title: "Contactez-nous",
-        contact_subtitle: "Nous sommes là pour répondre à vos questions.",
-        contact_name: "Nom complet",
-        contact_email: "Adresse e-mail",
-        contact_subject: "Sujet",
-        contact_message: "Votre message",
-        contact_send: "Envoyer le message",
-        contact_success:
-            "Message envoyé avec succès ! Nous vous répondrons bientôt.",
-        contact_error:
-            "Échec de l'envoi. Veuillez vérifier votre connexion ou réessayer plus tard.",
-        contact_key_error:
-            "Erreur de configuration : Veuillez remplacer vos clés EmailJS.",
-        contact_loading: "Envoi en cours...",
-    },
-    en: {
-        contact_title: "Contact Us",
-        contact_subtitle: "We are here to answer your questions.",
-        contact_name: "Full Name",
-        contact_email: "Email Address",
-        contact_subject: "Subject",
-        contact_message: "Your Message",
-        contact_send: "Send Message",
-        contact_success:
-            "Message sent successfully! We will get back to you soon.",
-        contact_error:
-            "Failed to send message. Please check your connection or try again later.",
-        contact_key_error:
-            "Configuration Error: Please replace your EmailJS keys.",
-        contact_loading: "Sending...",
-    },
-    ar: {
-        contact_title: "اتصل بنا",
-        contact_subtitle: "نحن هنا للإجابة على أسئلتكم.",
-        contact_name: "الاسم الكامل",
-        contact_email: "البريد الإلكتروني",
-        contact_subject: "الموضوع",
-        contact_message: "رسالتك",
-        contact_send: "إرسال الرسالة",
-        contact_success: "تم إرسال الرسالة بنجاح! سنرد عليك قريباً.",
-        contact_error:
-            "فشل الإرسال. يرجى التحقق من اتصالك والمحاولة مرة أخرى لاحقاً.",
-        contact_key_error:
-            "خطأ في الإعداد: الرجاء استبدال مفاتيح EmailJS الخاصة بك.",
-        contact_loading: "جاري الإرسال...",
-    },
+  fr: {
+    contact_title: "Contactez-nous",
+    contact_subtitle: "Nous sommes là pour répondre à vos questions.",
+    name: "Nom complet",
+    company: "Nom de l’entreprise",
+    company_size: "Taille de l’entreprise",
+    phone: "Numéro de téléphone",
+    email: "Adresse e-mail",
+    subject: "Sujet",
+    message: "Votre message",
+    send: "Envoyer le message",
+    loading: "Envoi en cours...",
+    success: "Message envoyé avec succès ! Nous vous répondrons bientôt.",
+    error: "Échec de l'envoi. Veuillez vérifier votre connexion ou réessayer.",
+    size_options: [
+      "Micro (1–9 employés)",
+      "Petite (10–49 employés)",
+      "Moyenne (50–249 employés)",
+      "Grande (250+ employés)",
+    ],
+    request_quote_title: "Vous souhaitez un devis ?",
+    request_quote_text:
+      "Cliquez sur le bouton ci-dessous pour envoyer votre demande de devis et obtenir une réponse rapide.",
+    request_quote_btn: "Demander un devis",
+  },
+  en: {
+    contact_title: "Contact Us",
+    contact_subtitle: "We are here to answer your questions.",
+    name: "Full Name",
+    company: "Company Name",
+    company_size: "Company Size",
+    phone: "Phone Number",
+    email: "Email Address",
+    subject: "Subject",
+    message: "Your Message",
+    send: "Send Message",
+    loading: "Sending...",
+    success: "Message sent successfully! We will get back to you soon.",
+    error: "Failed to send message. Please try again later.",
+    size_options: [
+      "Micro (1–9 employees)",
+      "Small (10–49 employees)",
+      "Medium (50–249 employees)",
+      "Large (250+ employees)",
+    ],
+    request_quote_title: "Want a Quote?",
+    request_quote_text:
+      "Click the button below to request a quote and get a fast response.",
+    request_quote_btn: "Request a Quote",
+  },
+  ar: {
+    contact_title: "اتصل بنا",
+    contact_subtitle: "نحن هنا للإجابة على أسئلتكم.",
+    name: "الاسم الكامل",
+    company: "اسم الشركة",
+    company_size: "حجم الشركة",
+    phone: "رقم الهاتف",
+    email: "البريد الإلكتروني",
+    subject: "الموضوع",
+    message: "رسالتك",
+    send: "إرسال الرسالة",
+    loading: "جاري الإرسال...",
+    success: "تم إرسال الرسالة بنجاح! سنرد عليك قريباً.",
+    error: "فشل الإرسال. يرجى المحاولة مرة أخرى.",
+    size_options: [
+      "صغيرة جداً (1–9)",
+      "صغيرة (10–49)",
+      "متوسطة (50–249)",
+      "كبيرة (250+)",
+    ],
+    request_quote_title: "هل ترغب في الحصول على عرض سعر؟",
+    request_quote_text:
+      "انقر على الزر أدناه لإرسال طلب عرض سعر والحصول على رد سريع.",
+    request_quote_btn: "طلب عرض سعر",
+  },
 };
 
-// ==========================================================
-// --- MOCK EMAILJS (for dev) ---
-// ==========================================================
-const emailjs = {
-    send: (serviceID, templateID, form, userID) => {
-        return new Promise((resolve, reject) => {
-            console.log(`EmailJS Simulation: Sending message...`);
-            setTimeout(() => {
-                if (Math.random() < 0.9) resolve({ text: "OK" });
-                else reject({ text: "Error" });
-            }, 1500);
-        });
-    },
-};
-// service_jfhz2hb
-
-// ==========================================================
-// --- CONTACT FORM COMPONENT ---
-// ==========================================================
+/* ==========================================================
+   CONTACT FORM
+========================================================== */
 function ContactForm() {
-    const { language } = useLanguage();
-    const t = translations[language];
-    const isArabic = language === "ar";
+  const { language } = useLanguage();
+  const t = translations[language];
+  const isArabic = language === "ar";
 
-    const form = useRef();
-    const [status, setStatus] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+  const form = useRef();
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(t.loading);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    setTimeout(() => {
+      setStatus(t.success);
+      form.current.reset();
+      setLoading(false);
+    }, 1500);
+  };
 
-        if (
-            EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY" ||
-            EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
-            EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID"
-        ) {
-            setStatus(t.contact_key_error);
-            return;
-        }
+  return (
+    <div className="flex flex-col md:flex-row items-center gap-8 mb-20">
+      {/* Left: Formulaire */}
+      <div className="bg-gray-100 p-6 md:p-8 rounded-2xl shadow-xl md:w-[70%] md:ml-20 flex flex-col items-center">
+        <h1 className="text-4xl font-bold text-[rgb(223,126,60)] text-center md:text-left">
+          {t.contact_title}
+        </h1>
+        <p className="text-gray-600 mt-2 mb-6 text-center md:text-left">
+          {t.contact_subtitle}
+        </p>
 
-        setIsLoading(true);
-        setStatus(t.contact_loading);
+        {status && (
+          <div className="mb-6 p-4 rounded-lg bg-blue-100 text-blue-800 font-medium text-center md:text-left">
+            {status}
+          </div>
+        )}
 
-        try {
-            await emailjs.send(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                form.current,
-                EMAILJS_PUBLIC_KEY
-            );
-            setStatus(t.contact_success);
-            form.current.reset();
-        } catch (err) {
-            console.error(err);
-            setStatus(t.contact_error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    return (
-        <div
-            className={`p-5 min-h-screen bg-base-200 ${
-                isArabic ? "text-right" : "text-left"
-            }`}
+        <form
+          ref={form}
+          onSubmit={handleSubmit}
+          className="space-y-4 w-full md:w-[90%]"
         >
-            <div className="max-w-4xl mx-auto p-8 bg-white shadow-xl rounded-2xl">
-                <h1 className="text-4xl font-bold mb-2 text-[rgb(223,126,60)]">
-                    {t.contact_title}
-                </h1>
-                <p className="text-lg text-gray-600 mb-8">
-                    {t.contact_subtitle}
-                </p>
+          <Input label={t.name} name="user_name" isArabic={isArabic} />
+          <Input label={t.company} name="company_name" isArabic={isArabic} />
 
-                {status && (
-                    <div
-                        className={`p-4 mb-4 rounded-lg font-medium ${
-                            status === t.contact_success
-                                ? "bg-green-100 text-green-800"
-                                : status === t.contact_error ||
-                                  status.includes("Erreur de configuration")
-                                ? "bg-red-100 text-red-800"
-                                : "bg-blue-100 text-blue-800"
-                        } ${isArabic ? "text-right" : "text-left"}`}
-                    >
-                        {status}
-                    </div>
-                )}
+          <div>
+            <label className="label font-semibold">{t.company_size}</label>
+            <select
+              name="company_size"
+              required
+              className="select select-bordered w-full rounded-lg"
+            >
+              <option value="">--</option>
+              {t.size_options.map((opt, i) => (
+                <option key={i} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="label">
-                            <span className="label-text font-semibold">
-                                {t.contact_name}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            name="user_name"
-                            placeholder={t.contact_name}
-                            required
-                            className={`input input-bordered w-full rounded-lg ${
-                                isArabic ? "text-right" : "text-left"
-                            }`}
-                        />
-                    </div>
+          <Input label={t.phone} name="phone" type="tel" isArabic={isArabic} />
+          <Input
+            label={t.email}
+            name="user_email"
+            type="email"
+            isArabic={isArabic}
+          />
+          <Input label={t.subject} name="subject" isArabic={isArabic} />
 
-                    <div>
-                        <label className="label">
-                            <span className="label-text font-semibold">
-                                {t.contact_email}
-                            </span>
-                        </label>
-                        <input
-                            type="email"
-                            name="user_email"
-                            placeholder={t.contact_email}
-                            required
-                            className={`input input-bordered w-full rounded-lg ${
-                                isArabic ? "text-right" : "text-left"
-                            }`}
-                        />
-                    </div>
+          <div>
+            <label className="label font-semibold">{t.message}</label>
+            <textarea
+              name="message"
+              rows="4"
+              required
+              className="textarea textarea-bordered w-full rounded-lg"
+            />
+          </div>
 
-                    <div>
-                        <label className="label">
-                            <span className="label-text font-semibold">
-                                {t.contact_subject}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            name="subject"
-                            placeholder={t.contact_subject}
-                            required
-                            className={`input input-bordered w-full rounded-lg ${
-                                isArabic ? "text-right" : "text-left"
-                            }`}
-                        />
-                    </div>
+          {/* Bouton centré */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn rounded-full bg-[rgb(223,126,60)] text-white text-lg px-6 py-3 md:px-10 border-none hover:bg-white hover:text-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] hover:border-solid hover:border-2 transition w-full md:w-auto"
+            >
+              {loading ? t.loading : t.send}
+            </button>
+          </div>
+        </form>
+      </div>
 
-                    <div>
-                        <label className="label">
-                            <span className="label-text font-semibold">
-                                {t.contact_message}
-                            </span>
-                        </label>
-                        <textarea
-                            name="message"
-                            placeholder={t.contact_message}
-                            required
-                            rows="4"
-                            className={`textarea textarea-bordered w-full rounded-lg ${
-                                isArabic ? "text-right" : "text-left"
-                            }`}
-                        ></textarea>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="btn btn-primary rounded-full px-10 text-white shadow-lg w-full md:w-auto bg-[rgb(223,126,60)] border-[rgb(223,126,60)]"
-                    >
-                        {isLoading ? (
-                            <svg
-                                className="animate-spin h-5 w-5 mr-3"
-                                viewBox="0 0 24 24"
-                            >
-                                <circle
-                                    className="opacity-25"
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="currentColor"
-                                    strokeWidth="4"
-                                ></circle>
-                                <path
-                                    className="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                ></path>
-                            </svg>
-                        ) : (
-                            t.contact_send
-                        )}
-                    </button>
-                </form>
-            </div>
-        </div>
-    );
+      {/* Right: Section devis */}
+      <div className="bg-gray-100 h-fit p-6 md:p-8 rounded-2xl shadow-inner md:w-[30%] flex flex-col justify-center items-center">
+        <h2 className="text-3xl font-bold text-[rgb(223,126,60)] mb-4 text-center">
+          {t.request_quote_title}
+        </h2>
+        <p className="text-gray-700 mb-6 text-center">{t.request_quote_text}</p>
+        <Link
+          href="/devis"
+          className="btn bg-[rgb(223,126,60)] text-white rounded-full px-6 py-3 md:px-8 text-lg hover:bg-white hover:text-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] hover:border-2 transition w-full md:w-auto text-center"
+        >
+          {t.request_quote_btn}
+        </Link>
+      </div>
+    </div>
+  );
 }
 
+/* ==========================================================
+   INPUT COMPONENT
+========================================================== */
+function Input({ label, name, type = "text", isArabic }) {
+  return (
+    <div>
+      <label className="label font-semibold">{label}</label>
+      <input
+        type={type}
+        name={name}
+        required
+        className={`input input-bordered w-full rounded-lg ${
+          isArabic ? "text-right" : "text-left"
+        }`}
+      />
+    </div>
+  );
+}
+
+/* ==========================================================
+   PAGE
+========================================================== */
 export default function ContactPage() {
-    return (
-        <>
-            <Header />
-            <div className="min-h-screen pt-[120px]">
-                <ContactForm />
-            </div>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <div className="pt-[120px] px-6">
+        <ContactForm />
+      </div>
+      <Footer />
+    </>
+  );
 }

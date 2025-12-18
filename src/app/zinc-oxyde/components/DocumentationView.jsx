@@ -19,6 +19,7 @@ export default function DocumentationView() {
 
     return (
         <section className="py-20 bg-base-100">
+            <div className="h-28"></div>
             <div className="max-w-6xl mx-auto px-4 space-y-12">
                 {/* Header */}
                 <header className="text-center">

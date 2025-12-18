@@ -50,7 +50,7 @@ export default function TechnicalSpecs() {
                     {properties.slice(0, 4).map((prop, idx) => (
                         <div
                             key={idx}
-                            className="bg-slate-700/30 border border-slate-600 rounded-lg p-4 hover:bg-slate-700/50 transition-colors"
+                            className="bg-slate-700/50 border border-slate-600 rounded-lg p-4 hover:bg-slate-700/50 transition-colors"
                         >
                             <p className="text-sky-300 font-semibold mb-1">
                                 {prop.label}

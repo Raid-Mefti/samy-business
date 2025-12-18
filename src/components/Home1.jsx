@@ -32,7 +32,7 @@ export default function Home1() {
             {/* Background image */}
             <img
                 className="w-full h-full object-cover"
-                src="/couvertureIMG.jpg"
+                src="/hero2.jpg"
                 alt="Hero background image"
             />
 
@@ -50,7 +50,7 @@ export default function Home1() {
             >
                 {/* Slogan Line 1 */}
                 <h1
-                    className="font-extrabold tracking-tight drop-shadow-2xl text-[rgb(238,128,56)] w-full px-4 sm:px-6"
+                    className="font-extrabold tracking-tight drop-shadow-2xl text-white w-full px-4 sm:px-6"
                     style={{
                         fontSize: "min(8vw, 56px)",
                         lineHeight: 1.1,
@@ -60,7 +60,7 @@ export default function Home1() {
 
                 {/* Slogan Line 2 */}
                 <h1
-                    className="font-extrabold tracking-tight drop-shadow-2xl text-white w-full px-4 pb-4 sm:px-6 sm:pb-6"
+                    className="font-extrabold tracking-tight drop-shadow-2xl text-[rgb(238,128,56)] w-full px-4 pb-4 sm:px-6 sm:pb-6"
                     style={{
                         fontSize: "min(8vw, 56px)",
                         lineHeight: 1.1,
