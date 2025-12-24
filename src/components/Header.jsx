@@ -1,5 +1,6 @@
 "use client";
-import { useRef, useState } from "react";
+
+import { useRef, useEffect, useState } from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -8,9 +9,22 @@ import Link from "next/link";
 
 export default function NavBar({ children }) {
     const { language } = useLanguage();
-    const sideMenuRef = useRef();
+    const isArabic = language === "ar";
     const router = useRouter();
+    const sideMenuRef = useRef(null);
 
+    /* ---------------- SCROLL STATE ---------------- */
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => {
+            setScrolled(window.scrollY > 40);
+        };
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
+    /* ---------------- TRANSLATIONS ---------------- */
     const translations = {
         fr: {
             about: "Oxyde de Zinc",
@@ -34,9 +48,10 @@ export default function NavBar({ children }) {
             devis: "طلب عرض سعر",
         },
     };
-    const t = translations[language];
-    const isArabic = language === "ar";
 
+    const t = translations[language];
+
+    /* ---------------- MOBILE MENU ---------------- */
     const openMenu = () => {
         if (!sideMenuRef.current) return;
         sideMenuRef.current.style.transform = "translateX(0)";
@@ -49,21 +64,15 @@ export default function NavBar({ children }) {
             : "translateX(100%)";
     };
 
-    const handleLinkClick = (e, hash) => {
-        e.preventDefault();
-        if (window.location.pathname !== "/") {
-            router.push(`/${hash}`);
-        } else {
-            const targetElement = document.querySelector(hash);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            }
+    /* ---------------- HEADER STYLES ---------------- */
+    const headerClasses = `
+        fixed top-0 w-full z-[60] transition-all duration-300
+        ${
+            scrolled
+                ? "bg-[#1E2438] shadow-lg border-b border-white/10"
+                : "bg-transparent backdrop-blur-md"
         }
-        setTimeout(() => closeMenu(), 300);
-    };
+    `;
 
     const navFlexClass = `${
         isArabic ? "flex-row-reverse " : ""
@@ -71,51 +80,43 @@ export default function NavBar({ children }) {
 
     return (
         <nav
-            className={`flex ${navFlexClass} items-center w-full px-5 fixed lg:px-8 xl:px-[5%] py-4 z-[60] bg-[#38367F] text-white border-b border-[#4E6BA4] shadow-lg`}
+            className={`flex ${navFlexClass} items-center px-5 lg:px-8 xl:px-[5%] py-4 ${headerClasses}`}
         >
-            {/* Logo */}
+            {/* LOGO */}
             <div>
-                <a href="/" onClick={(e) => handleLinkClick(e, "#top")}>
+                <Link href="/">
                     <img
                         src="/logo99.png"
-                        // src="/logo2.png"
                         alt="logo"
-                        className="w-60 cursor-pointer"
+                        className="w-56 drop-shadow-md"
                     />
-                </a>
+                </Link>
             </div>
 
-            {/* Desktop Menu */}
+            {/* DESKTOP MENU */}
             <ul
-                className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white/10 border border-white/20 backdrop-blur ${
-                    isArabic ? "flex-row-reverse" : ""
-                }`}
+                className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3
+                bg-white/10 border border-white/20 backdrop-blur
+                ${isArabic ? "flex-row-reverse" : ""}`}
             >
                 <li>
-                    <a
+                    <Link
                         href="/zinc-oxyde"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            router.push("/zinc-oxyde");
-                        }}
                         className="text-white text-lg font-bold hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.about}
-                    </a>
+                    </Link>
                 </li>
 
-                <a
-                    href="/produits"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        router.push("/produits");
-                    }}
-                    className="text-white text-lg hover:text-[rgb(223,126,60)] transition"
-                >
-                    {t.products}
-                </a>
+                <li>
+                    <Link
+                        href="/produits"
+                        className="text-white text-lg hover:text-[rgb(223,126,60)] transition"
+                    >
+                        {t.products}
+                    </Link>
+                </li>
 
-                {/* Services — now a direct button */}
                 <li>
                     <Link
                         href="/aboutus"
@@ -126,143 +127,84 @@ export default function NavBar({ children }) {
                 </li>
             </ul>
 
-            {/* Right Section */}
+            {/* RIGHT CONTROLS */}
             <div
-                className={`flex ${
+                className={`flex items-center ${
                     isArabic ? "flex-row-reverse space-x-reverse" : "space-x-4"
                 }`}
             >
-                {/* Devis button */}
+                {/* QUOTE BUTTON */}
                 <button
                     onClick={() => router.push("/devis")}
-                    className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border
-                         border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white 
-                         hover:text-[rgb(223,126,60)] transition ${
-                             isArabic ? "mr-1" : "ml-2"
-                         }`}
+                    className="hidden lg:flex items-center px-6 py-2 font-bold rounded-full
+                    bg-[rgb(223,126,60)] text-white border border-[rgb(223,126,60)]
+                    hover:bg-white hover:text-[rgb(223,126,60)] transition"
                 >
                     {t.devis}
                 </button>
+
+                {/* CONTACT */}
                 <button
                     onClick={() => router.push("/contact")}
-                    className={`cursor-pointer hidden lg:flex items-center gap-3 px-6 font-bold rounded-full bg-white
-                        border border-white/60 bg-transparent text-[rgb(223,126,60)] hover:bg-[rgb(223,126,60)] 
-                        hover:text-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] hover:text-white transition ${
-                            isArabic ? "mr-4" : "ml-1"
-                        }`}
+                    className="hidden lg:flex items-center gap-2 px-6 py-2 rounded-full
+                    border border-white/40 text-white
+                    hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition"
                 >
                     {t.contact}
-                    <img
-                        width="28"
-                        height="28"
-                        src="https://img.icons8.com/parakeet-line/48/mail-contact.png"
-                        alt="mail-contact"
-                    />
                 </button>
 
                 <LanguageSwitcher />
                 <ThemeSwitcher />
-                {children}
-                <button
-                    className={`cursor-pointer block md:hidden ${
-                        isArabic ? "mr-3" : "ml-3"
-                    }`}
-                    onClick={openMenu}
-                >
+
+                {/* MOBILE MENU BUTTON */}
+                <button className="block md:hidden" onClick={openMenu}>
                     <img
-                        width="50"
-                        height="50"
-                        src="https://img.icons8.com/ios-filled/50/list.png"
-                        alt="list"
+                        width="40"
+                        height="40"
+                        src="https://img.icons8.com/ios-filled/50/menu--v1.png"
+                        alt="menu"
                     />
                 </button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* MOBILE MENU */}
             <ul
                 ref={sideMenuRef}
                 className={`fixed top-0 ${
                     isArabic ? "left-0" : "right-0"
-                } w-72 sm:w-80 flex md:hidden flex-col items-stretch gap-4 pt-24 pb-6 px-6 bg-[#38367F] text-white border-[rgb(223,126,60)] border-l-2 shadow-2xl z-50`}
+                } w-72 h-full flex md:hidden flex-col gap-6 pt-24 px-6
+                bg-[#1E2438] text-white shadow-2xl z-50`}
                 style={{
                     transform: isArabic
                         ? "translateX(-100%)"
                         : "translateX(100%)",
-                    transition: "transform 0.4s ease-out",
+                    transition: "transform 0.4s ease",
                 }}
             >
-                <div
-                    className={`absolute ${
-                        isArabic ? "left-5" : "right-5"
-                    } top-5`}
+                <button
                     onClick={closeMenu}
-                >
-                    <img
-                        className="cursor-pointer"
-                        width="40"
-                        height="40"
-                        src="https://img.icons8.com/ios/50/close-window--v1.png"
-                        alt="close-window--v1"
-                    />
-                </div>
-
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
-                    <a
-                        href="/zinc-oxyde"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            router.push("/zinc-oxyde");
-                            closeMenu();
-                        }}
-                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
-                            isArabic ? "text-right" : "text-left"
-                        }`}
-                    >
-                        {t.about}
-                    </a>
-                </li>
-
-                <a
-                    href="/produits"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        router.push("/produits");
-                        closeMenu();
-                    }}
-                    className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
-                        isArabic ? "text-right" : "text-left"
+                    className={`absolute top-5 ${
+                        isArabic ? "left-5" : "right-5"
                     }`}
                 >
+                    ✕
+                </button>
+
+                <Link href="/zinc-oxyde" onClick={closeMenu}>
+                    {t.about}
+                </Link>
+
+                <Link href="/produits" onClick={closeMenu}>
                     {t.products}
-                </a>
+                </Link>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
-                    <a
-                        href="/#services"
-                        onClick={(e) => handleLinkClick(e, "#services")}
-                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
-                            isArabic ? "text-right" : "text-left"
-                        }`}
-                    >
-                        {t.services}
-                    </a>
-                </li>
+                <Link href="/aboutus" onClick={closeMenu}>
+                    {t.aboutus}
+                </Link>
 
-                <li className="rounded-2xl w-full text-center px-4 border border-[rgb(223,126,60)] bg-white/95 text-gray-900 shadow-sm">
-                    <a
-                        href="/contact"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            router.push("/contact");
-                            closeMenu();
-                        }}
-                        className={`text-gray-800 hover:text-[rgb(223,126,60)] block py-4 ${
-                            isArabic ? "text-right" : "text-left"
-                        }`}
-                    >
-                        {t.contact}
-                    </a>
-                </li>
+                <Link href="/contact" onClick={closeMenu}>
+                    {t.contact}
+                </Link>
             </ul>
         </nav>
     );

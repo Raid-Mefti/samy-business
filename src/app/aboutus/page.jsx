@@ -1,222 +1,287 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
 import { useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// LIGNE ORIGINALE : import { useLanguage } from "@/contexts/LanguageContext";
-
-// --- SIMULATION DU CONTEXTE DE LANGUE POUR ASSURER LA COMPILATION ---
-
-export default function AboutSection() {
-    // Récupère la langue actuelle (e.g., 'fr', 'en', 'ar' ou 'fr-CA', 'ar-DZ')
+export default function AboutPage() {
     const { language: rawLanguage } = useLanguage();
+    const lang = rawLanguage ? rawLanguage.split("-")[0] : "fr";
+    const isRtl = lang === "ar";
 
-    const sanitizedLanguage = rawLanguage
-        ? String(rawLanguage).toLowerCase().trim().split("-")[0]
-        : "fr"; // Si la langue est null/undefined, utilise 'fr'
-
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
-
-    const translations = {
-        fr: {
-            title: "Samy Business EURL",
-            description:
-                "Samy Business EURL, fondée en 2007 à Alger par son gérant unique M. Rabah Bourrai, est spécialisée dans l’importation, la transformation et la commercialisation de produits sidérurgiques et métaux ferreux et non-ferreux.\n\nFort d’une riche expérience de plus de 15 ans, notre entreprise s’appuie sur une équipe dynamique d’une quinzaine de collaborateurs, organisée autour de départements clefs : direction générale, administration, finances, commercial/marketing, logistique et informatique.",
-            additionalText:
-                "La société importe et distribue divers produits métallurgiques (acier, inox, plomb, aluminium, laiton, cuivre, zinc, etc.), conformes aux normes européennes et sélectionnés auprès de fournisseurs locaux et internationaux reconnus. Tous nos produits sont cotés à la London Metal Exchange (LME).\n\nSamy Business s’est imposée comme un opérateur majeur grâce :\n- À la maîtrise technique et commerciale du secteur\n- À un vaste réseau de partenaires et fournisseurs en Europe\n- À une culture d’innovation et d’amélioration continue\n- À un engagement fort pour la satisfaction client et la qualité\n\nNotre vision : participer activement au développement économique national en offrant une valeur ajoutée locale, des services fiables et une organisation agile, orientée vers l’excellence et l’innovation.\n\nNous accompagnons nos clients industriels dans tous leurs besoins d’approvisionnement, de transformation et d’expertise technique, grâce à des solutions sur mesure et un parc de véhicules et d’outils technologiques adaptés.\n\nNos valeurs : satisfaction client, qualité, fiabilité, agilité, innovation et perfection.\n\nSamy Business, un partenaire de confiance pour tous vos projets industriels en métaux et produits sidérurgiques.",
-            buttonShow: "Plus d'infos",
-            buttonHide: "Moins d'infos",
-            close: "Fermer",
-        },
-        en: {
-            title: "Samy Business EURL",
-            description:
-                "Samy Business EURL, founded in Algiers in 2007 by its sole manager, Mr. Rabah Bourrai, specializes in the import, transformation, and commercialization of iron and steel products, as well as ferrous and non-ferrous metals.\n\nBacked by over 15 years of rich experience, our company relies on a dynamic team of about fifteen employees, organized around key departments: general management, administration, finance, commercial/marketing, logistics, and IT.",
-            additionalText:
-                "The company imports and distributes various metallurgical products (steel, stainless steel, lead, aluminum, brass, copper, zinc, etc.), which comply with European standards and are selected from recognized local and international suppliers. All our products are quoted on the London Metal Exchange (LME).\n\nSamy Business has established itself as a major operator thanks to:\n- Technical and commercial mastery of the sector\n- A vast network of partners and suppliers in Europe\n- A culture of innovation and continuous improvement\n- A strong commitment to customer satisfaction and quality\n\nOur vision is to actively participate in national economic development by offering local added value, reliable services, and an agile organization, oriented towards excellence and innovation.\n\nWe support our industrial clients in all their supply, transformation, and technical expertise needs, thanks to tailor-made solutions and a fleet of adapted vehicles and technological tools.\n\nOur values are: customer satisfaction, quality, reliability, agility, innovation, and perfection.\n\nSamy Business, a trusted partner for all your industrial projects in metals and steel products.",
-            buttonShow: "More info",
-            buttonHide: "Less info",
-            close: "Close",
-        },
-        ar: {
-            title: "سامي بيزنس (ش.ذ.م.م)",
-            description:
-                "شركة سامي بيزنس ذات المسؤولية المحدودة (EURL)، تأسست في الجزائر العاصمة عام 2007 على يد مسيرها الوحيد السيد رباح بوراي، وهي متخصصة في استيراد، تحويل، وتسويق المنتجات الحديدية والمعدنية الفلزية وغير الفلزية.\n\nمع خبرة غنية تفوق 15 عامًا، تعتمد شركتنا على فريق ديناميكي يضم حوالي خمسة عشر متعاونًا، منظمين حول أقسام رئيسية: الإدارة العامة، الإدارة، المالية، التجارة/التسويق، اللوجستيك، وتكنولوجيا المعلومات.",
-            additionalText:
-                "تستورد الشركة وتوزع منتجات معدنية متنوعة (الصلب، الفولاذ المقاوم للصدأ، الرصاص، الألومنيوم، النحاس الأصفر، النحاس، الزنك، إلخ)، المتوافقة مع المعايير الأوروبية والمختارة من موردين محليين ودوليين معترف بهم. جميع منتجاتنا مسعّرة في بورصة لندن للمعادن (LME).\n\nرسخت سامي بيزنس مكانتها كفاعل رئيسي بفضل:\n- الإتقان التقني والتجاري للقطاع\n- شبكة واسعة من الشركاء والموردين في أوروبا\n- ثقافة الابتكار والتحسين المستمر\n- والالتزام القوي برضا العملاء والجودة\n\nرؤيتنا: المشاركة بفعالية في التنمية الاقتصادية الوطنية من خلال تقديم قيمة مضافة محلية، خدمات موثوقة، وتنظيم مرن وموجه نحو التميز والابتكار.\n\nندعم عملائنا الصناعيين في جميع احتياجاتهم من التموين، التحويل، والخبرة التقنية، بفضل حلول مصممة خصيصًا وأسطول من المركبات والأدوات التكنولوجية المناسبة.\n\nقيمنا هي: رضا العملاء، الجودة، الموثوقية، المرونة، الابتكار، والكمال.\n\nسامي بيزنس، شريك موثوق لجميع مشاريعكم الصناعية في المعادن والمنتجات الحديدية.",
-            buttonShow: "المزيد من المعلومات",
-            buttonHide: "أقل معلومات",
-            close: "إغلاق",
-        },
-    };
-
-    const getTranslation = (lang) => {
-        // La sélection se fait sur la langue nettoyée (code de base)
-        if (translations[lang]) {
-            return translations[lang];
-        }
-        // Si la langue nettoyée n'est toujours pas une clé valide, on utilise le français par défaut.
-        return translations.fr;
-    };
-
-    const t = getTranslation(sanitizedLanguage);
-    // -----------------------------------------------------------------
-
-    const handleButtonClick = () => {
-        if (isMobile) {
-            setIsModalOpen(true);
-        } else {
-            setIsExpanded(!isExpanded);
-        }
-    };
-
-    const buttonText = isMobile
-        ? t.buttonShow
-        : isExpanded
-        ? t.buttonHide
-        : t.buttonShow;
+    const t = translations[lang] || translations.fr;
 
     return (
         <>
             <Header />
-            <div
-                className={`hero bg-base-100 min-h-96 text-base-content rounded-lg shadow-xl ${
-                    sanitizedLanguage === "ar" ? "text-right" : ""
-                }`}
+
+            <main
+                className="bg-base-100 text-base-content"
+                dir={isRtl ? "rtl" : "ltr"}
             >
-                <div
-                    className={`hero-content flex-col py-8 mt-20     ${
-                        sanitizedLanguage === "ar"
-                            ? "lg:flex-row-reverse"
-                            : "lg:flex-row-reverse"
-                    }`}
-                >
-                    {/* Placeholder for an image or logo [rgb(223,126,60)] */}
-                    <div className="w-full lg:w-1/3 flex justify-center items-center p-4  ">
-                        <svg
-                            className="w-32 h-32  opacity-70 text-[rgb(223,126,60)]"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M12 2L2 7V17L12 22L22 17V7L12 2Z"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M12 2V22"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M2 7L12 12L22 7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M2 17L12 12L22 17"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M7 9L17 14"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </div>
+                {/* ABOUT */}
+                <section className="max-w-6xl mx-auto px-6 py-24">
+                    <h1 className="text-4xl md:text-6xl font-bold text-[rgb(223,126,60)] mb-10">
+                        {t.about.title}
+                    </h1>
 
-                    <div className="flex flex-col justify-center w-full lg:w-2/3">
-                        <h1 className="text-[rgb(223,126,60)] text-4xl md:text-6xl font-bold">
-                            {t.title}
-                        </h1>
-                        <p
-                            // Les deux premiers paragraphes (description) sont entièrement visibles par défaut.
-                            className={`py-6 text-lg md:text-2xl leading-relaxed whitespace-pre-line`}
-                        >
-                            {t.description}
-                        </p>
+                    <p className="text-lg md:text-xl leading-relaxed whitespace-pre-line opacity-90">
+                        {t.about.description}
+                    </p>
+                </section>
 
-                        {/* Affiche le texte additionnel si non-mobile ET isExpanded est true */}
-                        {!isMobile && isExpanded && (
-                            <p className="py-6 text-xl leading-relaxed border-t border-base-200 mt-4 pt-4 whitespace-pre-line">
-                                {t.additionalText}
-                            </p>
-                        )}
-                        <button
-                            className="btn btn-primary bg-[rgb(223,126,60)] border-0 mt-4 rounded-full shadow-md hover:shadow-lg transition-shadow self-start"
-                            // Aligner le bouton correctement pour RTL/LTR
-                            style={{
-                                alignSelf:
-                                    sanitizedLanguage === "ar"
-                                        ? "flex-end"
-                                        : "flex-start",
-                            }}
-                            onClick={handleButtonClick}
-                        >
-                            {buttonText}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <Footer />
+                {/* SERVICES */}
+                <section className="bg-base-200 py-24">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            {t.services.title}
+                        </h2>
 
-            {/* Modal for Mobile */}
-            {isModalOpen && (
-                <dialog className="modal modal-open">
-                    <div
-                        className={`modal-box max-w-4xl rounded-lg shadow-2xl bg-base-100 ${
-                            sanitizedLanguage === "ar"
-                                ? "text-right"
-                                : "text-left"
-                        }`}
-                    >
-                        <h3 className="font-bold text-2xl mb-4">{t.title}</h3>
-                        {/* Utilisation de whitespace-pre-line dans la modale pour le texte complet */}
-                        <p className="py-4 text-lg leading-relaxed whitespace-pre-line">
-                            {t.description}
-                        </p>
-                        <p className="py-4 text-lg leading-relaxed whitespace-pre-line">
-                            {t.additionalText}
-                        </p>
-                        <div
-                            className={`modal-action ${
-                                sanitizedLanguage === "ar"
-                                    ? "justify-start"
-                                    : "justify-end"
-                            }`}
-                        >
-                            <button
-                                className="btn btn-primary rounded-full bg-[rgb(223,126,60)]"
-                                onClick={() => setIsModalOpen(false)}
-                            >
-                                {t.close}
-                            </button>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {t.services.items.map((s, i) => (
+                                <div
+                                    key={i}
+                                    className="bg-white rounded-2xl shadow-lg p-8 border-t-4"
+                                    style={{ borderColor: s.color }}
+                                >
+                                    <h3
+                                        className="text-xl font-bold mb-4"
+                                        style={{ color: s.color }}
+                                    >
+                                        {s.name}
+                                    </h3>
+                                    <p className="leading-relaxed opacity-80 whitespace-pre-line">
+                                        {s.desc}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </dialog>
-            )}
+                </section>
+
+                {/* KNOWLEDGE */}
+                <section className="py-24">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+                            {t.knowledge.title}
+                        </h2>
+
+                        <p className="text-center opacity-70 max-w-3xl mx-auto mb-14">
+                            {t.knowledge.subtitle}
+                        </p>
+
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {t.knowledge.items.map((k, i) => (
+                                <div
+                                    key={i}
+                                    className="group bg-white rounded-2xl shadow-lg overflow-hidden"
+                                >
+                                    <img
+                                        src={k.img}
+                                        alt={k.title}
+                                        className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="p-6">
+                                        <h3
+                                            className="font-bold text-xl mb-3"
+                                            style={{ color: k.color }}
+                                        >
+                                            {k.title}
+                                        </h3>
+                                        <p className="opacity-80 mb-6">
+                                            {k.text}
+                                        </p>
+                                        <a
+                                            href={k.link}
+                                            className="inline-block font-semibold hover:underline"
+                                            style={{ color: k.color }}
+                                        >
+                                            {t.knowledge.cta}
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <Footer />
         </>
     );
 }
+
+/* ---------------- TRANSLATIONS ---------------- */
+
+const translations = {
+    fr: {
+        about: {
+            title: "Samy Business EURL",
+            description:
+                "Samy Business EURL est une entreprise algérienne fondée en 2007 à Alger par son gérant unique, M. Rabah Bourrai. Elle est spécialisée dans l’importation, la transformation et la commercialisation de produits sidérurgiques ainsi que de métaux ferreux et non ferreux destinés principalement aux secteurs industriels.\n\nDepuis plus de 15 ans, Samy Business accompagne des acteurs industriels nationaux à travers une offre structurée, reposant sur la maîtrise des chaînes d’approvisionnement internationales, la conformité aux normes européennes et l’indexation des produits sur la London Metal Exchange (LME). L’entreprise s’appuie sur une organisation interne solide et une équipe pluridisciplinaire couvrant la direction générale, l’administration, les finances, le commercial, la logistique et les systèmes d’information.",
+        },
+        services: {
+            title: "Nos Services",
+            items: [
+                {
+                    name: "Import & Distribution",
+                    color: "#DF7E3C",
+                    desc: "Approvisionnement international de métaux ferreux et non ferreux.\nDevis indexés LME, traçabilité ERP, contrôle qualité et distribution nationale.",
+                },
+                {
+                    name: "Transformation & ZnO",
+                    color: "#4E6BA4",
+                    desc: "Accompagnement technique pour les filières caoutchouc, céramique et chimie.\nMaîtrise des procédés, qualité constante et logistique sécurisée.",
+                },
+                {
+                    name: "Consulting Métallurgique",
+                    color: "#38367F",
+                    desc: "Sourcing stratégique, conformité UE, audits fournisseurs et optimisation coûts-délais pour décisions industrielles fiables.",
+                },
+            ],
+        },
+        knowledge: {
+            title: "Envie d’aller plus loin ?",
+            subtitle:
+                "Découvrez nos ressources techniques et analyses approfondies autour du zinc et de la métallurgie.",
+            cta: "Lire l’article →",
+            items: [
+                {
+                    title: "Utilisation du Zinc",
+                    text: "Applications industrielles, propriétés chimiques et enjeux de durabilité.",
+                    img: "Zink-Eigenschaften.webp",
+                    link: "/wiki/zinc-usage",
+                    color: "#DF7E3C",
+                },
+                {
+                    title: "Statistiques & Marché",
+                    text: "Opportunités globales du ZnO et position stratégique de l’Algérie.",
+                    img: "statistics.jpg",
+                    link: "/wiki/statistics",
+                    color: "#4E6BA4",
+                },
+                {
+                    title: "Aspects de Surface",
+                    text: "Gammes, finitions et solutions adaptées aux exigences industrielles.",
+                    img: "img13.png",
+                    link: "/wiki/surface-aspects",
+                    color: "#38367F",
+                },
+            ],
+        },
+    },
+
+    en: {
+        about: {
+            title: "Samy Business EURL",
+            description:
+                "Samy Business EURL is an Algerian company founded in 2007 in Algiers by its sole manager, Mr. Rabah Bourrai. It specializes in the import, processing, and commercialization of steel products as well as ferrous and non-ferrous metals, primarily serving industrial sectors.\n\nFor more than 15 years, Samy Business has supported national industrial players through a structured offering based on international supply chain expertise, compliance with European standards, and product pricing indexed to the London Metal Exchange (LME). The company relies on a solid internal organization and a multidisciplinary team covering general management, administration, finance, sales, logistics, and information systems.",
+        },
+        services: {
+            title: "Our Services",
+            items: [
+                {
+                    name: "Import & Distribution",
+                    color: "#DF7E3C",
+                    desc: "International sourcing of ferrous and non-ferrous metals.\nLME-indexed pricing, ERP traceability, quality control, and nationwide distribution.",
+                },
+                {
+                    name: "Processing & ZnO",
+                    color: "#4E6BA4",
+                    desc: "Technical support for rubber, ceramics, and chemical industries.\nProcess control, consistent quality, and secured logistics.",
+                },
+                {
+                    name: "Metallurgical Consulting",
+                    color: "#38367F",
+                    desc: "Strategic sourcing, EU compliance, supplier audits, and cost–lead time optimization for reliable industrial decisions.",
+                },
+            ],
+        },
+        knowledge: {
+            title: "Want to know more?",
+            subtitle:
+                "Explore our technical resources and in-depth analyses on zinc and metallurgy.",
+            cta: "Read article →",
+            items: [
+                {
+                    title: "Zinc Usage",
+                    text: "Industrial applications, chemical properties, and sustainability challenges.",
+                    img: "Zink-Eigenschaften.webp",
+                    link: "/wiki/zinc-usage",
+                    color: "#DF7E3C",
+                },
+                {
+                    title: "Statistics & Market",
+                    text: "Global ZnO opportunities and Algeria’s strategic positioning.",
+                    img: "statistics.jpg",
+                    link: "/wiki/statistics",
+                    color: "#4E6BA4",
+                },
+                {
+                    title: "Surface Aspects",
+                    text: "Ranges, finishes, and solutions tailored to industrial requirements.",
+                    img: "img13.png",
+                    link: "/wiki/surface-aspects",
+                    color: "#38367F",
+                },
+            ],
+        },
+    },
+
+    ar: {
+        about: {
+            title: "شركة سامي بيزنس",
+            description:
+                "شركة سامي بيزنس ذات المسؤولية المحدودة هي شركة جزائرية تأسست سنة 2007 بالجزائر العاصمة على يد مسيرها الوحيد السيد رباح بوراي، وهي متخصصة في استيراد، تحويل وتسويق المنتجات الحديدية والمعادن الحديدية وغير الحديدية الموجهة أساسًا للقطاعات الصناعية.\n\nمنذ أكثر من 15 سنة، ترافق سامي بيزنس الفاعلين الصناعيين الوطنيين من خلال عرض منظم يرتكز على التحكم في سلاسل التموين الدولية، مطابقة المعايير الأوروبية، وتسعير المنتجات وفق بورصة لندن للمعادن (LME). وتعتمد الشركة على تنظيم داخلي متين وفريق متعدد التخصصات يشمل الإدارة العامة، الإدارة، المالية، التجارة، اللوجستيك ونظم المعلومات.",
+        },
+        services: {
+            title: "خدماتنا",
+            items: [
+                {
+                    name: "الاستيراد والتوزيع",
+                    color: "#DF7E3C",
+                    desc: "تموين دولي بالمعادن الحديدية وغير الحديدية.\nتسعير مرتبط بـ LME، تتبع ERP، مراقبة الجودة وتوزيع وطني.",
+                },
+                {
+                    name: "التحويل و ZnO",
+                    color: "#4E6BA4",
+                    desc: "مرافقة تقنية لقطاعات المطاط، السيراميك والصناعة الكيميائية.\nتحكم في العمليات وجودة ثابتة ولوجستيك مؤمن.",
+                },
+                {
+                    name: "الاستشارة المعدنية",
+                    color: "#38367F",
+                    desc: "اختيار الموردين، مطابقة المعايير الأوروبية، تدقيق الموردين وتحسين التكاليف والآجال لاتخاذ قرارات صناعية دقيقة.",
+                },
+            ],
+        },
+        knowledge: {
+            title: "هل ترغب في معرفة المزيد؟",
+            subtitle:
+                "اطّلع على مواردنا التقنية وتحليلاتنا المتعمقة حول الزنك وصناعة المعادن.",
+            cta: "اقرأ المقال →",
+            items: [
+                {
+                    title: "استخدام الزنك",
+                    text: "التطبيقات الصناعية، الخصائص الكيميائية وتحديات الاستدامة.",
+                    img: "Zink-Eigenschaften.webp",
+                    link: "/wiki/zinc-usage",
+                    color: "#DF7E3C",
+                },
+                {
+                    title: "الإحصائيات والسوق",
+                    text: "فرص ZnO عالميًا والموقع الاستراتيجي للجزائر.",
+                    img: "statistics.jpg",
+                    link: "/wiki/statistics",
+                    color: "#4E6BA4",
+                },
+                {
+                    title: "الجوانب السطحية",
+                    text: "مجالات، تشطيبات وحلول تلبي المتطلبات الصناعية.",
+                    img: "img13.png",
+                    link: "/wiki/surface-aspects",
+                    color: "#38367F",
+                },
+            ],
+        },
+    },
+};

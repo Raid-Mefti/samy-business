@@ -41,24 +41,24 @@ export default function ZincOxideIntro() {
     const c = CONTENT[language] || CONTENT.fr;
 
     return (
-        <section className="py-24">
-            <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+        <section className="">
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 {/* Visual */}
-                <div className="relative h-96 rounded-3xl overflow-hidden bg-base-200">
+                <div className="relative h-[28rem] md:h-[32rem] rounded-3xl overflow-hidden shadow-lg">
                     <img
                         src="Zinc_fragment_sublimed_and_1cm3_cube.jpg"
                         alt="Oxyde de zinc industriel de haute qualité"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover scale-105"
                     />
                 </div>
 
                 {/* Content */}
-                <div className="space-y-8">
-                    <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+                <div className="space-y-6 md:space-y-8">
+                    <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
                         {c.title}
                     </h2>
 
-                    <p className="text-lg text-base-content/80 leading-relaxed max-w-xl">
+                    <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                         {c.text}
                     </p>
 
@@ -66,7 +66,7 @@ export default function ZincOxideIntro() {
                         {c.points.map((p) => (
                             <li
                                 key={p}
-                                className="rounded-xl bg-base-200/60 px-5 py-4 text-sm font-semibold"
+                                className="rounded-xl bg-white px-5 py-3 text-sm font-semibold shadow-md hover:shadow-xl transition hover:scale-105 text-center"
                             >
                                 {p}
                             </li>
@@ -75,7 +75,7 @@ export default function ZincOxideIntro() {
 
                     <Link
                         href="/zinc-oxyde"
-                        className="inline-flex items-center rounded-full bg-[rgb(223,126,60)] px-8 py-4 text-white font-semibold transition hover:opacity-90"
+                        className="inline-flex items-center rounded-full bg-orange-600 px-8 py-3 text-white font-semibold shadow-lg hover:shadow-xl transition hover:scale-105"
                     >
                         {c.cta}
                     </Link>
