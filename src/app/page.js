@@ -19,17 +19,17 @@ export default function Home() {
             <div className="site-container site-stack">
                 {/* Products section directly under the hero, as requested */}
                 <ZincOxyde />
-                <ProcessSteps />
+                {/* <ProcessSteps /> */}
 
-                <section id="propos" className="pt-20 px-4">
+                {/* <section id="propos" className="pt-20 px-4">
                     <AboutSection />
-                </section>
+                </section> */}
 
                 <ProductsGrid />
                 <Services />
 
-                <VideoComp />
-                <ImageCarousel />
+                {/* <VideoComp /> */}
+                {/* <ImageCarousel /> */}
             </div>
 
             <Footer />
