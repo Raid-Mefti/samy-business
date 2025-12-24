@@ -5,9 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function DevisPage() {
-    const [rows, setRows] = useState([
-        { type: "", designation: "", qty: "" },
-    ]);
+    const [rows, setRows] = useState([{ type: "", designation: "", qty: "" }]);
 
     const addRow = () => {
         setRows([...rows, { type: "", designation: "", qty: "" }]);
@@ -28,22 +26,21 @@ export default function DevisPage() {
                     {/* Title */}
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-[rgb(223,126,60)]">
-                        Demande de devis
-                    </h1>
-                    <p className="mt-3 text-base-content/70 max-w-2xl text-center mx-auto text-lg">
-                        Envoyez votre demande de produit et nous vous contacterons
-                        dans les plus brefs délais.
-                    </p>
+                            Demande de devis
+                        </h1>
+                        <p className="mt-3 text-base-content/70 max-w-2xl text-center mx-auto text-lg">
+                            Envoyez votre demande de produit et nous vous
+                            contacterons dans les plus brefs délais.
+                        </p>
                     </div>
-                    
 
                     {/* Form */}
                     <form className="mt-12 space-y-10">
-
                         {/* Contact info */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <Field label="Nom et Prénom *" required />
                             <Field label="Nom de l’entreprise *" required />
+                            <Field label="Numéro de téléphone *" required />
 
                             <SelectField
                                 label="Taille de l’entreprise *"
@@ -56,12 +53,7 @@ export default function DevisPage() {
                                 ]}
                             />
 
-                            <Field label="Numéro de téléphone *" required />
-                            <Field
-                                label="E-mail *"
-                                type="email"
-                                required
-                            />
+                            <Field label="E-mail *" type="email" required />
                             <Field
                                 label="Lieu de livraison"
                                 className="md:col-span-2"
@@ -73,14 +65,16 @@ export default function DevisPage() {
                         {/* Product table */}
                         <div>
                             <h2 className="text-2xl font-bold mb-4">
-                                Qualité et autres caractéristiques
+                                Quantité et autres caractéristiques
                             </h2>
 
                             <div className="overflow-x-auto">
                                 <table className="w-full border border-base-200 rounded-xl overflow-hidden">
                                     <thead className="bg-base-200 text-left">
                                         <tr>
-                                            <th className="p-3">Type produit</th>
+                                            <th className="p-3">
+                                                Type produit
+                                            </th>
                                             <th className="p-3">Désignation</th>
                                             <th className="p-3">QTY</th>
                                         </tr>
@@ -119,7 +113,6 @@ export default function DevisPage() {
                                                         <option value="Zinc SHG">
                                                             Zinc SHG
                                                         </option>
-                                                        
                                                     </select>
                                                 </td>
 

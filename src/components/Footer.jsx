@@ -188,7 +188,7 @@ export default function Comp7() {
                             language === "ar" ? "space-x-reverse" : ""
                         } mb-6 md:mb-0`}
                     >
-                        <img src="logo-planet.svg" alt="" />
+                        <img src="logo99.png" alt="" className="w-70" />
                         {/* <svg
                             className="w-6 h-6 text-[rgb(223,126,60)]"
                             viewBox="0 0 24 24"
@@ -196,9 +196,9 @@ export default function Comp7() {
                         >
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z" />
                         </svg> */}
-                        <span className="text-2xl font-extrabold text-white uppercase tracking-widest">
+                        {/* <span className="text-2xl font-extrabold text-white uppercase tracking-widest">
                             Samy Business
-                        </span>
+                        </span> */}
                     </div>
                 </div>
 

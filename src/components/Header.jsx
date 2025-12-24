@@ -4,6 +4,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function NavBar({ children }) {
     const { language } = useLanguage();
@@ -14,21 +15,21 @@ export default function NavBar({ children }) {
         fr: {
             about: "Oxyde de Zinc",
             products: "Produits",
-            services: "Services",
+            aboutus: "À propos de nous",
             contact: "Contactez nous",
             devis: "Demander un devis",
         },
         en: {
             about: "Zinc Oxide",
             products: "Products",
-            services: "Services",
+            aboutus: "About us",
             contact: "Contact",
             devis: "Request a Quote",
         },
         ar: {
             about: "أكسيد الزنك",
             products: "المنتجات",
-            services: "الخدمات",
+            aboutus: "نبذة عنا",
             contact: "اتصل بنا",
             devis: "طلب عرض سعر",
         },
@@ -77,6 +78,7 @@ export default function NavBar({ children }) {
                 <a href="/" onClick={(e) => handleLinkClick(e, "#top")}>
                     <img
                         src="/logo99.png"
+                        // src="/logo2.png"
                         alt="logo"
                         className="w-60 cursor-pointer"
                     />
@@ -115,13 +117,12 @@ export default function NavBar({ children }) {
 
                 {/* Services — now a direct button */}
                 <li>
-                    <a
-                        href="/#services"
-                        onClick={(e) => handleLinkClick(e, "#services")}
+                    <Link
+                        href="/aboutus"
                         className="text-white text-lg hover:text-[rgb(223,126,60)] transition"
                     >
-                        {t.services}
-                    </a>
+                        {t.aboutus}
+                    </Link>
                 </li>
             </ul>
 
@@ -137,8 +138,8 @@ export default function NavBar({ children }) {
                     className={`cursor-pointer hidden lg:flex items-center px-6 font-bold rounded-full border
                          border-[rgb(223,126,60)] bg-[rgb(223,126,60)] text-white hover:bg-white 
                          hover:text-[rgb(223,126,60)] transition ${
-                        isArabic ? "mr-1" : "ml-2"
-                    }`}
+                             isArabic ? "mr-1" : "ml-2"
+                         }`}
                 >
                     {t.devis}
                 </button>
@@ -147,8 +148,8 @@ export default function NavBar({ children }) {
                     className={`cursor-pointer hidden lg:flex items-center gap-3 px-6 font-bold rounded-full bg-white
                         border border-white/60 bg-transparent text-[rgb(223,126,60)] hover:bg-[rgb(223,126,60)] 
                         hover:text-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] hover:text-white transition ${
-                        isArabic ? "mr-4" : "ml-1"
-                    }`}
+                            isArabic ? "mr-4" : "ml-1"
+                        }`}
                 >
                     {t.contact}
                     <img
