@@ -414,8 +414,7 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                     </div>
                 </div>
 
-                {/* ================= MATERIAL BAND ================= */}
-                {bandImageTableau && (
+                {/* {bandImageTableau && (
                     <div
                         className="mt-28 rounded-2xl py-14 px-6 flex justify-center"
                         style={{ backgroundColor: bandColor }}
@@ -426,7 +425,7 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
                             className="max-h-72 object-contain"
                         />
                     </div>
-                )}
+                )} */}
             </div>
         </section>
     );

@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <>
             <section id="top">
-                <Header />
+                <Header transparentOnTop />
                 <Home1 />
             </section>
 

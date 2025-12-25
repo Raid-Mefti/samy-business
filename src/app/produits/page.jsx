@@ -55,18 +55,45 @@ const TRANSLATIONS = {
 
 /* ------------------ DATA ------------------ */
 const PRODUCTS = [
-    { name: "Aluminium", iconPath: "/product_section/aluminium-en-lingots.avif", category: "imported" },
-    { name: "Plomb Doux", iconPath: "/product_section/plomb-doux.png", category: "imported" },
-    { name: "Oxyde de Zinc", iconPath: "/product_section/oxyde de zinc.avif", category: "imported" },
-    { name: "Zinc SHG", iconPath: "/product_section/SHG-99.995.png", category: "exported" },
-    { name: "ZAMAK", iconPath: "/product_section/lingots-du-zamak.webp", category: "exported" },
+    {
+        name: "Aluminium",
+        iconPath: "/product_section/aluminium-en-lingots.avif",
+        category: "imported",
+    },
+    {
+        name: "Plomb Doux",
+        iconPath: "/product_section/plomb-doux.png",
+        category: "imported",
+    },
+    {
+        name: "Oxyde de Zinc",
+        iconPath: "/product_section/oxyde de zinc.avif",
+        category: "imported",
+    },
+    {
+        name: "Zinc SHG",
+        iconPath: "/product_section/SHG-99.995.png",
+        category: "exported",
+    },
+    {
+        name: "ZAMAK",
+        iconPath: "/product_section/lingots-du-zamak.webp",
+        category: "exported",
+    },
     { name: "Carton", iconPath: "/carton.avif", category: "exported" },
-    { name: "Zinc Aluminé", iconPath: "/product_section/zinc-aluminé.jpg", category: "manufactured" },
-    { name: "Cuivres", iconPath: "/product_section/lingot-de-cuivre.jpg", category: "manufactured" },
+    {
+        name: "Zinc Aluminé",
+        iconPath: "/product_section/zinc-aluminé.jpg",
+        category: "manufactured",
+    },
+    {
+        name: "Cuivres",
+        iconPath: "/product_section/lingot-de-cuivre.jpg",
+        category: "manufactured",
+    },
 ];
 
-const slugify = (name) =>
-    name.toLowerCase().replace(/\s+/g, "-");
+const slugify = (name) => name.toLowerCase().replace(/\s+/g, "-");
 
 /* ------------------ PRODUCT CARD ------------------ */
 const ProductCard = ({ name, iconPath, t }) => {
@@ -130,9 +157,11 @@ export default function ProduitsClient() {
     return (
         <>
             <Header />
-    
 
-            <section className=" py-16 bg-base-100" dir={isArabic ? "rtl" : "ltr"}>
+            <section
+                className=" py-16 bg-base-100"
+                dir={isArabic ? "rtl" : "ltr"}
+            >
                 <div className="h-28"></div>
                 <div className="max-w-7xl mx-auto px-4">
                     {/* Title */}
@@ -153,21 +182,24 @@ export default function ProduitsClient() {
                         />
 
                         <div className="flex gap-2 flex-wrap">
-                            {["all", "imported", "exported", "manufactured"].map(
-                                (cat) => (
-                                    <button
-                                        key={cat}
-                                        onClick={() => setActiveCategory(cat)}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
-                                            activeCategory === cat
-                                                ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
-                                                : "bg-white border-gray-300 text-gray-700 hover:border-[rgb(223,126,60)]"
-                                        }`}
-                                    >
-                                        {cat === "all" ? t.all : t[cat]}
-                                    </button>
-                                )
-                            )}
+                            {[
+                                "all",
+                                "imported",
+                                "exported",
+                                "manufactured",
+                            ].map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
+                                        activeCategory === cat
+                                            ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
+                                            : "bg-white border-gray-300 text-gray-700 hover:border-[rgb(223,126,60)]"
+                                    }`}
+                                >
+                                    {cat === "all" ? t.all : t[cat]}
+                                </button>
+                            ))}
                         </div>
                     </div>
 

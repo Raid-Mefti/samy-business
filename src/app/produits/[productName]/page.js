@@ -53,9 +53,9 @@ export default function ProductPage({ params }) {
     return (
         <>
             <Header />
-            <section id="article-hero">
+            {/* <section id="article-hero">
                 <Home1 />
-            </section>
+            </section> */}
 
             <div className="site-container site-stack py-16">
                 <ArticlePage productName={productName} />

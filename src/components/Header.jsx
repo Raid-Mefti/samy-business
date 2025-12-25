@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function NavBar({ children }) {
+export default function NavBar({ transparentOnTop = false }) {
     const { language } = useLanguage();
     const isArabic = language === "ar";
     const router = useRouter();
@@ -30,7 +30,7 @@ export default function NavBar({ children }) {
             about: "Oxyde de Zinc",
             products: "Produits",
             aboutus: "À propos de nous",
-            contact: "Contactez nous",
+            contact: "Contactez-nous",
             devis: "Demander un devis",
         },
         en: {
@@ -68,30 +68,28 @@ export default function NavBar({ children }) {
     const headerClasses = `
         fixed top-0 w-full z-[60] transition-all duration-300
         ${
-            scrolled
-                ? "bg-[#1E2438] shadow-lg border-b border-white/10"
-                : "bg-transparent backdrop-blur-md"
+            transparentOnTop && !scrolled
+                ? "bg-transparent backdrop-blur-md"
+                : "bg-[#1E2438] shadow-lg border-b border-white/10"
         }
     `;
 
     const navFlexClass = `${
-        isArabic ? "flex-row-reverse " : ""
-    }justify-between`;
+        isArabic ? "flex-row-reverse" : ""
+    } justify-between`;
 
     return (
         <nav
             className={`flex ${navFlexClass} items-center px-5 lg:px-8 xl:px-[5%] py-4 ${headerClasses}`}
         >
             {/* LOGO */}
-            <div>
-                <Link href="/">
-                    <img
-                        src="/logo99.png"
-                        alt="logo"
-                        className="w-56 drop-shadow-md"
-                    />
-                </Link>
-            </div>
+            <Link href="/">
+                <img
+                    src="/logo99.png"
+                    alt="logo"
+                    className="w-52 lg:w-56 drop-shadow-md"
+                />
+            </Link>
 
             {/* DESKTOP MENU */}
             <ul
@@ -102,7 +100,7 @@ export default function NavBar({ children }) {
                 <li>
                     <Link
                         href="/zinc-oxyde"
-                        className="text-white text-lg font-bold hover:text-[rgb(223,126,60)] transition"
+                        className="text-white text-lg font-semibold hover:text-[rgb(223,126,60)] transition"
                     >
                         {t.about}
                     </Link>
@@ -137,7 +135,7 @@ export default function NavBar({ children }) {
                 <button
                     onClick={() => router.push("/devis")}
                     className="hidden lg:flex items-center px-6 py-2 font-bold rounded-full
-                    bg-[rgb(223,126,60)] text-white border border-[rgb(223,126,60)]
+                    bg-[rgb(223,126,60)] text-white
                     hover:bg-white hover:text-[rgb(223,126,60)] transition"
                 >
                     {t.devis}
@@ -146,7 +144,7 @@ export default function NavBar({ children }) {
                 {/* CONTACT */}
                 <button
                     onClick={() => router.push("/contact")}
-                    className="hidden lg:flex items-center gap-2 px-6 py-2 rounded-full
+                    className="hidden lg:flex items-center px-6 py-2 rounded-full
                     border border-white/40 text-white
                     hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition"
                 >
