@@ -42,7 +42,7 @@ export default function Home1() {
     }, []);
 
     return (
-        <section className="relative h-[100vh] overflow-hidden">
+        <section className="relative min-h-screen flex items-end overflow-hidden">
             {/* PARALLAX BACKGROUND */}
             <motion.img
                 src="/hero2.jpg"
@@ -63,7 +63,7 @@ export default function Home1() {
 
             {/* CONTENT */}
             <div
-                className="relative z-10 h-full max-w-7xl mx-auto px-6 flex items-end pb-16 md:pb-24"
+                className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-16 md:pb-24 pt-20"
                 dir={isRtl ? "rtl" : "ltr"}
             >
                 <div

@@ -6,7 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const CONTENT = {
     fr: {
         title: "Oxyde de Zinc (ZnO)",
-        text: "Chez Samy Business, l’oxyde de zinc incarne notre exigence industrielle. Sélectionné auprès de fournisseurs certifiés et conforme aux normes européennes, il répond aux besoins des secteurs les plus exigeants, de la transformation industrielle à la fabrication spécialisée.",
+        text: "Chez Samy Business, l'oxyde de zinc incarne notre exigence industrielle. Sélectionné auprès de fournisseurs certifiés et conforme aux normes européennes, il répond aux besoins des secteurs les plus exigeants, de la transformation industrielle à la fabrication spécialisée.",
         points: [
             "Qualité industrielle certifiée",
             "Approvisionnement maîtrisé",
@@ -43,77 +43,94 @@ export default function ZincOxideIntro() {
 
     return (
         <section
-            className="
-                py-24
-                bg-gradient-to-b
-                from-base-100
-                to-base-200
-            "
+            className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-base-100 to-base-200"
             dir={isRTL ? "rtl" : "ltr"}
         >
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                {/* Visual */}
-                <div className="relative h-[28rem] md:h-[32rem] rounded-3xl overflow-hidden shadow-xl bg-base-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* Visual - Mobile: first, Desktop: first (LTR) or second (RTL) */}
+                <div
+                    className={`order-1 ${
+                        isRTL ? "md:order-2" : "md:order-1"
+                    } relative h-64 sm:h-80 md:h-[32rem] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl bg-base-300`}
+                >
                     <img
                         src="Zinc_fragment_sublimed_and_1cm3_cube.jpg"
                         alt="Oxyde de zinc industriel de haute qualité"
-                        className="w-full h-full object-cover scale-105"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
                     />
                 </div>
 
-                {/* Content */}
+                {/* Content - Mobile: second, Desktop: second (LTR) or first (RTL) */}
                 <div
-                    className={`space-y-6 md:space-y-8 ${
+                    className={`order-2 ${
+                        isRTL ? "md:order-1" : "md:order-2"
+                    } space-y-6 md:space-y-8 ${
                         isRTL ? "text-right" : "text-left"
                     }`}
                 >
-                    <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-base-content">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold md:font-extrabold tracking-tight text-base-content">
                         {c.title}
                     </h2>
 
-                    <p className="text-base md:text-lg text-base-content/80 leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-base-content/80 leading-relaxed sm:leading-relaxed">
                         {c.text}
                     </p>
 
-                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {/* Points grid - responsive layout */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                         {c.points.map((p) => (
-                            <li
+                            <div
                                 key={p}
                                 className="
-                                    rounded-xl
+                                    rounded-xl md:rounded-xl
                                     bg-base-100
                                     border border-base-300
-                                    px-5 py-4
-                                    text-sm font-semibold
+                                    px-4 py-3 sm:px-5 sm:py-4
+                                    text-xs sm:text-sm font-semibold
                                     text-base-content
                                     text-center
                                     shadow-sm
-                                    transition
+                                    transition-all duration-200
                                     hover:shadow-md
                                     hover:-translate-y-0.5
+                                    active:scale-95
                                 "
                             >
                                 {p}
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
 
-                    <Link
-                        href="/zinc-oxyde"
-                        className="
-                            inline-flex items-center justify-center
-                            rounded-full
-                            bg-[rgb(223,126,60)]
-                            px-8 py-3
-                            font-semibold text-white
-                            shadow-md
-                            transition
-                            hover:shadow-lg
-                            hover:opacity-95
-                        "
+                    {/* Orange button - centered on mobile */}
+                    <div
+                        className={`flex ${
+                            isRTL
+                                ? "justify-end md:justify-start"
+                                : "justify-start"
+                        } md:justify-start`}
                     >
-                        {c.cta}
-                    </Link>
+                        <Link
+                            href="/zinc-oxyde"
+                            className="
+                                inline-flex items-center justify-center
+                                rounded-full
+                                bg-[rgb(223,126,60)]
+                                px-6 py-3 sm:px-8 sm:py-3
+                                font-semibold text-white text-sm sm:text-base
+                                shadow-md
+                                transition-all duration-200
+                                hover:shadow-lg
+                                hover:bg-[rgb(223,126,60)]/90
+                                hover:scale-105
+                                active:scale-95
+                                w-full sm:w-auto
+                                text-center
+                            "
+                        >
+                            {c.cta}
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>

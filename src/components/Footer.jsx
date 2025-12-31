@@ -13,16 +13,19 @@ export default function Comp7() {
             terms: "Conditions générales",
             contact_title: "Nous Contacter",
             contactText: "Pour toutes demandes de sourcing et de partenariat :",
-            faq: "Questions fréquemment posées",
             products: "Nos Produits",
             about: "À propos de Samy Business",
             contact: "Contactez-nous",
             rights: "Tous droits réservés.",
             columns: {
-                c3: "FAQ",
-                c4: "Mentions Légales",
+                legal: "Mentions Légales",
                 social: "Suivez-nous",
+                products: "Produits",
+                about: "L'entreprise",
             },
+            contact_details: "Coordonnées",
+            phone: "Téléphone",
+            email: "E-mail",
         },
         en: {
             legal: "Legal Information",
@@ -30,17 +33,19 @@ export default function Comp7() {
             terms: "Terms and Conditions",
             contact_title: "Contact Us",
             contactText: "For all sourcing and partnership requests:",
-            faq: "Frequently asked questions",
             products: "Our Products",
             about: "About Samy Business",
             contact: "Contact Us",
             rights: "All rights reserved.",
             columns: {
-                c2: "Our Activities",
-                c3: "FAQ",
-                c4: "Legal Mentions",
+                legal: "Legal",
                 social: "Follow Us",
+                products: "Products",
+                about: "Company",
             },
+            contact_details: "Contact Details",
+            phone: "Phone",
+            email: "Email",
         },
         ar: {
             legal: "المعلومات القانونية",
@@ -48,21 +53,24 @@ export default function Comp7() {
             terms: "الشروط والأحكام",
             contact_title: "تواصل معنا",
             contactText: "لجميع طلبات التوريد والشراكات:",
-            faq: "الأسئلة المتداولة",
             products: "منتجاتنا",
             about: "من نحن",
             contact: "اتصل بنا",
             rights: "جميع الحقوق محفوظة.",
             columns: {
-                c2: "أنشطتنا",
-                c3: "الأسئلة الشائعة",
-                c4: "البيانات القانونية",
+                legal: "البيانات القانونية",
                 social: "تابعنا",
+                products: "المنتجات",
+                about: "الشركة",
             },
+            contact_details: "معلومات الاتصال",
+            phone: "الهاتف",
+            email: "البريد الإلكتروني",
         },
     };
 
     const t = translations[language];
+    const isRTL = language === "ar";
 
     const socialLinks = [
         {
@@ -79,6 +87,7 @@ export default function Comp7() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="text-gray-400 group-hover:text-[rgb(223,126,60)] transition-colors"
                 >
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                     <rect width="4" height="12" x="2" y="9" />
@@ -100,6 +109,7 @@ export default function Comp7() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="text-gray-400 group-hover:text-[rgb(223,126,60)] transition-colors"
                 >
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
@@ -119,6 +129,7 @@ export default function Comp7() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="text-gray-400 group-hover:text-[rgb(223,126,60)] transition-colors"
                 >
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -130,11 +141,21 @@ export default function Comp7() {
 
     const linkColumns = [
         {
-            title: t.columns.c3,
-            links: [{ name: t.faq, href: "#" }],
+            title: t.columns.products,
+            links: [
+                { name: t.products, href: "/produits" },
+                { name: "Zinc Oxide", href: "/zinc-oxyde" },
+            ],
         },
         {
-            title: t.columns.c4,
+            title: t.columns.about,
+            links: [
+                { name: t.about, href: "/aboutus" },
+                { name: t.contact, href: "/contact" },
+            ],
+        },
+        {
+            title: t.columns.legal,
             links: [
                 { name: t.legal, href: "/legal" },
                 { name: t.terms, href: "/legal#conditions" },
@@ -153,97 +174,98 @@ export default function Comp7() {
 
     return (
         <footer
-            className={`bg-gray-900 text-gray-300 py-10 sm:py-16 font-sans relative ${
-                language === "ar" ? "text-right" : ""
+            className={`bg-gray-900 text-gray-300 pt-10 pb-6 sm:pt-16 sm:pb-8 font-sans ${
+                isRTL ? "text-right" : ""
             }`}
+            dir={isRTL ? "rtl" : "ltr"}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                {/* HEADER (Logo) */}
+                {/* HEADER (Logo & Contact) */}
                 <div
-                    className={`flex flex-col md:flex-row justify-between items-center pb-8 border-b border-[rgb(223,126,60)] mb-8 ${
-                        language === "ar" ? "md:flex-row-reverse" : ""
+                    className={`flex flex-col lg:flex-row justify-between items-start lg:items-center pb-8 border-b border-[rgb(223,126,60)] mb-8 gap-8 ${
+                        isRTL ? "lg:flex-row-reverse" : ""
                     }`}
                 >
-                    <div
-                        className={`flex items-center space-x-2 ${
-                            language === "ar" ? "space-x-reverse" : ""
-                        } mb-6 md:mb-0`}
-                    >
-                        <img src="logo99.png" alt="" className="w-70" />
-                        {/* <svg
-                            className="w-6 h-6 text-[rgb(223,126,60)]"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
+                    {/* Logo */}
+                    <div className="flex-shrink-0">
+                        <img
+                            src="logo99.png"
+                            alt="Samy Business"
+                            className="w-60 sm:w-70 max-w-full"
+                        />
+                    </div>
+
+                    {/* Contact Info */}
+                    <div className="flex-1 max-w-2xl">
+                        <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
+                            {t.contact_details}
+                        </h5>
+                        <p className="text-gray-400 mb-4 text-sm sm:text-base">
+                            {t.contactText}
+                        </p>
+                        <div
+                            className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${
+                                isRTL ? "sm:text-right" : ""
+                            }`}
                         >
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z" />
-                        </svg> */}
-                        {/* <span className="text-2xl font-extrabold text-white uppercase tracking-widest">
-                            Samy Business
-                        </span> */}
+                            <div>
+                                <p className="text-[rgb(223,126,60)] font-medium mb-1 text-sm sm:text-base">
+                                    {t.phone}:
+                                </p>
+                                <div
+                                    className={`space-y-1 ${
+                                        isRTL ? "space-y-reverse" : ""
+                                    }`}
+                                >
+                                    <p className="text-gray-400 text-sm sm:text-base">
+                                        044-80-84-19
+                                    </p>
+                                    <p className="text-gray-400 text-sm sm:text-base">
+                                        0540-34-28-40
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                <p className="text-[rgb(223,126,60)] font-medium mb-1 text-sm sm:text-base">
+                                    {t.email}:
+                                </p>
+                                <p className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
+                                    contact@samybusiness.dz
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {/* COLUMNS */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-                    {/* Contact */}
-                    <div className="col-span-2 md:col-span-1">
-                        <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
-                            {t.contact_title}
-                        </h5>
-                        <p className="text-gray-400 mb-2">{t.contactText}</p>
-                        <p
-                            href="mailto:contact@samybusiness.dz"
-                            className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
-                        >
-                            Tel :
-                        </p>
-                        <p
-                            href="mailto:contact@samybusiness.dz"
-                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
-                        >
-                            044-80-84-19
-                        </p>
-                        <p
-                            href="mailto:contact@samybusiness.dz"
-                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
-                        >
-                            0540-34-28-40
-                        </p>
-
-                        <p
-                            href="mailto:contact@samybusiness.dz"
-                            className="text-[rgb(223,126,60)] font-medium hover:text-white transition-colors"
-                        >
-                            Email :
-                        </p>
-                        <p
-                            href="mailto:contact@samybusiness.dz"
-                            className="ml-8 text-gray-400 font-medium hover:text-white transition-colors"
-                        >
-                            contact@samybusiness.dz
-                        </p>
-                    </div>
-
-                    {/* Remaining Columns */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10">
                     {linkColumns.map((col, index) => (
                         <div key={index} className="col-span-1">
-                            <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-base">
+                            <h5 className="font-semibold text-white mb-4 uppercase tracking-wider text-sm sm:text-base">
                                 {col.title}
                             </h5>
-                            <ul className="space-y-3">
+                            <ul className="space-y-2 sm:space-y-3">
                                 {col.links.map((link, linkIndex) => (
                                     <li key={linkIndex}>
-                                        <a
-                                            href={link.href}
-                                            className={`${
-                                                link.icon
-                                                    ? "flex items-center gap-2 hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
-                                                    : "hover:text-[rgb(223,126,60)] transition-colors text-gray-400"
-                                            }`}
-                                        >
-                                            {link.icon && link.icon}
-                                            {link.name}
-                                        </a>
+                                        {col.title === t.columns.social ? (
+                                            <a
+                                                href={link.href}
+                                                className="group flex items-center gap-2 hover:text-[rgb(223,126,60)] transition-colors text-gray-400 text-sm sm:text-base"
+                                                aria-label={link.name}
+                                            >
+                                                {link.icon}
+                                                <span className="group-hover:text-[rgb(223,126,60)] transition-colors">
+                                                    {link.name}
+                                                </span>
+                                            </a>
+                                        ) : (
+                                            <a
+                                                href={link.href}
+                                                className="hover:text-[rgb(223,126,60)] transition-colors text-gray-400 text-sm sm:text-base"
+                                            >
+                                                {link.name}
+                                            </a>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -252,16 +274,33 @@ export default function Comp7() {
                 </div>
 
                 {/* COPYRIGHT */}
-                <div className="mt-16 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-xs">
-                    <p className="text-gray-500 mb-3 md:mb-0">
+                <div className="mt-8 pt-6 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p className="text-gray-500 text-xs sm:text-sm text-center sm:text-left">
                         &copy; {new Date().getFullYear()} Samy Business.{" "}
                         {t.rights}
                     </p>
+
+                    {/* Social Icons - Horizontal for mobile */}
                     <div
-                        className={`flex items-center space-x-2 ${
-                            language === "ar" ? "space-x-reverse" : ""
+                        className={`flex items-center gap-4 ${
+                            isRTL ? "flex-row-reverse" : ""
                         }`}
-                    ></div>
+                    >
+                        {socialLinks.map((social, index) => (
+                            <a
+                                key={index}
+                                href={social.href}
+                                className="text-gray-400 hover:text-[rgb(223,126,60)] transition-colors"
+                                aria-label={social.name}
+                            >
+                                <div className="w-6 h-6 sm:w-7 sm:h-7">
+                                    {React.cloneElement(social.icon, {
+                                        className: "w-full h-full",
+                                    })}
+                                </div>
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
         </footer>

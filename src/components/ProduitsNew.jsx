@@ -64,13 +64,8 @@ export default function HomeProductsScroller() {
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    // Create extended array for seamless scroll - quadruple for full width coverage
-    const extendedProducts = [
-        ...PRODUCTS,
-        ...PRODUCTS,
-        ...PRODUCTS,
-        ...PRODUCTS,
-    ];
+    // Create extended array for seamless scroll - triple for smooth edge-to-edge
+    const extendedProducts = [...PRODUCTS, ...PRODUCTS, ...PRODUCTS];
 
     // Translations
     const translations = {
@@ -97,14 +92,14 @@ export default function HomeProductsScroller() {
 
     const t = translations[language] || translations.fr;
 
-    // Calculate animation values
+    // Calculate animation values based on content width
     const [contentWidth, setContentWidth] = useState(0);
     const [containerWidth, setContainerWidth] = useState(0);
 
     useEffect(() => {
         const updateWidths = () => {
             if (contentRef.current && containerRef.current) {
-                const contentWidth = contentRef.current.scrollWidth / 4; // Since we quadrupled the array
+                const contentWidth = contentRef.current.scrollWidth / 3; // Since we tripled the array
                 const containerWidth = containerRef.current.offsetWidth;
                 setContentWidth(contentWidth);
                 setContainerWidth(containerWidth);
@@ -116,12 +111,12 @@ export default function HomeProductsScroller() {
         return () => window.removeEventListener("resize", updateWidths);
     }, []);
 
-    // Calculate total distance to travel (from right edge to left edge)
-    const travelDistance = contentWidth + containerWidth; // Full width coverage
+    // Calculate animation distance to ensure cards appear from left edge and disappear at right edge
+    const travelDistance = contentWidth - containerWidth;
 
     return (
         <section
-            className={`relative py-16 md:py-24 overflow-hidden w-screen ${
+            className={`relative py-16 md:py-24 overflow-hidden ${
                 theme === "dark"
                     ? "bg-base-200"
                     : "bg-gradient-to-b from-base-100 to-base-200"
@@ -134,9 +129,9 @@ export default function HomeProductsScroller() {
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="relative z-10">
-                {/* Header - now centered with proper margins */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12 md:mb-16">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header */}
+                <div className="text-center mb-12 md:mb-16">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -167,47 +162,39 @@ export default function HomeProductsScroller() {
                     </motion.p>
                 </div>
 
-                {/* SCROLLER CONTAINER - FULL WIDTH */}
-                <div className="relative w-full" ref={containerRef}>
+                {/* SCROLLER CONTAINER */}
+                <div className="relative" ref={containerRef}>
                     {/* Gradient overlays for smooth fade-in/out at edges */}
                     <div
-                        className={`absolute left-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-r ${
+                        className={`absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r ${
                             theme === "dark" ? "from-base-200" : "from-base-100"
                         } to-transparent z-20 pointer-events-none ${
                             isRtl ? "right-0 left-auto bg-gradient-to-l" : ""
                         }`}
                     ></div>
                     <div
-                        className={`absolute right-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-l ${
+                        className={`absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l ${
                             theme === "dark" ? "from-base-200" : "from-base-100"
                         } to-transparent z-20 pointer-events-none ${
                             isRtl ? "left-0 right-auto bg-gradient-to-r" : ""
                         }`}
                     ></div>
 
-                    {/* SCROLLER - FULL WIDTH */}
+                    {/* SCROLLER */}
                     <div className="relative w-full overflow-hidden">
                         <motion.div
                             className="flex gap-4 md:gap-8 w-max"
                             ref={contentRef}
                             animate={{
                                 x: isRtl
-                                    ? [containerWidth, -travelDistance] // Start from right, move left
-                                    : [-contentWidth, -travelDistance], // Start from right edge, move left
+                                    ? [0, -travelDistance]
+                                    : [0, -travelDistance],
                             }}
                             transition={{
-                                duration: 60, // Slower duration for full width
+                                duration: 45,
                                 ease: "linear",
                                 repeat: Infinity,
                                 repeatType: "loop",
-                            }}
-                            style={{
-                                paddingLeft: isRtl
-                                    ? "0"
-                                    : containerWidth + "px",
-                                paddingRight: isRtl
-                                    ? containerWidth + "px"
-                                    : "0",
                             }}
                         >
                             {extendedProducts.map((product, index) => (
@@ -224,7 +211,7 @@ export default function HomeProductsScroller() {
                     </div>
 
                     {/* Scroll indicator */}
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center mt-6">
+                    <div className="flex justify-center mt-6">
                         <div
                             className={`h-1 w-24 rounded-full ${
                                 theme === "dark"
@@ -251,7 +238,7 @@ export default function HomeProductsScroller() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
-                    className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 md:mt-16 text-center"
+                    className="mt-12 md:mt-16 text-center"
                 >
                     <Link
                         href="/produits"
