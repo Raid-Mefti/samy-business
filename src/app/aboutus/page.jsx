@@ -33,7 +33,7 @@ export default function AboutPage() {
                 {/* SERVICES */}
                 <section className="bg-base-200 py-24">
                     <div className="max-w-6xl mx-auto px-6">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-base-content">
                             {t.services.title}
                         </h2>
 
@@ -41,7 +41,7 @@ export default function AboutPage() {
                             {t.services.items.map((s, i) => (
                                 <div
                                     key={i}
-                                    className="bg-white rounded-2xl shadow-lg p-8 border-t-4"
+                                    className="bg-base-100 rounded-2xl shadow-lg p-8 border-t-4 hover:shadow-xl transition-shadow duration-300"
                                     style={{ borderColor: s.color }}
                                 >
                                     <h3
@@ -50,7 +50,7 @@ export default function AboutPage() {
                                     >
                                         {s.name}
                                     </h3>
-                                    <p className="leading-relaxed opacity-80 whitespace-pre-line">
+                                    <p className="leading-relaxed text-base-content/80 whitespace-pre-line">
                                         {s.desc}
                                     </p>
                                 </div>
@@ -60,13 +60,13 @@ export default function AboutPage() {
                 </section>
 
                 {/* KNOWLEDGE */}
-                <section className="py-24">
+                <section className="py-24 bg-base-100">
                     <div className="max-w-6xl mx-auto px-6">
-                        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-base-content">
                             {t.knowledge.title}
                         </h2>
 
-                        <p className="text-center opacity-70 max-w-3xl mx-auto mb-14">
+                        <p className="text-center text-base-content/70 max-w-3xl mx-auto mb-14">
                             {t.knowledge.subtitle}
                         </p>
 
@@ -74,7 +74,7 @@ export default function AboutPage() {
                             {t.knowledge.items.map((k, i) => (
                                 <div
                                     key={i}
-                                    className="group bg-white rounded-2xl shadow-lg overflow-hidden"
+                                    className="group bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
                                 >
                                     <img
                                         src={k.img}
@@ -88,12 +88,12 @@ export default function AboutPage() {
                                         >
                                             {k.title}
                                         </h3>
-                                        <p className="opacity-80 mb-6">
+                                        <p className="text-base-content/80 mb-6">
                                             {k.text}
                                         </p>
                                         <a
                                             href={k.link}
-                                            className="inline-block font-semibold hover:underline"
+                                            className="inline-block font-semibold hover:underline transition-colors"
                                             style={{ color: k.color }}
                                         >
                                             {t.knowledge.cta}
@@ -212,7 +212,7 @@ const translations = {
                 },
                 {
                     title: "Statistics & Market",
-                    text: "Global ZnO opportunities and Algeria’s strategic positioning.",
+                    text: "Global ZnO opportunities and Algeria's strategic positioning.",
                     img: "statistics.jpg",
                     link: "/wiki/statistics",
                     color: "#4E6BA4",

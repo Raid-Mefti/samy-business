@@ -108,7 +108,7 @@ const ProductCard = ({ name, iconPath, t }) => {
         >
             <Link
                 href={href}
-                className="group block rounded-2xl bg-gray-100 border border-gray-200 overflow-hidden hover:shadow-xl transition"
+                className="group block rounded-2xl bg-base-200 border border-base-300 overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-[rgb(223,126,60)]"
             >
                 <div className="relative w-full h-56">
                     <Image
@@ -116,16 +116,19 @@ const ProductCard = ({ name, iconPath, t }) => {
                         alt={name}
                         fill
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
 
                 <div className="p-6">
-                    <h3 className="text-xl font-bold">{name}</h3>
+                    <h3 className="text-xl font-bold text-base-content">
+                        {name}
+                    </h3>
                     <p className="mt-2 text-sm text-base-content/70">
                         {t.description}
                     </p>
 
-                    <span className="inline-block mt-4 px-5 py-2 rounded-full bg-[rgb(223,126,60)] text-white text-sm font-semibold">
+                    <span className="inline-block mt-4 px-5 py-2 rounded-full bg-[rgb(223,126,60)] text-white text-sm font-semibold hover:bg-[rgb(223,126,60)]/90 transition-colors">
                         {t.cta}
                     </span>
                 </div>
@@ -159,7 +162,7 @@ export default function ProduitsClient() {
             <Header />
 
             <section
-                className=" py-16 bg-base-100"
+                className="py-16 bg-base-100 min-h-screen"
                 dir={isArabic ? "rtl" : "ltr"}
             >
                 <div className="h-28"></div>
@@ -178,7 +181,7 @@ export default function ProduitsClient() {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder={t.search}
-                            className="px-4 py-2 border rounded-lg"
+                            className="px-4 py-3 border border-base-300 rounded-lg bg-base-200 text-base-content placeholder:text-base-content/50 focus:outline-none focus:ring-2 focus:ring-[rgb(223,126,60)] focus:border-transparent"
                         />
 
                         <div className="flex gap-2 flex-wrap">
@@ -191,10 +194,10 @@ export default function ProduitsClient() {
                                 <button
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
+                                    className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
                                         activeCategory === cat
                                             ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)]"
-                                            : "bg-white border-gray-300 text-gray-700 hover:border-[rgb(223,126,60)]"
+                                            : "bg-base-200 border-base-300 text-base-content hover:border-[rgb(223,126,60)] hover:text-[rgb(223,126,60)]"
                                     }`}
                                 >
                                     {cat === "all" ? t.all : t[cat]}
@@ -205,7 +208,11 @@ export default function ProduitsClient() {
 
                     {/* GRID 3 COLONNES */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredProducts.length === 0 && <p>{t.empty}</p>}
+                        {filteredProducts.length === 0 && (
+                            <p className="text-base-content/70 col-span-full text-center py-10">
+                                {t.empty}
+                            </p>
+                        )}
                         {filteredProducts.map((p) => (
                             <ProductCard key={p.name} {...p} t={t} />
                         ))}
