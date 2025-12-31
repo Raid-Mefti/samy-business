@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function ArticlePage({
     productName = "Article",
@@ -14,6 +15,7 @@ export default function ArticlePage({
             : "fr";
 
     const isRTL = lang === "ar";
+    const router = useRouter();
 
     const slugify = (name) =>
         String(name || "")
@@ -327,12 +329,7 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
         : fallback[lang];
 
     const mainImage =
-        imageSrc ||
-        productData[slug]?.image ||
-        "/tableaux/tableau_aluminium.jpeg";
-
-    const bandImageTableau = productData[slug]?.imageTableau;
-    const bandColor = themeColor || "#DF7E3C";
+        imageSrc || productData[slug]?.image || "/couvertureIMG.jpg";
 
     return (
         <section
@@ -352,13 +349,13 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
 
                 {/* ================= CONTENT GRID ================= */}
                 <div
-                    className={`grid grid-cols-1 lg:grid-cols-2 gap-14 items-start ${
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch ${
                         isRTL ? "lg:[direction:rtl]" : ""
                     }`}
                 >
                     {/* IMAGE COLUMN */}
                     <div className="w-full">
-                        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-neutral-200">
+                        <div className="relative h-full aspect-[4/3] lg:aspect-auto rounded-2xl overflow-hidden shadow-xl bg-neutral-200">
                             <img
                                 src={mainImage}
                                 onError={(e) => {
@@ -372,60 +369,62 @@ Uses: boxes, pallets, void fill, industrial packaging</pre>`,
 
                     {/* TEXT COLUMN */}
                     <div
-                        className={`max-w-xl ${
+                        className={`max-w-xl h-full flex flex-col ${
                             isRTL ? "text-right mr-auto" : "text-left ml-auto"
                         }`}
                     >
-                        <h2 className="text-2xl font-bold mb-6">
-                            {data.longTitle}
-                        </h2>
+                        {/* TOP CONTENT */}
+                        <div>
+                            <h2 className="text-2xl font-bold mb-6">
+                                {data.longTitle}
+                            </h2>
 
-                        <p className="leading-relaxed text-base-content/90 mb-8 whitespace-pre-line">
-                            {data.intro}
-                        </p>
+                            <p className="leading-relaxed text-base-content/90 mb-10">
+                                {data.intro}
+                            </p>
 
-                        {data.specsHtml && (
-                            <div className="mb-10">
-                                <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 text-base-content/70">
-                                    {lang === "fr"
-                                        ? "Fiche technique"
-                                        : lang === "ar"
-                                        ? "البيانات الفنية"
-                                        : "Technical sheet"}
-                                </h3>
+                            {data.specsHtml && (
+                                <div className="mb-12">
+                                    <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 text-base-content/60">
+                                        {lang === "fr"
+                                            ? "Fiche technique"
+                                            : lang === "ar"
+                                            ? "البيانات الفنية"
+                                            : "Technical sheet"}
+                                    </h3>
 
-                                <div className="bg-base-200 rounded-xl p-5 text-sm leading-relaxed">
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: data.specsHtml,
-                                        }}
-                                    />
+                                    <div className="rounded-2xl p-6 bg-base-200/80 border border-base-300 shadow-sm">
+                                        <div
+                                            className="text-sm leading-relaxed"
+                                            dangerouslySetInnerHTML={{
+                                                __html: data.specsHtml,
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
 
-                        <p className="text-base-content/80">
-                            {lang === "fr"
-                                ? "Pour toute demande technique ou commerciale, contactez notre service commercial."
-                                : lang === "ar"
-                                ? "لأي استفسار فني أو تجاري، يرجى التواصل مع قسم المبيعات."
-                                : "For technical or commercial inquiries, please contact our sales team."}
-                        </p>
+                        {/* CTA — BOTTOM CENTER */}
+                        <div className="mt-auto pt-10 flex justify-center">
+                            <button
+                                onClick={() => router.push("/devis")}
+                                className="inline-flex items-center justify-center
+                                       rounded-full px-12 py-4
+                                       font-semibold text-white
+                                       bg-[rgb(223,126,60)]
+                                       shadow-lg hover:shadow-xl
+                                       hover:brightness-110 transition"
+                            >
+                                {lang === "fr"
+                                    ? "Demander un devis"
+                                    : lang === "ar"
+                                    ? "طلب عرض سعر"
+                                    : "Request a quote"}
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                {/* {bandImageTableau && (
-                    <div
-                        className="mt-28 rounded-2xl py-14 px-6 flex justify-center"
-                        style={{ backgroundColor: bandColor }}
-                    >
-                        <img
-                            src={bandImageTableau}
-                            alt={data.longTitle}
-                            className="max-h-72 object-contain"
-                        />
-                    </div>
-                )} */}
             </div>
         </section>
     );

@@ -21,14 +21,25 @@ export default function DevisPage() {
         <>
             <Header />
 
-            <section className="py-20 bg-gray-100">
-                <div className="max-w-5xl bg-gray-200 px-16 py-5 rounded-2xl mx-auto px-4 mt-20">
+            <section className="py-24 bg-base-200">
+                <div
+                    className="
+            max-w-5xl
+            mx-auto
+            mt-20
+            rounded-3xl
+            px-6 md:px-16 py-12
+            bg-base-100
+            border border-base-300
+            shadow-xl
+        "
+                >
                     {/* Title */}
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-[rgb(223,126,60)]">
                             Demande de devis
                         </h1>
-                        <p className="mt-3 text-base-content/70 max-w-2xl text-center mx-auto text-lg">
+                        <p className="mt-3 text-base-content/70 max-w-2xl mx-auto text-lg">
                             Envoyez votre demande de produit et nous vous
                             contacterons dans les plus brefs délais.
                         </p>
@@ -68,15 +79,19 @@ export default function DevisPage() {
                                 Quantité et autres caractéristiques
                             </h2>
 
-                            <div className="overflow-x-auto">
-                                <table className="w-full border border-base-200 rounded-xl overflow-hidden">
-                                    <thead className="bg-base-200 text-left">
+                            <div className="overflow-x-auto rounded-xl border border-base-300">
+                                <table className="w-full">
+                                    <thead className="bg-base-200 text-base-content">
                                         <tr>
-                                            <th className="p-3">
+                                            <th className="p-3 font-semibold">
                                                 Type produit
                                             </th>
-                                            <th className="p-3">Désignation</th>
-                                            <th className="p-3">QTY</th>
+                                            <th className="p-3 font-semibold">
+                                                Désignation
+                                            </th>
+                                            <th className="p-3 font-semibold">
+                                                QTY
+                                            </th>
                                         </tr>
                                     </thead>
 
@@ -84,7 +99,11 @@ export default function DevisPage() {
                                         {rows.map((row, i) => (
                                             <tr
                                                 key={i}
-                                                className="border-t border-base-200"
+                                                className="
+                        border-t border-base-300
+                        hover:bg-base-200/50
+                        transition
+                    "
                                             >
                                                 <td className="p-2">
                                                     <select
@@ -149,21 +168,34 @@ export default function DevisPage() {
                                     </tbody>
                                 </table>
                             </div>
-
-                            <button
-                                type="button"
-                                onClick={addRow}
-                                className="mt-4 text-sm font-semibold text-[rgb(223,126,60)] hover:underline"
-                            >
-                                + Ajouter un produit
-                            </button>
                         </div>
 
+                        <button
+                            type="button"
+                            onClick={addRow}
+                            className="
+        mt-4 text-sm font-semibold
+        text-[rgb(223,126,60)]
+        hover:underline
+        hover:opacity-80
+    "
+                        >
+                            + Ajouter un produit
+                        </button>
                         {/* Submit */}
                         <div className="flex justify-center ">
                             <button
                                 type="submit"
-                                className="px-8 py-4 rounded-full cursor-pointer bg-[rgb(223,126,60)] text-white font-bold hover:opacity-90 transition"
+                                className="
+        px-10 py-4
+        rounded-full
+        bg-[rgb(223,126,60)]
+        text-white font-bold
+        shadow-md
+        hover:shadow-lg
+        hover:scale-105
+        transition
+    "
                             >
                                 Envoyer la demande
                             </button>

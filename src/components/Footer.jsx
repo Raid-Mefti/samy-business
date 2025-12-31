@@ -87,25 +87,6 @@ export default function Comp7() {
             ),
         },
         {
-            name: "Twitter / X",
-            href: "#",
-            icon: (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
-                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17-15.3 11.1 1.7.1 3.5-.1 5.4-1.2C7.2 16.5 4 11.2 4 4" />
-                </svg>
-            ),
-        },
-        {
             name: "Facebook",
             href: "#",
             icon: (
