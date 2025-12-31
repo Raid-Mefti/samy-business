@@ -3,8 +3,13 @@
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function DevisPage() {
+    const { language } = useLanguage();
+
+    const t = TRANSLATIONS[language]; // current translations
+
     const [rows, setRows] = useState([{ type: "", designation: "", qty: "" }]);
 
     const addRow = () => {
@@ -22,26 +27,14 @@ export default function DevisPage() {
             <Header />
 
             <section className="py-24 bg-base-200">
-                <div
-                    className="
-            max-w-5xl
-            mx-auto
-            mt-20
-            rounded-3xl
-            px-6 md:px-16 py-12
-            bg-base-100
-            border border-base-300
-            shadow-xl
-        "
-                >
+                <div className="max-w-5xl mx-auto mt-20 rounded-3xl px-6 md:px-16 py-12 bg-base-100 border border-base-300 shadow-xl">
                     {/* Title */}
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-[rgb(223,126,60)]">
-                            Demande de devis
+                            {t.pageTitle}
                         </h1>
                         <p className="mt-3 text-base-content/70 max-w-2xl mx-auto text-lg">
-                            Envoyez votre demande de produit et nous vous
-                            contacterons dans les plus brefs délais.
+                            {t.pageSubtitle}
                         </p>
                     </div>
 
@@ -49,24 +42,21 @@ export default function DevisPage() {
                     <form className="mt-12 space-y-10">
                         {/* Contact info */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <Field label="Nom et Prénom *" required />
-                            <Field label="Nom de l’entreprise *" required />
-                            <Field label="Numéro de téléphone *" required />
-
+                            <Field label={t.fields.name} required />
+                            <Field label={t.fields.company} required />
+                            <Field label={t.fields.phone} required />
                             <SelectField
-                                label="Taille de l’entreprise *"
+                                label={t.fields.companySize}
                                 required
-                                options={[
-                                    "Micro (1–9 employés)",
-                                    "Petite (10–49 employés)",
-                                    "Moyenne (50–249 employés)",
-                                    "Grande (250+ employés)",
-                                ]}
+                                options={t.companySizes}
                             />
-
-                            <Field label="E-mail *" type="email" required />
                             <Field
-                                label="Lieu de livraison"
+                                label={t.fields.email}
+                                type="email"
+                                required
+                            />
+                            <Field
+                                label={t.fields.deliveryLocation}
                                 className="md:col-span-2"
                             />
                         </div>
@@ -76,7 +66,7 @@ export default function DevisPage() {
                         {/* Product table */}
                         <div>
                             <h2 className="text-2xl font-bold mb-4">
-                                Quantité et autres caractéristiques
+                                {t.productSectionTitle}
                             </h2>
 
                             <div className="overflow-x-auto rounded-xl border border-base-300">
@@ -84,13 +74,13 @@ export default function DevisPage() {
                                     <thead className="bg-base-200 text-base-content">
                                         <tr>
                                             <th className="p-3 font-semibold">
-                                                Type produit
+                                                {t.tableHeaders.type}
                                             </th>
                                             <th className="p-3 font-semibold">
-                                                Désignation
+                                                {t.tableHeaders.designation}
                                             </th>
                                             <th className="p-3 font-semibold">
-                                                QTY
+                                                {t.tableHeaders.qty}
                                             </th>
                                         </tr>
                                     </thead>
@@ -99,11 +89,7 @@ export default function DevisPage() {
                                         {rows.map((row, i) => (
                                             <tr
                                                 key={i}
-                                                className="
-                        border-t border-base-300
-                        hover:bg-base-200/50
-                        transition
-                    "
+                                                className="border-t border-base-300 hover:bg-base-200/50 transition"
                                             >
                                                 <td className="p-2">
                                                     <select
@@ -118,7 +104,7 @@ export default function DevisPage() {
                                                         }
                                                     >
                                                         <option value="">
-                                                            Choisir un produit
+                                                            {t.selectProduct}
                                                         </option>
                                                         <option value="OXYDE DE ZINC">
                                                             OXYDE DE ZINC
@@ -173,36 +159,23 @@ export default function DevisPage() {
                         <button
                             type="button"
                             onClick={addRow}
-                            className="
-        mt-4 text-sm font-semibold
-        text-[rgb(223,126,60)]
-        hover:underline
-        hover:opacity-80
-    "
+                            className="mt-4 text-sm font-semibold text-[rgb(223,126,60)] hover:underline hover:opacity-80"
                         >
-                            + Ajouter un produit
+                            + {t.addProduct}
                         </button>
+
                         {/* Submit */}
-                        <div className="flex justify-center ">
+                        <div className="flex justify-center">
                             <button
                                 type="submit"
-                                className="
-        px-10 py-4
-        rounded-full
-        bg-[rgb(223,126,60)]
-        text-white font-bold
-        shadow-md
-        hover:shadow-lg
-        hover:scale-105
-        transition
-    "
+                                className="px-10 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-bold shadow-md hover:shadow-lg hover:scale-105 transition"
                             >
-                                Envoyer la demande
+                                {t.submitButton}
                             </button>
                         </div>
 
                         <p className="text-sm text-center text-base-content/60">
-                            Les champs marqués * sont obligatoires.
+                            {t.requiredNote}
                         </p>
                     </form>
                 </div>
@@ -214,7 +187,6 @@ export default function DevisPage() {
 }
 
 /* ---------- Reusable components ---------- */
-
 function Field({ label, type = "text", required, className }) {
     return (
         <div className={className}>
@@ -236,7 +208,7 @@ function SelectField({ label, options = [], required, className }) {
                 required={required}
                 className="select select-bordered w-full"
             >
-                <option value="">Sélectionner</option>
+                <option value="">{label}</option>
                 {options.map((opt, i) => (
                     <option key={i} value={opt}>
                         {opt}
@@ -246,3 +218,93 @@ function SelectField({ label, options = [], required, className }) {
         </div>
     );
 }
+
+/* ---------- Translations ---------- */
+const TRANSLATIONS = {
+    fr: {
+        pageTitle: "Demande de devis",
+        pageSubtitle:
+            "Envoyez votre demande de produit et nous vous contacterons dans les plus brefs délais.",
+        fields: {
+            name: "Nom et Prénom *",
+            company: "Nom de l’entreprise *",
+            phone: "Numéro de téléphone *",
+            companySize: "Taille de l’entreprise *",
+            email: "E-mail *",
+            deliveryLocation: "Lieu de livraison",
+        },
+        companySizes: [
+            "Micro (1–9 employés)",
+            "Petite (10–49 employés)",
+            "Moyenne (50–249 employés)",
+            "Grande (250+ employés)",
+        ],
+        productSectionTitle: "Quantité et autres caractéristiques",
+        tableHeaders: {
+            type: "Type produit",
+            designation: "Désignation",
+            qty: "QTY",
+        },
+        selectProduct: "Choisir un produit",
+        addProduct: "Ajouter un produit",
+        submitButton: "Envoyer la demande",
+        requiredNote: "Les champs marqués * sont obligatoires.",
+    },
+    en: {
+        pageTitle: "Request a Quote",
+        pageSubtitle:
+            "Send your product request and we will contact you as soon as possible.",
+        fields: {
+            name: "Full Name *",
+            company: "Company Name *",
+            phone: "Phone Number *",
+            companySize: "Company Size *",
+            email: "E-mail *",
+            deliveryLocation: "Delivery Location",
+        },
+        companySizes: [
+            "Micro (1–9 employees)",
+            "Small (10–49 employees)",
+            "Medium (50–249 employees)",
+            "Large (250+ employees)",
+        ],
+        productSectionTitle: "Quantity and other characteristics",
+        tableHeaders: {
+            type: "Product Type",
+            designation: "Designation",
+            qty: "QTY",
+        },
+        selectProduct: "Select a product",
+        addProduct: "Add a product",
+        submitButton: "Send Request",
+        requiredNote: "Fields marked * are required.",
+    },
+    ar: {
+        pageTitle: "طلب عرض سعر",
+        pageSubtitle: "أرسل طلب منتجك وسنتواصل معك في أقرب وقت ممكن.",
+        fields: {
+            name: "الاسم الكامل *",
+            company: "اسم الشركة *",
+            phone: "رقم الهاتف *",
+            companySize: "حجم الشركة *",
+            email: "البريد الإلكتروني *",
+            deliveryLocation: "مكان التسليم",
+        },
+        companySizes: [
+            "صغيرة جدًا (1–9 موظفين)",
+            "صغيرة (10–49 موظفين)",
+            "متوسطة (50–249 موظفين)",
+            "كبيرة (250+ موظف)",
+        ],
+        productSectionTitle: "الكمية وخصائص أخرى",
+        tableHeaders: {
+            type: "نوع المنتج",
+            designation: "التسمية",
+            qty: "الكمية",
+        },
+        selectProduct: "اختر منتجًا",
+        addProduct: "أضف منتجًا",
+        submitButton: "إرسال الطلب",
+        requiredNote: "الحقول المميزة بـ * إلزامية.",
+    },
+};
