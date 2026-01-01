@@ -5,7 +5,8 @@ import Footer from "@/components/Footer";
 import Home1 from "@/components/Home1";
 import ArticlePage from "@/components/ArticlePage";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import { use } from "react"; // Import the use hook
 
 const translations = {
     fr: {
@@ -24,12 +25,16 @@ const translations = {
     },
 };
 
-export default function ProductPage({ params }) {
+// Client component wrapper
+function ProductPageContent({ params }) {
     const { language } = useLanguage();
     const t = translations[language] || translations.fr;
 
+    // Use the use() hook to unwrap the params promise
+    const unwrappedParams = use(params);
+
     // Convert slug to readable name
-    const productName = params.productName
+    const productName = unwrappedParams.productName
         .split("-")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
@@ -53,15 +58,25 @@ export default function ProductPage({ params }) {
     return (
         <>
             <Header />
-            {/* <section id="article-hero">
-                <Home1 />
-            </section> */}
-
             <div className="site-container site-stack py-16">
                 <ArticlePage productName={productName} />
             </div>
-
             <Footer />
         </>
+    );
+}
+
+// Main component with Suspense
+export default function ProductPage({ params }) {
+    return (
+        <Suspense
+            fallback={
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[rgb(223,126,60)]"></div>
+                </div>
+            }
+        >
+            <ProductPageContent params={params} />
+        </Suspense>
     );
 }
