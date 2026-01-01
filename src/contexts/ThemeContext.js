@@ -5,11 +5,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState("dark"); // Default to dark
+    const [theme, setTheme] = useState("light"); // Changed from "dark" to "light"
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
-        const initialTheme = savedTheme || "dark";
+        const initialTheme = savedTheme || "light"; // Changed from "dark" to "light"
         setTheme(initialTheme);
         document.documentElement.setAttribute("data-theme", initialTheme);
     }, []);

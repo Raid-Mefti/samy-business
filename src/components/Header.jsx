@@ -12,17 +12,29 @@ export default function NavBar({ transparentOnTop = false }) {
     const isArabic = language === "ar";
     const router = useRouter();
     const sideMenuRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     /* ---------------- SCROLL STATE ---------------- */
     const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
         const onScroll = () => {
             setScrolled(window.scrollY > 40);
         };
+
+        checkMobile();
         window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
+        window.addEventListener("resize", checkMobile);
+
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", checkMobile);
+        };
     }, []);
 
     /* ---------------- TRANSLATIONS ---------------- */
@@ -67,19 +79,25 @@ export default function NavBar({ transparentOnTop = false }) {
     };
 
     /* ---------------- HEADER STYLES ---------------- */
-    // On mobile: Always have background color, never transparent
-    // On desktop: Keep the transparent effect when at top
+    // Mobile: Always solid background, never transparent
+    // Desktop: Transparent effect only when at top (if transparentOnTop prop is true)
+    const getHeaderClasses = () => {
+        // Always solid background on mobile
+        if (isMobile) {
+            return "bg-[#1E2438] shadow-lg border-b border-white/10";
+        }
+
+        // Desktop behavior
+        if (transparentOnTop && !scrolled) {
+            return "bg-transparent backdrop-blur-md";
+        }
+
+        return "bg-[#1E2438] shadow-lg border-b border-white/10";
+    };
+
     const headerClasses = `
         fixed top-0 w-full z-[60] transition-all duration-300
-        ${
-            // For mobile (screens < 768px), always show background
-            typeof window !== "undefined" && window.innerWidth < 768
-                ? "bg-[#1E2438] shadow-lg border-b border-white/10"
-                : // For desktop, apply transparent effect only at top
-                transparentOnTop && !scrolled
-                ? "bg-transparent backdrop-blur-md"
-                : "bg-[#1E2438] shadow-lg border-b border-white/10"
-        }
+        ${getHeaderClasses()}
     `;
 
     const navFlexClass = `${

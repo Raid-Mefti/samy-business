@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "@/contexts/ThemeContext"; // ✅ Use the shared context
+import { useTheme } from "@/contexts/ThemeContext";
 
+// Changed order: light first, then dark
 const themes = [
     { name: "light", label: "Light", icon: "☀️" },
     { name: "dark", label: "Dark", icon: "🌙" },
@@ -25,7 +26,7 @@ export default function ThemeSwitcher() {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    className="w-8 h-8 stroke-current text-white  hover:text-black"
+                    className="w-8 h-8 stroke-current text-white hover:text-black"
                 >
                     <path
                         strokeLinecap="round"
@@ -47,7 +48,7 @@ export default function ThemeSwitcher() {
                         <button
                             onClick={() => toggleTheme(themeOption.name)}
                             className={`flex items-center justify-between gap-2 w-full px-2 py-1 rounded hover:bg-base-200 ${
-                                theme === themeOption.name ? "font-bold " : ""
+                                theme === themeOption.name ? "font-bold" : ""
                             }`}
                         >
                             <div className="flex items-center gap-2">
