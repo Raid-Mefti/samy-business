@@ -83,51 +83,44 @@ export default function HomeProductsScroller() {
     const containerRef = useRef(null);
     const contentRef = useRef(null);
     const controls = useAnimation();
-    const animationFrameRef = useRef(null);
     const lastPositionRef = useRef(0);
     const isPausedRef = useRef(false);
 
     const [isHovering, setIsHovering] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [reducedMotion, setReducedMotion] = useState(false);
-    const [contentWidth, setContentWidth] = useState(0);
+    const [contentWidth, setContentWidth] = useState(0); // Width of ONE set of products
     const [containerWidth, setContainerWidth] = useState(0);
 
     /* ----------------- Translations ----------------- */
-    const t = {
-        fr: {
-            title: "Nos Produits",
-            subtitle:
-                "Un aperçu rapide de notre gamme de produits industriels.",
-            cta: "Voir tout le catalogue",
-            view: "Voir",
-            paused: "En pause",
-            stock: "En stock",
-        },
-        en: {
-            title: "Our Products",
-            subtitle: "A quick overview of our industrial product range.",
-            cta: "View full catalog",
-            view: "View",
-            paused: "Paused",
-            stock: "In stock",
-        },
-        ar: {
-            title: "منتجاتنا",
-            subtitle: "نظرة سريعة على مجموعة منتجاتنا الصناعية.",
-            cta: "عرض جميع المنتجات",
-            view: "عرض",
-            paused: "الإيقاف مؤقتاً",
-            stock: "متوفر",
-        },
-    }[language] ?? {
-        title: "Nos Produits",
-        subtitle: "Un aperçu rapide de notre gamme de produits industriels.",
-        cta: "Voir tout le catalogue",
-        view: "Voir",
-        paused: "En pause",
-        stock: "En stock",
-    };
+    const t =
+        {
+            fr: {
+                title: "Nos Produits",
+                subtitle:
+                    "Un aperçu rapide de notre gamme de produits industriels.",
+                cta: "Voir tout le catalogue",
+                view: "Voir",
+                paused: "En pause",
+                stock: "En stock",
+            },
+            en: {
+                title: "Our Products",
+                subtitle: "A quick overview of our industrial product range.",
+                cta: "View full catalog",
+                view: "View",
+                paused: "Paused",
+                stock: "In stock",
+            },
+            ar: {
+                title: "منتجاتنا",
+                subtitle: "نظرة سريعة على مجموعة منتجاتنا الصناعية.",
+                cta: "عرض جميع المنتجات",
+                view: "عرض",
+                paused: "الإيقاف مؤقتاً",
+                stock: "متوفر",
+            },
+        }[language] ?? t.fr;
 
     /* ----------------- Effects ----------------- */
     useEffect(() => {
@@ -140,14 +133,16 @@ export default function HomeProductsScroller() {
     useEffect(() => {
         const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
         setReducedMotion(mq.matches);
-        mq.addEventListener("change", (e) => setReducedMotion(e.matches));
-        return () => mq.removeEventListener("change", () => {});
+        const handler = (e) => setReducedMotion(e.matches);
+        mq.addEventListener("change", handler);
+        return () => mq.removeEventListener("change", handler);
     }, []);
 
     useEffect(() => {
         const updateWidths = () => {
             if (!contentRef.current || !containerRef.current) return;
-            setContentWidth(contentRef.current.scrollWidth / 4);
+            const singleSetWidth = contentRef.current.scrollWidth / 4; // 4 copies
+            setContentWidth(singleSetWidth);
             setContainerWidth(containerRef.current.offsetWidth);
         };
 
@@ -156,60 +151,42 @@ export default function HomeProductsScroller() {
         return () => window.removeEventListener("resize", updateWidths);
     }, []);
 
-    // Track the current position during animation
+    /* ----------------- Animation Setup ----------------- */
     useEffect(() => {
         if (reducedMotion || !contentWidth || !containerWidth) return;
 
-        const updatePosition = () => {
-            if (contentRef.current && !isPausedRef.current) {
-                const transform = contentRef.current.style.transform;
-                if (transform) {
-                    const match = transform.match(/translateX\(([^)]+)px\)/);
-                    if (match) {
-                        const xValue = parseFloat(match[1]);
-                        if (!isNaN(xValue)) {
-                            lastPositionRef.current = xValue;
-                        }
-                    }
-                }
-            }
-            animationFrameRef.current = requestAnimationFrame(updatePosition);
-        };
-
-        animationFrameRef.current = requestAnimationFrame(updatePosition);
-
-        return () => {
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
-        };
-    }, [contentWidth, containerWidth, reducedMotion]);
-
-    // Start animation
-    useEffect(() => {
-        if (!contentWidth || !containerWidth || reducedMotion) return;
-
-        const startX = isRtl ? containerWidth : -contentWidth;
-        const endX = -contentWidth - containerWidth;
-
-        lastPositionRef.current = startX;
+        // LTR: scroll left  → start at 0, go to -contentWidth
+        // RTL: scroll right → start at 0, go to +contentWidth
+        const distance = isRtl ? contentWidth : -contentWidth;
 
         controls.start({
-            x: [startX, endX],
+            x: [0, distance],
             transition: {
                 duration: 65,
                 ease: "linear",
                 repeat: Infinity,
             },
         });
+
+        lastPositionRef.current = 0;
     }, [contentWidth, containerWidth, reducedMotion, isRtl, controls]);
 
-    /* ----------------- Hover logic ----------------- */
+    /* ----------------- Hover Pause/Resume ----------------- */
     const pause = () => {
         if (reducedMotion) return;
         setIsHovering(true);
         isPausedRef.current = true;
         controls.stop();
+
+        // Capture current position
+        if (contentRef.current) {
+            const transform =
+                contentRef.current.style.transform || "translateX(0px)";
+            const match = transform.match(/translateX\(([^)]+)px\)/);
+            if (match) {
+                lastPositionRef.current = parseFloat(match[1]);
+            }
+        }
     };
 
     const resume = () => {
@@ -217,10 +194,10 @@ export default function HomeProductsScroller() {
         setIsHovering(false);
         isPausedRef.current = false;
 
-        const endX = -contentWidth - containerWidth;
+        const distance = isRtl ? contentWidth : -contentWidth;
 
         controls.start({
-            x: [lastPositionRef.current, endX],
+            x: [lastPositionRef.current, lastPositionRef.current + distance],
             transition: {
                 duration: 65,
                 ease: "linear",
@@ -261,16 +238,17 @@ export default function HomeProductsScroller() {
                 ref={containerRef}
                 onMouseEnter={pause}
                 onMouseLeave={resume}
-                className="relative w-full"
+                className="relative w-full cursor-pointer"
             >
                 <div className="overflow-hidden">
                     <motion.div
                         ref={contentRef}
                         animate={controls}
-                        className="flex gap-6 w-max"
+                        className="flex gap-6"
                         style={{
-                            paddingLeft: isRtl ? 0 : containerWidth + "px",
-                            paddingRight: isRtl ? containerWidth + "px" : "0",
+                            // Start at x: 0 — already filling the screen
+                            // Extra copies ensure seamless loop
+                            width: "max-content",
                         }}
                     >
                         {[
@@ -294,6 +272,7 @@ export default function HomeProductsScroller() {
                 {/* Pause indicator */}
                 <motion.div
                     animate={{ opacity: isHovering ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
                     className="mt-6 flex justify-center items-center gap-2 text-xs text-base-content/50"
                 >
                     <span className="w-2 h-2 bg-[rgb(223,126,60)] rounded-full animate-pulse" />
@@ -324,7 +303,7 @@ function ProductCard({ product, t, isMobile, isDark, isRtl }) {
     return (
         <Link
             href={`/produits/${slugify(product.name)}`}
-            className={`group relative ${
+            className={`group relative flex-shrink-0 ${
                 isMobile ? "w-72 h-64" : "w-80 h-96"
             } rounded-3xl overflow-hidden border transition-all duration-500 ${
                 isDark
@@ -332,7 +311,6 @@ function ProductCard({ product, t, isMobile, isDark, isRtl }) {
                     : "bg-white border-base-200"
             } hover:shadow-2xl`}
         >
-            {/* Image */}
             <div className="relative h-2/3">
                 {!loaded && (
                     <div className="absolute inset-0 bg-base-300 animate-pulse" />
@@ -346,7 +324,6 @@ function ProductCard({ product, t, isMobile, isDark, isRtl }) {
                 />
             </div>
 
-            {/* Bottom content */}
             <div className="absolute bottom-0 w-full h-1/3 bg-black/90 p-5 rounded-b-3xl flex flex-col justify-between">
                 <div className="flex justify-between items-start gap-3">
                     <h3
