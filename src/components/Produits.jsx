@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 /* ---- PRODUCTS ---- */
@@ -13,37 +13,49 @@ const PRODUCTS = [
         name: "Aluminium",
         img: "/product_section/aluminium-en-lingots.avif",
         color: "#3B82F6",
+        shortName: "Aluminium",
     },
     {
         name: "Plomb Doux",
         img: "/product_section/plomb-doux.png",
         color: "#6B7280",
+        shortName: "Plomb Doux",
     },
     {
         name: "Oxyde de Zinc",
         img: "/product_section/oxyde de zinc.avif",
         color: "#10B981",
+        shortName: "Oxyde Zinc",
     },
     {
         name: "Zinc SHG",
         img: "/product_section/SHG-99.995.png",
         color: "#F59E0B",
+        shortName: "Zinc SHG",
     },
     {
         name: "ZAMAK",
         img: "/product_section/lingots-du-zamak.webp",
         color: "#8B5CF6",
+        shortName: "ZAMAK",
     },
-    { name: "Carton", img: "/carton.avif", color: "#DC2626" },
+    {
+        name: "Carton",
+        img: "/carton.avif",
+        color: "#DC2626",
+        shortName: "Carton",
+    },
     {
         name: "Zinc Aluminé",
         img: "/product_section/zinc-aluminé.jpg",
         color: "#0891B2",
+        shortName: "Zinc Aluminé",
     },
     {
         name: "Cuivres",
         img: "/product_section/lingot-de-cuivre.jpg",
         color: "#B45309",
+        shortName: "Cuivres",
     },
 ];
 
@@ -56,6 +68,9 @@ export default function HomeProductsScroller() {
     const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef(null);
     const contentRef = useRef(null);
+    const controls = useAnimation();
+    const [isHovering, setIsHovering] = useState(false);
+    const currentPositionRef = useRef(0);
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -79,19 +94,19 @@ export default function HomeProductsScroller() {
             subtitle:
                 "Un aperçu rapide de notre gamme de produits industriels.",
             cta: "Voir tout le catalogue",
-            viewProduct: "Voir le produit",
+            viewProduct: "Voir",
         },
         en: {
             title: "Our Products",
             subtitle: "A quick overview of our industrial product range.",
             cta: "View full catalog",
-            viewProduct: "View product",
+            viewProduct: "View",
         },
         ar: {
             title: "منتجاتنا",
             subtitle: "نظرة سريعة على مجموعة منتجاتنا الصناعية.",
             cta: "عرض جميع المنتجات",
-            viewProduct: "عرض المنتج",
+            viewProduct: "عرض",
         },
     };
 
@@ -118,6 +133,60 @@ export default function HomeProductsScroller() {
 
     // Calculate total distance to travel (from right edge to left edge)
     const travelDistance = contentWidth + containerWidth; // Full width coverage
+
+    // Start the animation when widths are calculated
+    useEffect(() => {
+        if (contentWidth > 0 && containerWidth > 0) {
+            currentPositionRef.current = isRtl ? containerWidth : -contentWidth;
+            controls.start({
+                x: [currentPositionRef.current, -travelDistance],
+                transition: {
+                    duration: 60,
+                    ease: "linear",
+                    repeat: Infinity,
+                    repeatType: "loop",
+                },
+            });
+        }
+    }, [contentWidth, containerWidth, travelDistance, isRtl, controls]);
+
+    // Handle hover to pause animation
+    const handleMouseEnter = () => {
+        setIsHovering(true);
+        controls.stop(); // This actually pauses the animation
+
+        // Get the current transform value from the DOM
+        if (contentRef.current) {
+            const transform = contentRef.current.style.transform;
+            if (transform) {
+                // Extract the x value from translateX() or translate3d()
+                const match =
+                    transform.match(/translateX\(([^)]+)\)/) ||
+                    transform.match(/translate3d\(([^,]+)/);
+                if (match) {
+                    const xValue = parseFloat(match[1]);
+                    if (!isNaN(xValue)) {
+                        currentPositionRef.current = xValue;
+                    }
+                }
+            }
+        }
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovering(false);
+
+        // Restart animation from current position
+        controls.start({
+            x: [currentPositionRef.current, -travelDistance],
+            transition: {
+                duration: 60,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
+            },
+        });
+    };
 
     return (
         <section
@@ -168,7 +237,12 @@ export default function HomeProductsScroller() {
                 </div>
 
                 {/* SCROLLER CONTAINER - FULL WIDTH */}
-                <div className="relative w-full" ref={containerRef}>
+                <div
+                    className="relative w-full"
+                    ref={containerRef}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
                     {/* Gradient overlays for smooth fade-in/out at edges */}
                     <div
                         className={`absolute left-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-r ${
@@ -190,17 +264,7 @@ export default function HomeProductsScroller() {
                         <motion.div
                             className="flex gap-4 md:gap-8 w-max"
                             ref={contentRef}
-                            animate={{
-                                x: isRtl
-                                    ? [containerWidth, -travelDistance] // Start from right, move left
-                                    : [-contentWidth, -travelDistance], // Start from right edge, move left
-                            }}
-                            transition={{
-                                duration: 60, // Slower duration for full width
-                                ease: "linear",
-                                repeat: Infinity,
-                                repeatType: "loop",
-                            }}
+                            animate={controls}
                             style={{
                                 paddingLeft: isRtl
                                     ? "0"
@@ -223,24 +287,40 @@ export default function HomeProductsScroller() {
                         </motion.div>
                     </div>
 
-                    {/* Scroll indicator */}
+                    {/* Scroll indicator with pause state */}
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center mt-6">
-                        <div
-                            className={`h-1 w-24 rounded-full ${
-                                theme === "dark"
-                                    ? "bg-base-content/30"
-                                    : "bg-base-content/20"
-                            }`}
-                        >
-                            <motion.div
-                                className="h-full w-1/3 bg-[rgb(223,126,60)] rounded-full"
-                                animate={{ x: ["0%", "200%"] }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
-                            />
+                        <div className="flex flex-col items-center gap-3">
+                            <div
+                                className={`h-1 w-24 rounded-full ${
+                                    theme === "dark"
+                                        ? "bg-base-content/30"
+                                        : "bg-base-content/20"
+                                }`}
+                            >
+                                <motion.div
+                                    className="h-full w-1/3 bg-[rgb(223,126,60)] rounded-full"
+                                    animate={{
+                                        x: isHovering ? "0%" : ["0%", "200%"],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                    }}
+                                />
+                            </div>
+                            {isHovering && (
+                                <div className="text-xs text-base-content/50 flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-[rgb(223,126,60)] animate-pulse"></span>
+                                    <span>
+                                        {language === "ar"
+                                            ? "الإيقاف مؤقتاً"
+                                            : language === "en"
+                                            ? "Paused"
+                                            : "En pause"}
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -279,73 +359,96 @@ function ProductMiniCard({ product, theme, language, t, isMobile }) {
     const isDark = theme === "dark";
     const isRtl = language === "ar";
 
+    // Define consistent dimensions
+    const cardWidth = isMobile ? "w-72" : "w-80";
+    const cardHeight = isMobile ? "h-64" : "h-96";
+
     return (
-        <div className="relative">
+        <div className="relative overflow-hidden">
             <Link
                 href={`/produits/${slugify(product.name)}`}
-                className={`group block ${
-                    isMobile ? "w-64 h-56" : "min-w-[280px] h-[320px]"
-                } rounded-2xl md:rounded-3xl overflow-hidden border-2 shadow-lg transition-all duration-500 hover:shadow-2xl ${
+                className={`group block ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden border-2 shadow-lg transition-all duration-500 hover:shadow-2xl ${
                     isDark
                         ? "bg-base-300 border-base-400"
                         : "bg-base-100 border-base-300"
                 }`}
             >
-                {/* Image Container */}
-                <div className="relative w-full h-3/4 overflow-hidden">
+                {/* Image Container - Fixed height */}
+                <div className="relative w-full h-2/3 overflow-hidden">
                     <Image
                         src={product.img}
                         alt={product.name}
                         fill
-                        sizes="(max-width: 768px) 256px, 280px"
+                        sizes="(max-width: 768px) 288px, 320px"
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                         priority={false}
                     />
 
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
 
-                    {/* Color accent */}
+                    {/* Color accent - Consistent positioning */}
                     <div
-                        className="absolute top-4 right-4 w-3 h-3 rounded-full"
+                        className="absolute top-4 right-4 w-3 h-3 rounded-full shadow-md"
                         style={{ backgroundColor: product.color }}
                     />
                 </div>
 
-                {/* Content */}
+                {/* Content Container */}
                 <div
-                    className={`absolute bottom-0 w-full p-4 md:p-6 ${
-                        isDark ? "bg-black/80" : "bg-black/70"
+                    className={`bottom-0 w-full h-1/3 p-4 md:p-6 flex flex-col justify-between  ${
+                        isDark ? "bg-black/90" : "bg-black/85"
                     } backdrop-blur-sm`}
                 >
-                    <div className="flex items-center justify-between">
-                        <h3
-                            className={`text-lg md:text-xl font-bold text-white line-clamp-1 ${
-                                isRtl ? "text-right" : "text-left"
+                    {/* Title and button row */}
+                    <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                            <h3
+                                className={`text-lg md:text-xl font-bold text-white truncate ${
+                                    isRtl ? "text-right" : "text-left"
+                                }`}
+                                title={product.name}
+                            >
+                                {product.name}
+                            </h3>
+                        </div>
+                        <span
+                            className={`flex-shrink-0 text-white/80 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-full border border-white/30 whitespace-nowrap ${
+                                isRtl ? "mr-2" : "ml-2"
                             }`}
                         >
-                            {product.name}
-                        </h3>
-                        <span className="text-white/70 text-sm font-medium px-3 py-1 rounded-full border border-white/30">
                             {t.viewProduct}
                         </span>
                     </div>
 
-                    {/* Price/Stock indicator */}
-                    <div className="mt-2 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        <span className="text-white/70 text-sm">
-                            {language === "ar"
-                                ? "متوفر"
-                                : language === "en"
-                                ? "In Stock"
-                                : "En Stock"}
-                        </span>
+                    {/* Stock indicator  */}
+                    <div className="flex items-center justify-between mt-3">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            <span className="text-white/70 text-sm whitespace-nowrap">
+                                {language === "ar"
+                                    ? "متوفر"
+                                    : language === "en"
+                                    ? "In Stock"
+                                    : "En Stock"}
+                            </span>
+                        </div>
+
+                        {/* Material type indicator */}
+                        <div className="flex items-center gap-1">
+                            <div
+                                className="w-2 h-2 rounded-full"
+                                style={{ backgroundColor: product.color }}
+                            />
+                            <span className="text-white/60 text-xs font-medium capitalize">
+                                {product.shortName}
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Hover effect border */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[rgb(223,126,60)] rounded-2xl md:rounded-3xl transition-colors duration-500 pointer-events-none" />
+                {/* Hover effect border  */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[rgb(223,126,60)]  rounded-2xl md:rounded-3xl transition-colors duration-500 pointer-events-none" />
             </Link>
         </div>
     );
