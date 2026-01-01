@@ -83,7 +83,9 @@ export default function HomeProductsScroller() {
     const containerRef = useRef(null);
     const contentRef = useRef(null);
     const controls = useAnimation();
-    const currentX = useRef(0);
+    const animationFrameRef = useRef(null);
+    const lastPositionRef = useRef(0);
+    const isPausedRef = useRef(false);
 
     const [isHovering, setIsHovering] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -92,34 +94,40 @@ export default function HomeProductsScroller() {
     const [containerWidth, setContainerWidth] = useState(0);
 
     /* ----------------- Translations ----------------- */
-    const t =
-        {
-            fr: {
-                title: "Nos Produits",
-                subtitle:
-                    "Un aperçu rapide de notre gamme de produits industriels.",
-                cta: "Voir tout le catalogue",
-                view: "Voir",
-                paused: "En pause",
-                stock: "En stock",
-            },
-            en: {
-                title: "Our Products",
-                subtitle: "A quick overview of our industrial product range.",
-                cta: "View full catalog",
-                view: "View",
-                paused: "Paused",
-                stock: "In stock",
-            },
-            ar: {
-                title: "منتجاتنا",
-                subtitle: "نظرة سريعة على مجموعة منتجاتنا الصناعية.",
-                cta: "عرض جميع المنتجات",
-                view: "عرض",
-                paused: "الإيقاف مؤقتاً",
-                stock: "متوفر",
-            },
-        }[language] ?? t.fr;
+    const t = {
+        fr: {
+            title: "Nos Produits",
+            subtitle:
+                "Un aperçu rapide de notre gamme de produits industriels.",
+            cta: "Voir tout le catalogue",
+            view: "Voir",
+            paused: "En pause",
+            stock: "En stock",
+        },
+        en: {
+            title: "Our Products",
+            subtitle: "A quick overview of our industrial product range.",
+            cta: "View full catalog",
+            view: "View",
+            paused: "Paused",
+            stock: "In stock",
+        },
+        ar: {
+            title: "منتجاتنا",
+            subtitle: "نظرة سريعة على مجموعة منتجاتنا الصناعية.",
+            cta: "عرض جميع المنتجات",
+            view: "عرض",
+            paused: "الإيقاف مؤقتاً",
+            stock: "متوفر",
+        },
+    }[language] ?? {
+        title: "Nos Produits",
+        subtitle: "Un aperçu rapide de notre gamme de produits industriels.",
+        cta: "Voir tout le catalogue",
+        view: "Voir",
+        paused: "En pause",
+        stock: "En stock",
+    };
 
     /* ----------------- Effects ----------------- */
     useEffect(() => {
@@ -137,21 +145,57 @@ export default function HomeProductsScroller() {
     }, []);
 
     useEffect(() => {
-        if (!contentRef.current || !containerRef.current) return;
-        setContentWidth(contentRef.current.scrollWidth / 4);
-        setContainerWidth(containerRef.current.offsetWidth);
+        const updateWidths = () => {
+            if (!contentRef.current || !containerRef.current) return;
+            setContentWidth(contentRef.current.scrollWidth / 4);
+            setContainerWidth(containerRef.current.offsetWidth);
+        };
+
+        updateWidths();
+        window.addEventListener("resize", updateWidths);
+        return () => window.removeEventListener("resize", updateWidths);
     }, []);
 
+    // Track the current position during animation
+    useEffect(() => {
+        if (reducedMotion || !contentWidth || !containerWidth) return;
+
+        const updatePosition = () => {
+            if (contentRef.current && !isPausedRef.current) {
+                const transform = contentRef.current.style.transform;
+                if (transform) {
+                    const match = transform.match(/translateX\(([^)]+)px\)/);
+                    if (match) {
+                        const xValue = parseFloat(match[1]);
+                        if (!isNaN(xValue)) {
+                            lastPositionRef.current = xValue;
+                        }
+                    }
+                }
+            }
+            animationFrameRef.current = requestAnimationFrame(updatePosition);
+        };
+
+        animationFrameRef.current = requestAnimationFrame(updatePosition);
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [contentWidth, containerWidth, reducedMotion]);
+
+    // Start animation
     useEffect(() => {
         if (!contentWidth || !containerWidth || reducedMotion) return;
 
-        const start = isRtl ? containerWidth : -contentWidth;
-        const end = -contentWidth - containerWidth;
+        const startX = isRtl ? containerWidth : -contentWidth;
+        const endX = -contentWidth - containerWidth;
 
-        currentX.current = start;
+        lastPositionRef.current = startX;
 
         controls.start({
-            x: [start, end],
+            x: [startX, endX],
             transition: {
                 duration: 65,
                 ease: "linear",
@@ -164,16 +208,21 @@ export default function HomeProductsScroller() {
     const pause = () => {
         if (reducedMotion) return;
         setIsHovering(true);
+        isPausedRef.current = true;
         controls.stop();
     };
 
     const resume = () => {
         if (reducedMotion) return;
         setIsHovering(false);
+        isPausedRef.current = false;
+
+        const endX = -contentWidth - containerWidth;
+
         controls.start({
-            x: [currentX.current, -contentWidth - containerWidth],
+            x: [lastPositionRef.current, endX],
             transition: {
-                duration: 60,
+                duration: 65,
                 ease: "linear",
                 repeat: Infinity,
             },
@@ -220,8 +269,8 @@ export default function HomeProductsScroller() {
                         animate={controls}
                         className="flex gap-6 w-max"
                         style={{
-                            paddingLeft: isRtl ? 0 : containerWidth,
-                            paddingRight: isRtl ? containerWidth : 0,
+                            paddingLeft: isRtl ? 0 : containerWidth + "px",
+                            paddingRight: isRtl ? containerWidth + "px" : "0",
                         }}
                     >
                         {[
@@ -256,7 +305,7 @@ export default function HomeProductsScroller() {
             <div className="mt-16 text-center">
                 <Link
                     href="/produits"
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
                 >
                     {t.cta}
                     <span>{isRtl ? "←" : "→"}</span>
