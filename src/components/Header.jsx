@@ -79,15 +79,11 @@ export default function NavBar({ transparentOnTop = false }) {
     };
 
     /* ---------------- HEADER STYLES ---------------- */
-    // Mobile: Always solid background, never transparent
-    // Desktop: Transparent effect only when at top (if transparentOnTop prop is true)
     const getHeaderClasses = () => {
-        // Always solid background on mobile
         if (isMobile) {
             return "bg-[#1E2438] shadow-lg border-b border-white/10";
         }
 
-        // Desktop behavior
         if (transparentOnTop && !scrolled) {
             return "bg-transparent backdrop-blur-md";
         }
@@ -109,7 +105,7 @@ export default function NavBar({ transparentOnTop = false }) {
             <nav
                 className={`flex ${navFlexClass} items-center px-4 sm:px-5 lg:px-8 xl:px-[5%] py-3 ${headerClasses}`}
             >
-                {/* LOGO - Responsive scaling */}
+                {/* LOGO */}
                 <Link href="/">
                     <img
                         src="/logo99.png"
@@ -118,7 +114,7 @@ export default function NavBar({ transparentOnTop = false }) {
                     />
                 </Link>
 
-                {/* DESKTOP MENU - Unchanged except responsive text */}
+                {/* DESKTOP MENU */}
                 <ul
                     className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3
                     bg-white/10 border border-white/20 backdrop-blur
@@ -132,7 +128,6 @@ export default function NavBar({ transparentOnTop = false }) {
                             {t.about}
                         </Link>
                     </li>
-
                     <li>
                         <Link
                             href="/produits"
@@ -141,7 +136,6 @@ export default function NavBar({ transparentOnTop = false }) {
                             {t.products}
                         </Link>
                     </li>
-
                     <li>
                         <Link
                             href="/aboutus"
@@ -160,7 +154,7 @@ export default function NavBar({ transparentOnTop = false }) {
                             : "space-x-3 sm:space-x-4"
                     }`}
                 >
-                    {/* DESKTOP BUTTONS - Responsive padding */}
+                    {/* DESKTOP BUTTONS */}
                     <button
                         onClick={() => router.push("/devis")}
                         className="hidden lg:flex items-center px-5 lg:px-6 py-1.5 lg:py-2 font-bold rounded-full
@@ -179,13 +173,13 @@ export default function NavBar({ transparentOnTop = false }) {
                         {t.contact}
                     </button>
 
-                    {/* SWITCHERS - Better mobile spacing */}
+                    {/* SWITCHERS */}
                     <div className="flex items-center gap-2 sm:gap-3">
                         <LanguageSwitcher />
                         <ThemeSwitcher />
                     </div>
 
-                    {/* MOBILE MENU BUTTON - Improved design */}
+                    {/* MOBILE MENU BUTTON */}
                     <button
                         className="block md:hidden p-2"
                         onClick={openMenu}
@@ -199,7 +193,7 @@ export default function NavBar({ transparentOnTop = false }) {
                     </button>
                 </div>
 
-                {/* MOBILE MENU OVERLAY */}
+                {/* MOBILE MENU OVERLAY - Only show when menu is open */}
                 {isMenuOpen && (
                     <div
                         className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"
@@ -207,101 +201,97 @@ export default function NavBar({ transparentOnTop = false }) {
                     />
                 )}
 
-                {/* MOBILE MENU - Improved design with always solid background */}
-                <div
-                    ref={sideMenuRef}
-                    className={`fixed top-0 ${
-                        isArabic ? "left-0" : "right-0"
-                    } w-80 max-w-[85vw] h-full flex md:hidden flex-col gap-6 pt-24 px-6 pb-8
-                    bg-[#1E2438] text-white shadow-2xl z-50 transform transition-transform duration-300 ease-out
-                    ${isMenuOpen ? "translate-x-0" : "translate-x-full"} ${
-                        isArabic && !isMenuOpen ? "translate-x-[-100%]" : ""
-                    }`}
-                >
-                    {/* CLOSE BUTTON - Improved */}
-                    <button
-                        onClick={closeMenu}
-                        className={`absolute top-6 ${
-                            isArabic ? "left-6" : "right-6"
-                        } w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors`}
-                        aria-label="Close menu"
+                {/* MOBILE MENU - Only render when menu is open */}
+                {isMenuOpen && (
+                    <div
+                        ref={sideMenuRef}
+                        className={`fixed top-0 right-0 w-80 max-w-[85vw] h-full flex md:hidden flex-col gap-6 pt-24 px-6 pb-8
+                        bg-[#1E2438] text-white shadow-2xl z-50 animate-in slide-in-from-right duration-300`}
+                        dir={isArabic ? "rtl" : "ltr"}
                     >
-                        <div className="w-5 h-5 relative">
-                            <span className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-white rounded transform -translate-x-1/2 -translate-y-1/2 rotate-45"></span>
-                            <span className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-white rounded transform -translate-x-1/2 -translate-y-1/2 -rotate-45"></span>
+                        {/* CLOSE BUTTON */}
+                        <button
+                            onClick={closeMenu}
+                            className={`absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors`}
+                            aria-label="Close menu"
+                        >
+                            <div className="w-5 h-5 relative">
+                                <span className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-white rounded transform -translate-x-1/2 -translate-y-1/2 rotate-45"></span>
+                                <span className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-white rounded transform -translate-x-1/2 -translate-y-1/2 -rotate-45"></span>
+                            </div>
+                        </button>
+
+                        {/* MENU ITEMS */}
+                        <div className="flex flex-col gap-1">
+                            <Link
+                                href="/"
+                                onClick={closeMenu}
+                                className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
+                            >
+                                {t.home}
+                            </Link>
+
+                            <Link
+                                href="/zinc-oxyde"
+                                onClick={closeMenu}
+                                className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
+                            >
+                                {t.about}
+                            </Link>
+
+                            <Link
+                                href="/produits"
+                                onClick={closeMenu}
+                                className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
+                            >
+                                {t.products}
+                            </Link>
+
+                            <Link
+                                href="/aboutus"
+                                onClick={closeMenu}
+                                className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
+                            >
+                                {t.aboutus}
+                            </Link>
+
+                            <Link
+                                href="/contact"
+                                onClick={closeMenu}
+                                className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
+                            >
+                                {t.contact}
+                            </Link>
                         </div>
-                    </button>
 
-                    {/* MOBILE MENU ITEMS - Better spacing and design */}
-                    <div className="flex flex-col gap-1">
-                        <Link
-                            href="/"
-                            onClick={closeMenu}
-                            className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
-                        >
-                            {t.home}
-                        </Link>
+                        {/* ACTION BUTTONS */}
+                        <div className="mt-6 flex flex-col gap-3">
+                            <button
+                                onClick={() => {
+                                    router.push("/devis");
+                                    closeMenu();
+                                }}
+                                className="w-full py-3 rounded-lg font-semibold
+                                bg-[rgb(223,126,60)] text-white
+                                hover:bg-[rgb(223,126,60)]/90 transition-colors shadow-md"
+                            >
+                                {t.devis}
+                            </button>
 
-                        <Link
-                            href="/zinc-oxyde"
-                            onClick={closeMenu}
-                            className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
-                        >
-                            {t.about}
-                        </Link>
-
-                        <Link
-                            href="/produits"
-                            onClick={closeMenu}
-                            className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
-                        >
-                            {t.products}
-                        </Link>
-
-                        <Link
-                            href="/aboutus"
-                            onClick={closeMenu}
-                            className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
-                        >
-                            {t.aboutus}
-                        </Link>
-
-                        <Link
-                            href="/contact"
-                            onClick={closeMenu}
-                            className="py-4 px-4 rounded-lg hover:bg-white/10 transition-colors text-lg font-medium border-b border-white/10"
-                        >
-                            {t.contact}
-                        </Link>
+                            <button
+                                onClick={() => {
+                                    router.push("/contact");
+                                    closeMenu();
+                                }}
+                                className="w-full py-3 rounded-lg font-semibold
+                                border border-white/40 text-white
+                                hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition-colors"
+                            >
+                                {t.contact}
+                            </button>
+                        </div>
                     </div>
-
-                    {/* MOBILE ACTION BUTTONS - Added for mobile */}
-                    <div className="mt-6 flex flex-col gap-3">
-                        <button
-                            onClick={() => {
-                                router.push("/devis");
-                                closeMenu();
-                            }}
-                            className="w-full py-3 rounded-lg font-semibold
-                            bg-[rgb(223,126,60)] text-white
-                            hover:bg-[rgb(223,126,60)]/90 transition-colors shadow-md"
-                        >
-                            {t.devis}
-                        </button>
-
-                        <button
-                            onClick={() => {
-                                router.push("/contact");
-                                closeMenu();
-                            }}
-                            className="w-full py-3 rounded-lg font-semibold
-                            border border-white/40 text-white
-                            hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition-colors"
-                        >
-                            {t.contact}
-                        </button>
-                    </div>
-                </div>
+                )}
             </nav>
         </>
     );
