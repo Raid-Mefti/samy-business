@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Home1 from "@/components/Home1";
+import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState, useMemo } from "react";
 import Image from "next/image";
@@ -215,6 +216,7 @@ export default function ProduitsPage() {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>
     );
 }
