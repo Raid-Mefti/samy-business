@@ -157,9 +157,9 @@ export default function ProduitsPage() {
     return (
         <>
             <Header />
-            <section id="article-hero">
+            {/* <section id="article-hero">
                 <Home1 />
-            </section>
+            </section> */}
 
             <section
                 className="py-16 bg-base-100 min-h-screen"
