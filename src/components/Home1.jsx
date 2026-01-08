@@ -45,7 +45,7 @@ export default function Home1() {
         <section className="relative min-h-screen flex items-end overflow-hidden">
             {/* PARALLAX BACKGROUND */}
             <motion.img
-                src="/hero2.jpg"
+                src="/finals/HeroVisual.png"
                 alt="Industrial background"
                 className="absolute inset-0 w-full h-full object-cover"
                 initial={{ scale: 1.1 }}
@@ -59,7 +59,7 @@ export default function Home1() {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" /> */}
 
             {/* CONTENT */}
             <div

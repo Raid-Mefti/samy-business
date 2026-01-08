@@ -29,7 +29,7 @@ export default function ArticlePage({
     // Product content database with translations
     const productData = {
         zamak: {
-            image: "/product_section/lingots-du-zamak.webp",
+            image: "/finals/zamak.png",
             imageTableau: "/tableaux/tableau_zamak.jpeg",
             fr: {
                 shortTitle: "Zamak 5",
@@ -167,7 +167,7 @@ export default function ArticlePage({
         },
 
         "plomb-doux": {
-            image: "/product_section/plomb-doux.png",
+            image: "/finals/plomb.png",
             imageTableau: "/tableaux/tableau_plombDoux.jpeg",
             fr: {
                 shortTitle: "Plomb Doux Pur",
@@ -306,7 +306,7 @@ export default function ArticlePage({
         },
 
         aluminium: {
-            image: "/product_section/aluminium-en-lingots.avif",
+            image: "/finals/aluminium.png",
             imageTableau: "/tableaux/tableau_aluminium.jpeg",
             fr: {
                 shortTitle: "Aluminium Industriel",
@@ -444,7 +444,7 @@ export default function ArticlePage({
         },
 
         "oxyde-de-zinc": {
-            image: "/product_section/oxyde de zinc.avif",
+            image: "/finals/oxyde_de_zinc2.png",
             imageTableau: "/tableaux/tableau_oxideZinc.jpeg",
             fr: {
                 shortTitle: "Oxyde de Zinc",
@@ -582,7 +582,7 @@ export default function ArticlePage({
         },
 
         "zinc-shg": {
-            image: "/product_section/SHG-99.995.png",
+            image: "/finals/zinc_hg.png",
             imageTableau: "/tableaux/tableau_zincSHG99.jpeg",
             fr: {
                 shortTitle: "Zinc SHG 99.995%",
@@ -721,7 +721,7 @@ export default function ArticlePage({
         },
 
         "zinc-aluminé": {
-            image: "/product_section/zinc-aluminé.jpg",
+            image: "/finals/zinc_aluminé.png",
             imageTableau: "/tableaux/tableau_aluminium.jpeg",
             fr: {
                 shortTitle: "Zinc Aluminé",
@@ -858,7 +858,7 @@ export default function ArticlePage({
         },
 
         cuivres: {
-            image: "/product_section/lingot-de-cuivre.jpg",
+            image: "/finals/cuivre.png",
             imageTableau: "/tableaux/tableau_cuivre.jpeg",
             fr: {
                 shortTitle: "Cuivre Industriel",
@@ -997,7 +997,7 @@ export default function ArticlePage({
         },
 
         carton: {
-            image: "/product_section/carton.avif",
+            image: "/finals/carton.png",
             imageTableau: "/tableaux/tableau_carton.jpeg",
             fr: {
                 shortTitle: "Carton Industriel",
@@ -1451,7 +1451,7 @@ export default function ArticlePage({
                                     alt={data.longTitle}
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                                {/* black filter on the images in individual product page : <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div> */}
                             </div>
                             {/* Floating specs badge */}
                             <div className="absolute -bottom-4 -right-4 bg-white dark:bg-base-300 rounded-xl p-4 shadow-2xl border border-base-300">

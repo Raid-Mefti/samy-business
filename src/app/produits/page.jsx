@@ -58,38 +58,38 @@ const TRANSLATIONS = {
 const PRODUCTS = [
     {
         name: "Aluminium",
-        iconPath: "/product_section/aluminium-en-lingots.avif",
+        iconPath: "/finals/aluminium.png",
         category: "imported",
     },
     {
         name: "Plomb Doux",
-        iconPath: "/product_section/plomb-doux.png",
+        iconPath: "/finals/plomb.png",
         category: "imported",
     },
     {
         name: "Oxyde de Zinc",
-        iconPath: "/product_section/oxyde de zinc.avif",
+        iconPath: "/finals/oxyde_de_zinc2.png",
         category: "imported",
     },
     {
         name: "Zinc SHG",
-        iconPath: "/product_section/SHG-99.995.png",
+        iconPath: "/finals/zinc_hg.png",
         category: "exported",
     },
     {
         name: "ZAMAK",
-        iconPath: "/product_section/lingots-du-zamak.webp",
+        iconPath: "/finals/zamak.png",
         category: "exported",
     },
-    { name: "Carton", iconPath: "/carton.avif", category: "exported" },
+    { name: "Carton", iconPath: "/finals/carton.png", category: "exported" },
     {
         name: "Zinc Aluminé",
-        iconPath: "/product_section/zinc-aluminé.jpg",
+        iconPath: "/finals/zinc_aluminé.png",
         category: "manufactured",
     },
     {
         name: "Cuivres",
-        iconPath: "/product_section/lingot-de-cuivre.jpg",
+        iconPath: "/finals/cuivre.png",
         category: "manufactured",
     },
 ];
