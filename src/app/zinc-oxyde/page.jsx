@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -29,114 +30,203 @@ export default function ZincOxidePage() {
             <Header />
 
             <main className="bg-base-100 text-base-content">
-                <section className="max-w-6xl mx-auto px-6 pt-32 pb-28 space-y-24">
-                    {/* Page header */}
-                    <header className="text-center space-y-8">
-                        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[rgb(223,126,60)]">
-                            {t.pageTitle}
-                        </h1>
-                        <p className="text-lg text-base-content/70 max-w-3xl mx-auto leading-relaxed">
-                            {t.pageSubtitle}
-                        </p>
+                {/* Hero Section */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        {/* Left Column - Content */}
+                        <div className="space-y-8">
+                            <div>
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[rgb(223,126,60)] leading-tight">
+                                    {t.pageTitle}
+                                </h1>
+                                <p className="text-lg md:text-xl text-base-content/80 mt-6 leading-relaxed">
+                                    {t.pageSubtitle}
+                                </p>
+                            </div>
 
-                        {/* Company info badge */}
-                        <div className="inline-flex items-center gap-4 px-6 py-3 bg-base-200/60 rounded-full border border-base-300">
-                            <div className="flex items-center gap-2">
-                                <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="font-medium">
-                                    {t.companyInfo.year}
-                                </span>
+                            {/* Company Info Badge */}
+                            <div className="inline-flex flex-wrap items-center justify-center gap-4 px-6 py-4 bg-base-200/60 rounded-2xl border border-base-300">
+                                <div className="flex items-center gap-2">
+                                    <svg
+                                        className="w-5 h-5 text-[rgb(223,126,60)]"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                    <span className="font-medium">
+                                        {t.companyInfo.year}
+                                    </span>
+                                </div>
+                                <div className="hidden sm:block h-4 w-px bg-base-300"></div>
+                                <div className="flex items-center gap-2">
+                                    <svg
+                                        className="w-5 h-5 text-[rgb(223,126,60)]"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                    <span className="font-medium">
+                                        {t.companyInfo.employees}
+                                    </span>
+                                </div>
+                                <div className="hidden sm:block h-4 w-px bg-base-300"></div>
+                                <div className="flex items-center gap-2">
+                                    <svg
+                                        className="w-5 h-5 text-[rgb(223,126,60)]"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                    <span className="font-medium">
+                                        {t.companyInfo.capital}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="h-4 w-px bg-base-300"></div>
-                            <div className="flex items-center gap-2">
-                                <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="font-medium">
-                                    {t.companyInfo.employees}
-                                </span>
+
+                            {/* Key Points from PDF */}
+                            <div className="space-y-4">
+                                <h3 className="text-lg font-semibold text-[rgb(223,126,60)]">
+                                    {t.keyPoints.title}
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {t.keyPoints.items.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-start gap-3"
+                                        >
+                                            <svg
+                                                className="w-5 h-5 text-[rgb(223,126,60)] mt-0.5 flex-shrink-0"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <span className="text-base-content/80 text-sm">
+                                                {item}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="h-4 w-px bg-base-300"></div>
-                            <div className="flex items-center gap-2">
-                                <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
+
+                            {/* CTA Button */}
+                            <div className="pt-4">
+                                <Link
+                                    href="/devis"
+                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
                                 >
-                                    <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="font-medium">
-                                    {t.companyInfo.capital}
-                                </span>
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                        />
+                                    </svg>
+                                    {t.ctaButton}
+                                </Link>
                             </div>
                         </div>
-                    </header>
 
-                    {/* CTA Button - Request Quote */}
-                    <div className="flex justify-center">
-                        <Link
-                            href="/devis"
-                            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                />
-                            </svg>
-                            {t.ctaButton}
-                        </Link>
+                        {/* Right Column - Product Image */}
+                        <div className="flex justify-center lg:justify-end">
+                            <div className="relative w-full max-w-md">
+                                <div className="rounded-2xl bg-gradient-to-br from-base-200 to-base-300 p-8 shadow-xl">
+                                    {/* Product Image */}
+                                    <div className="relative h-64 md:h-80 rounded-xl overflow-hidden mb-6 bg-white">
+                                        <Image
+                                            src="/finals/oxyde_de_zinc2.png"
+                                            alt="Zinc Oxide High Purity - Samy Business"
+                                            fill
+                                            className="object-contain p-4"
+                                            priority
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                    </div>
+
+                                    {/* Product Info */}
+                                    <div className="space-y-4 text-center">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-[rgb(223,126,60)]">
+                                                ZINC OXIDE
+                                            </h3>
+                                            <p className="text-base-content/70 mt-1">
+                                                High Purity • Consistent Quality
+                                            </p>
+                                        </div>
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)]">
+                                            <svg
+                                                className="w-4 h-4"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <span className="font-semibold">
+                                                25 kg packaging
+                                            </span>
+                                        </div>
+                                        <p className="text-sm text-base-content/60">
+                                            {t.productInfo.norm}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </section>
 
-                    {/* Tabs */}
-                    <div className="flex flex-wrap justify-center gap-3">
+                {/* Tabs Navigation */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-wrap justify-center gap-3 mb-8">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`px-6 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300 ${
+                                className={`px-6 py-3 rounded-full text-sm font-semibold border transition-all duration-300 ${
                                     activeTab === tab.id
-                                        ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)] shadow-sm"
-                                        : "bg-base-200/60 border-base-300 hover:border-[rgb(223,126,60)] hover:text-[rgb(223,126,60)]"
+                                        ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)] shadow-lg transform -translate-y-1"
+                                        : "bg-base-200/60 border-base-300 hover:border-[rgb(223,126,60)] hover:text-[rgb(223,126,60)] hover:shadow-md"
                                 }`}
                             >
                                 {tab.label}
                             </button>
                         ))}
                     </div>
+                </section>
 
-                    {/* Content */}
-                    <div className="rounded-3xl bg-base-200/40 border border-base-300 p-10 md:p-14 shadow-sm space-y-24">
+                {/* Content Section */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                    <div className="rounded-3xl bg-base-200/40 border border-base-300 p-6 sm:p-8 md:p-12 shadow-sm">
                         {activeTab === "specs" && (
                             <TechnicalSpecs t={t.specs} />
                         )}
@@ -153,15 +243,19 @@ export default function ZincOxidePage() {
                             <CompanyProfile t={t.company} />
                         )}
                     </div>
+                </section>
 
-                    {/* Bottom CTA */}
-                    <div className="text-center space-y-6">
-                        <h3 className="text-2xl font-bold">
-                            {t.bottomCta.title}
-                        </h3>
-                        <p className="text-base-content/70 max-w-2xl mx-auto">
-                            {t.bottomCta.description}
-                        </p>
+                {/* Bottom CTA */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+                    <div className="text-center space-y-8 bg-gradient-to-br from-base-200/50 to-base-300/30 rounded-3xl border border-base-300 p-8 md:p-12">
+                        <div>
+                            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                                {t.bottomCta.title}
+                            </h3>
+                            <p className="text-lg text-base-content/70 max-w-3xl mx-auto leading-relaxed">
+                                {t.bottomCta.description}
+                            </p>
+                        </div>
                         <Link
                             href="/devis"
                             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
@@ -191,31 +285,36 @@ export default function ZincOxidePage() {
 }
 
 /* ======================================================
-   TECHNICAL SPECS
+   TECHNICAL SPECS COMPONENT
 ====================================================== */
 
 function TechnicalSpecs({ t }) {
     return (
-        <section className="space-y-14">
-            <header className="space-y-3">
-                <h2 className="text-3xl font-bold">{t.title}</h2>
-                <p className="text-base-content/70 max-w-3xl">
+        <section className="space-y-12">
+            <header className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
+                <p className="text-lg text-base-content/80 max-w-3xl">
                     {t.description}
                 </p>
             </header>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {t.properties.map((property) => (
                     <div
                         key={property.label}
                         className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:border-[rgb(223,126,60)]/30 transition-colors"
                     >
-                        <p className="text-sm uppercase tracking-wide text-base-content/50">
+                        <p className="text-sm uppercase tracking-wide text-base-content/50 font-semibold">
                             {property.label}
                         </p>
-                        <p className="mt-1 font-semibold text-lg">
+                        <p className="mt-2 font-bold text-2xl text-[rgb(223,126,60)]">
                             {property.value}
                         </p>
+                        {property.note && (
+                            <p className="mt-1 text-xs text-base-content/60">
+                                {property.note}
+                            </p>
+                        )}
                     </div>
                 ))}
             </div>
@@ -224,70 +323,79 @@ function TechnicalSpecs({ t }) {
 }
 
 /* ======================================================
-   MANUFACTURING
+   MANUFACTURING PROCESS COMPONENT
 ====================================================== */
 
 function ManufacturingProcess({ t }) {
     return (
         <section className="space-y-16">
-            <header className="space-y-3">
-                <h2 className="text-3xl font-bold">{t.title}</h2>
-                <p className="text-base-content/70 max-w-3xl">
+            <header className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
+                <p className="text-lg text-base-content/80 max-w-3xl">
                     {t.description}
                 </p>
             </header>
 
             <div className="grid gap-10">
-                {t.processes.map((process) => (
+                {t.processes.map((process, index) => (
                     <div
                         key={process.name}
-                        className="relative rounded-3xl bg-base-200/60 border border-base-300 p-10 shadow-sm hover:shadow-md transition-shadow"
+                        className="relative rounded-3xl bg-base-200/60 border border-base-300 p-8 shadow-sm hover:shadow-md transition-shadow"
                     >
-                        <span className="absolute left-0 top-10 h-14 w-1 rounded-full bg-[rgb(223,126,60)]" />
+                        <div className="absolute left-0 top-8 bottom-8 w-1 rounded-full bg-[rgb(223,126,60)]"></div>
 
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
-                            <div>
-                                <h3 className="text-xl font-bold mb-1">
-                                    {process.name}
-                                </h3>
-                                <p className="text-sm text-base-content/60">
-                                    {process.market}
+                        <div className="ml-6">
+                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                                <div>
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 rounded-full bg-[rgb(223,126,60)] text-white flex items-center justify-center font-bold text-sm">
+                                            {index + 1}
+                                        </div>
+                                        <h3 className="text-xl font-bold">
+                                            {process.name}
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-base-content/60">
+                                        {process.market}
+                                    </p>
+                                </div>
+                                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)] text-sm font-medium">
+                                    {process.quality}
+                                </span>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8 ml-6">
+                                <Info
+                                    label={t.labels.principle}
+                                    value={process.principle}
+                                />
+                                <Info
+                                    label={t.labels.material}
+                                    value={process.material}
+                                />
+                                <Info
+                                    label={t.labels.applications}
+                                    value={process.applications}
+                                />
+                            </div>
+
+                            <div className="mt-6 ml-6 p-4 rounded-xl bg-[rgb(223,126,60)]/5 border border-[rgb(223,126,60)]/10">
+                                <p className="font-semibold text-[rgb(223,126,60)] flex items-center gap-2">
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                    {process.advantage}
                                 </p>
                             </div>
-                            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)] text-sm font-medium">
-                                {process.quality}
-                            </span>
                         </div>
-
-                        <div className="grid md:grid-cols-2 gap-6 text-sm">
-                            <Info
-                                label={t.labels.principle}
-                                value={process.principle}
-                            />
-                            <Info
-                                label={t.labels.material}
-                                value={process.material}
-                            />
-                            <Info
-                                label={t.labels.applications}
-                                value={process.applications}
-                            />
-                        </div>
-
-                        <p className="mt-8 font-semibold text-[rgb(223,126,60)] flex items-center gap-2">
-                            <svg
-                                className="w-5 h-5"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                            {process.advantage}
-                        </p>
                     </div>
                 ))}
             </div>
@@ -298,34 +406,36 @@ function ManufacturingProcess({ t }) {
 function Info({ label, value }) {
     return (
         <div>
-            <p className="font-semibold mb-1">{label}</p>
-            <p className="text-base-content/70 leading-relaxed">{value}</p>
+            <p className="font-semibold text-sm text-base-content/70 mb-1">
+                {label}
+            </p>
+            <p className="text-base-content/80 leading-relaxed">{value}</p>
         </div>
     );
 }
 
 /* ======================================================
-   APPLICATIONS
+   APPLICATIONS BY INDUSTRY COMPONENT
 ====================================================== */
 
 function ApplicationsByIndustry({ t }) {
     return (
         <section className="space-y-12">
-            <header className="space-y-3">
-                <h2 className="text-3xl font-bold">{t.title}</h2>
-                <p className="text-base-content/70 max-w-3xl">
+            <header className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
+                <p className="text-lg text-base-content/80 max-w-3xl">
                     {t.description}
                 </p>
             </header>
 
             <div className="grid md:grid-cols-2 gap-6">
-                {t.industries.map((industry) => (
+                {t.industries.map((industry, index) => (
                     <div
                         key={industry.title}
-                        className="rounded-2xl bg-base-200/60 border border-base-300 p-8 shadow-sm hover:border-[rgb(223,126,60)]/30 transition-colors"
+                        className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:border-[rgb(223,126,60)]/30 transition-colors"
                     >
                         <div className="flex items-start gap-4">
-                            <div className="p-3 rounded-lg bg-[rgb(223,126,60)]/10">
+                            <div className="p-3 rounded-lg bg-[rgb(223,126,60)]/10 flex-shrink-0">
                                 <svg
                                     className="w-6 h-6 text-[rgb(223,126,60)]"
                                     fill="currentColor"
@@ -339,9 +449,14 @@ function ApplicationsByIndustry({ t }) {
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="font-bold text-lg mb-2">
-                                    {industry.title}
-                                </h3>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="text-xs font-semibold px-2 py-1 rounded bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)]">
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
+                                    <h3 className="font-bold text-lg">
+                                        {industry.title}
+                                    </h3>
+                                </div>
                                 <p className="text-base-content/70 text-sm">
                                     {industry.description}
                                 </p>
@@ -355,15 +470,15 @@ function ApplicationsByIndustry({ t }) {
 }
 
 /* ======================================================
-   MARKET
+   MARKET ANALYSIS COMPONENT
 ====================================================== */
 
 function MarketAnalysis({ t }) {
     return (
         <section className="space-y-14">
-            <header className="space-y-3">
-                <h2 className="text-3xl font-bold">{t.title}</h2>
-                <p className="text-base-content/70 max-w-3xl">
+            <header className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
+                <p className="text-lg text-base-content/80 max-w-3xl">
                     {t.description}
                 </p>
             </header>
@@ -372,26 +487,53 @@ function MarketAnalysis({ t }) {
                 {t.indicators.map((indicator) => (
                     <div
                         key={indicator.title}
-                        className="rounded-2xl bg-base-200/60 border border-base-300 p-8 shadow-sm hover:shadow-md transition-shadow"
+                        className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow"
                     >
-                        <p className="font-semibold text-lg mb-2">
-                            {indicator.title}
-                        </p>
-                        <p className="mt-2 text-sm text-base-content/70">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                                <svg
+                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                                </svg>
+                            </div>
+                            <p className="font-bold text-lg">
+                                {indicator.title}
+                            </p>
+                        </div>
+                        <p className="text-sm text-base-content/70">
                             {indicator.description}
                         </p>
                     </div>
                 ))}
             </div>
 
-            {/* Growth Chart */}
+            {/* Growth Chart - Based on PDF data */}
             <div className="mt-12 p-8 rounded-2xl bg-base-200/60 border border-base-300">
-                <h3 className="text-xl font-bold mb-6">{t.growth.title}</h3>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <h3 className="text-xl font-bold">{t.growth.title}</h3>
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)] text-sm font-medium">
+                        <svg
+                            className="w-4 h-4"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                        {t.growth.trend}
+                    </span>
+                </div>
                 <div className="flex flex-col md:flex-row items-end justify-between gap-6">
                     {t.growth.years.map((year) => (
                         <div key={year.year} className="flex-1 text-center">
                             <div
-                                className="w-full bg-gradient-to-t from-[rgb(223,126,60)]/20 to-[rgb(223,126,60)]/5 rounded-t-lg mb-3"
+                                className="w-full bg-gradient-to-t from-[rgb(223,126,60)]/30 via-[rgb(223,126,60)]/15 to-transparent rounded-t-lg mb-3"
                                 style={{ height: `${year.height}px` }}
                             ></div>
                             <p className="font-bold text-2xl text-[rgb(223,126,60)]">
@@ -403,7 +545,7 @@ function MarketAnalysis({ t }) {
                         </div>
                     ))}
                 </div>
-                <p className="text-center mt-6 text-base-content/70">
+                <p className="text-center mt-8 text-base-content/70 max-w-2xl mx-auto">
                     {t.growth.description}
                 </p>
             </div>
@@ -412,33 +554,49 @@ function MarketAnalysis({ t }) {
 }
 
 /* ======================================================
-   COMPANY PROFILE
+   COMPANY PROFILE COMPONENT
 ====================================================== */
 
 function CompanyProfile({ t }) {
     return (
         <section className="space-y-16">
-            <header className="space-y-3">
-                <h2 className="text-3xl font-bold">{t.title}</h2>
-                <p className="text-base-content/70 max-w-3xl">
+            <header className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
+                <p className="text-lg text-base-content/80 max-w-3xl">
                     {t.description}
                 </p>
             </header>
 
             <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                    <div className="p-6 rounded-2xl bg-base-200/60 border border-base-300">
-                        <h3 className="font-bold text-xl mb-4">
-                            {t.sections.companyInfo.title}
-                        </h3>
-                        <div className="space-y-3">
+                <div className="space-y-8">
+                    {/* Company Info */}
+                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                                <svg
+                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 className="font-bold text-xl">
+                                {t.sections.companyInfo.title}
+                            </h3>
+                        </div>
+                        <div className="space-y-4">
                             {t.sections.companyInfo.items.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center gap-3"
+                                    className="flex items-center gap-3 p-3 rounded-lg bg-base-300/30"
                                 >
-                                    <div className="w-2 h-2 rounded-full bg-[rgb(223,126,60)]"></div>
-                                    <span className="text-base-content/70">
+                                    <div className="w-2 h-2 rounded-full bg-[rgb(223,126,60)] flex-shrink-0"></div>
+                                    <span className="text-base-content/80">
                                         {item}
                                     </span>
                                 </div>
@@ -446,39 +604,34 @@ function CompanyProfile({ t }) {
                         </div>
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-base-200/60 border border-base-300">
-                        <h3 className="font-bold text-xl mb-4">
-                            {t.sections.expertise.title}
-                        </h3>
-                        <div className="space-y-3">
+                    {/* Expertise */}
+                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                                <svg
+                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 className="font-bold text-xl">
+                                {t.sections.expertise.title}
+                            </h3>
+                        </div>
+                        <div className="space-y-4">
                             {t.sections.expertise.items.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center gap-3"
-                                >
-                                    <div className="w-2 h-2 rounded-full bg-[rgb(223,126,60)]"></div>
-                                    <span className="text-base-content/70">
-                                        {item}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="p-6 rounded-2xl bg-base-200/60 border border-base-300">
-                        <h3 className="font-bold text-xl mb-4">
-                            {t.sections.products.title}
-                        </h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            {t.sections.products.items.map((product, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-center gap-2"
+                                    className="flex items-start gap-4 p-3 rounded-lg bg-base-300/30"
                                 >
                                     <svg
-                                        className="w-4 h-4 text-[rgb(223,126,60)]"
+                                        className="w-4 h-4 text-[rgb(223,126,60)] mt-1 flex-shrink-0"
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                     >
@@ -488,7 +641,50 @@ function CompanyProfile({ t }) {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                    <span className="text-sm text-base-content/70">
+                                    <span className="text-base-content/80">
+                                        {item}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-8">
+                    {/* Products */}
+                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                                <svg
+                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-bold text-xl">
+                                {t.sections.products.title}
+                            </h3>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            {t.sections.products.items.map((product, index) => (
+                                <div
+                                    key={index}
+                                    className="flex items-center gap-2 p-2 rounded bg-base-300/30 hover:bg-base-300/50 transition-colors"
+                                >
+                                    <svg
+                                        className="w-3 h-3 text-[rgb(223,126,60)] flex-shrink-0"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                    <span className="text-sm text-base-content/80 truncate">
                                         {product}
                                     </span>
                                 </div>
@@ -496,15 +692,31 @@ function CompanyProfile({ t }) {
                         </div>
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-base-200/60 border border-base-300">
-                        <h3 className="font-bold text-xl mb-4">
-                            {t.sections.values.title}
-                        </h3>
+                    {/* Values */}
+                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                                <svg
+                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 className="font-bold text-xl">
+                                {t.sections.values.title}
+                            </h3>
+                        </div>
                         <div className="grid grid-cols-2 gap-4">
                             {t.sections.values.items.map((value) => (
                                 <div
                                     key={value.title}
-                                    className="text-center p-4 rounded-lg bg-base-200/40"
+                                    className="text-center p-4 rounded-lg bg-base-300/40 border border-base-300/50"
                                 >
                                     <h4 className="font-bold text-[rgb(223,126,60)] mb-2">
                                         {value.title}
@@ -523,31 +735,44 @@ function CompanyProfile({ t }) {
 }
 
 /* ======================================================
-   TRANSLATIONS
+   TRANSLATIONS - BASED ONLY ON PDF CONTENT
 ====================================================== */
 
 const TRANSLATIONS = {
     fr: {
-        pageTitle: "Oxyde de Zinc (ZnO) - Expertise Industrielle",
+        pageTitle: "Oxyde de Zinc (ZnO) - Samy Business",
         pageSubtitle:
-            "Cette page présente les données techniques, industrielles et économiques essentielles liées à l'oxyde de zinc (ZnO), reflétant l'approche Samy Business : rigueur, traçabilité et fiabilité à long terme.",
+            "Fournisseur certifié d'oxyde de zinc de qualité supérieure pour l'industrie algérienne, avec plus de 15 ans d'expertise.",
         companyInfo: {
             year: "Depuis 2007",
             employees: "15 collaborateurs",
             capital: "250M DA de capital",
         },
+        keyPoints: {
+            title: "Nos engagements qualité",
+            items: [
+                "Produits aux normes européennes",
+                "Côtés LME (London Metal Exchange)",
+                "Sélection rigoureuse des fournisseurs",
+                "Contrôles qualité systématiques",
+                "Expertise métaux ferreux et non-ferreux",
+            ],
+        },
+        productInfo: {
+            norm: "Tous nos produits sont préalablement sélectionnés et analysés auprès de fournisseurs reconnus",
+        },
         ctaButton: "Demander un devis",
         tabs: {
-            specs: "Propriétés chimiques",
+            specs: "Propriétés techniques",
             manufacturing: "Fabrication",
             applications: "Applications",
             market: "Marché & tendances",
             company: "Samy Business",
         },
         specs: {
-            title: "Propriétés physico-chimiques",
+            title: "Propriétés techniques de l'Oxyde de Zinc",
             description:
-                "Ces propriétés constituent la base des décisions de formulation, de sélection matière et de contrôle qualité dans des environnements industriels exigeants.",
+                "L'oxyde de zinc (ZnO) est un produit essentiel dans de nombreuses industries pour ses propriétés physico-chimiques exceptionnelles.",
             properties: [
                 { label: "Nom chimique", value: "Oxyde de Zinc" },
                 { label: "Formule", value: "ZnO" },
@@ -560,9 +785,9 @@ const TRANSLATIONS = {
             ],
         },
         manufacturing: {
-            title: "Procédés de fabrication",
+            title: "Procédés de fabrication du ZnO",
             description:
-                "Le procédé de fabrication influence directement la performance, la constance des lots et l'adéquation du ZnO aux applications finales.",
+                "Différents procédés de fabrication permettent d'obtenir des oxydes de zinc adaptés à diverses applications industrielles.",
             labels: {
                 principle: "Principe de fabrication",
                 material: "Matière première",
@@ -607,9 +832,9 @@ const TRANSLATIONS = {
             ],
         },
         applications: {
-            title: "Applications industrielles",
+            title: "Applications industrielles du ZnO",
             description:
-                "L'oxyde de zinc est utilisé pour ses propriétés fonctionnelles dans des secteurs où la conformité réglementaire et la répétabilité sont critiques.",
+                "L'oxyde de zinc est utilisé dans de nombreux secteurs industriels pour ses propriétés fonctionnelles.",
             industries: [
                 {
                     title: "Caoutchouc & Pneumatique",
@@ -644,9 +869,9 @@ const TRANSLATIONS = {
             ],
         },
         market: {
-            title: "Marché & tendances économiques",
+            title: "Analyse du marché du ZnO",
             description:
-                "Indicateurs clés permettant d'anticiper les risques économiques et d'optimiser les décisions d'achat stratégiques.",
+                "Comprendre les tendances du marché pour optimiser les décisions d'approvisionnement.",
             indicators: [
                 {
                     title: "Indexation des prix",
@@ -656,18 +881,19 @@ const TRANSLATIONS = {
                 {
                     title: "Volatilité du marché",
                     description:
-                        "Gestion proactive via stratégies de couverture et contrats à terme",
+                        "Nécessite une gestion proactive via des stratégies de couverture adaptées",
                 },
                 {
                     title: "Croissance du Nano-ZnO",
                     description:
-                        "Taux de croissance annuel > 8% grâce aux applications high-tech",
+                        "Marché en croissance grâce aux applications high-tech et aux innovations",
                 },
             ],
             growth: {
-                title: "Évolution du Chiffre d'Affaires Samy Business",
+                title: "Croissance de Samy Business",
+                trend: "+50% croissance annuelle",
                 description:
-                    "Croissance moyenne de 50% par an grâce à l'expertise métier et au développement stratégique",
+                    "Notre société opère dans un environnement à fort potentiel, générant des flux importants au regard des produits à valeur boursière commercialisés.",
                 years: [
                     { year: "2020", value: "872 KDA", height: 60 },
                     { year: "2021", value: "1.184 KDA", height: 85 },
@@ -676,34 +902,34 @@ const TRANSLATIONS = {
             },
         },
         company: {
-            title: "Samy Business - Expertise Métallurgique",
+            title: "Samy Business - Votre partenaire industriel",
             description:
-                "Leader dans l'import-export de produits sidérurgiques avec plus de 15 ans d'expertise et un engagement fort pour le développement industriel algérien.",
+                "Société d'importation de produits sidérurgiques divers du domaine des métaux ferreux et non-ferreux, destinés à la transformation et fabrication.",
             sections: {
                 companyInfo: {
-                    title: "Présentation de la Société",
+                    title: "Présentation de l'entreprise",
                     items: [
-                        "Création en 2007 sous forme EURL",
-                        "Capital social de 250.000.000,00 DA",
+                        "Créée en 2007 sous forme EURL",
+                        "Capital social : 250.000.000,00 DA",
                         "15 collaborateurs spécialisés",
                         "Siège à Alger (Said Hamdine)",
                         "Dirigeant : Mr. Rabah BOURRAI",
                     ],
                 },
                 expertise: {
-                    title: "Expertise & Savoir-faire",
+                    title: "Notre expertise",
                     items: [
                         "Plus de 15 ans d'expérience dans les métaux ferreux et non-ferreux",
                         "Maîtrise complète de la chaîne logistique d'import-export",
-                        "Partenariats avec fournisseurs européens reconnus",
-                        "Produits cotés LME (London Metal Exchange)",
+                        "Partenariats avec fournisseurs européens reconnus (Allemagne, Luxembourg, Belgique, Espagne)",
+                        "Produits côtés LME (London Metal Exchange)",
                         "Conformité aux normes européennes",
                     ],
                 },
                 products: {
-                    title: "Gamme de Produits",
+                    title: "Gamme de produits",
                     items: [
-                        "Oxyde de Zinc",
+                        "Oxyde de Zinc (ZnO)",
                         "Plomb doux pur 99%",
                         "Zamak 5",
                         "Aluminium en lingot",
@@ -714,12 +940,12 @@ const TRANSLATIONS = {
                     ],
                 },
                 values: {
-                    title: "Valeurs de l'Entreprise",
+                    title: "Nos valeurs",
                     items: [
                         {
                             title: "Mission",
                             description:
-                                "Satisfaction client, qualité produit et fiabilité totale",
+                                "Satisfaction client, qualité produit et fiabilité",
                         },
                         {
                             title: "Vision",
@@ -741,59 +967,464 @@ const TRANSLATIONS = {
             },
         },
         bottomCta: {
-            title: "Prêt à passer à l'action ?",
+            title: "Besoin d'oxyde de zinc de qualité ?",
             description:
-                "Contactez-nous pour discuter de vos besoins spécifiques en oxyde de zinc ou tout autre produit sidérurgique. Notre équipe d'experts est à votre disposition pour vous conseiller.",
+                "Notre équipe d'experts est à votre disposition pour vous conseiller et répondre à vos besoins spécifiques en produits sidérurgiques.",
             button: "Demander un devis personnalisé",
         },
     },
     en: {
-        pageTitle: "Zinc Oxide (ZnO) - Industrial Expertise",
+        pageTitle: "Zinc Oxide (ZnO) - Samy Business",
         pageSubtitle:
-            "This page presents essential technical, industrial, and economic data related to zinc oxide (ZnO), reflecting the Samy Business approach: rigor, traceability, and long-term reliability.",
+            "Certified supplier of premium quality zinc oxide for Algerian industry, with over 15 years of expertise.",
         companyInfo: {
             year: "Since 2007",
             employees: "15 employees",
             capital: "250M DA capital",
         },
-        ctaButton: "Request a Quote",
+        keyPoints: {
+            title: "Our quality commitments",
+            items: [
+                "Products meeting European standards",
+                "LME (London Metal Exchange) listed",
+                "Rigorous supplier selection",
+                "Systematic quality controls",
+                "Expertise in ferrous and non-ferrous metals",
+            ],
+        },
+        productInfo: {
+            norm: "All our products are pre-selected and analyzed from recognized suppliers",
+        },
+        ctaButton: "Request a quote",
         tabs: {
-            specs: "Chemical Properties",
+            specs: "Technical properties",
             manufacturing: "Manufacturing",
             applications: "Applications",
-            market: "Market & Trends",
+            market: "Market & trends",
             company: "Samy Business",
         },
-        // Add English translations similarly...
-        bottomCta: {
-            title: "Ready to take action?",
+        specs: {
+            title: "Zinc Oxide Technical Properties",
             description:
-                "Contact us to discuss your specific zinc oxide or other steel product needs. Our team of experts is available to advise you.",
-            button: "Request a Custom Quote",
+                "Zinc oxide (ZnO) is an essential product in many industries due to its exceptional physico-chemical properties.",
+            properties: [
+                { label: "Chemical name", value: "Zinc Oxide" },
+                { label: "Formula", value: "ZnO" },
+                { label: "CAS Number", value: "1314-13-2" },
+                { label: "Appearance", value: "Fine white powder" },
+                { label: "Molar mass", value: "81.38 g/mol" },
+                { label: "Melting point", value: "1975 °C" },
+                { label: "Density", value: "5.61 g/cm³" },
+                { label: "Band gap", value: "≈ 3.37 eV" },
+            ],
+        },
+        manufacturing: {
+            title: "ZnO Manufacturing Processes",
+            description:
+                "Different manufacturing processes produce zinc oxides suitable for various industrial applications.",
+            labels: {
+                principle: "Manufacturing principle",
+                material: "Raw material",
+                applications: "Target applications",
+            },
+            processes: [
+                {
+                    name: "French Process (Indirect)",
+                    market: "≈ 58% of global market",
+                    quality: "99.5% – 99.9%",
+                    principle:
+                        "Melting of pure zinc metal, vaporization then controlled oxidation under regulated atmosphere",
+                    material: "Pure zinc metal (99.995% Zn)",
+                    applications: "Pharmaceutical, cosmetic, technical rubber",
+                    advantage: "Excellent control of purity and particle size",
+                },
+                {
+                    name: "American Process (Direct)",
+                    market: "Heavy industry & construction",
+                    quality: "98% – 99%",
+                    principle:
+                        "Direct reduction of ore followed by immediate reoxidation in rotary kiln",
+                    material: "Zinc ores and concentrates",
+                    applications:
+                        "Standard rubber, ceramics, industrial paints",
+                    advantage: "Production cost optimization at large scale",
+                },
+                {
+                    name: "Chemical Process (Wet)",
+                    market: "Specialized & high-tech applications",
+                    quality: "High specific surface",
+                    principle:
+                        "Controlled chemical precipitation followed by calcination at controlled temperature",
+                    material: "Purified zinc salt solutions",
+                    applications:
+                        "Nano-ZnO, catalysis, fine chemicals, electronics",
+                    advantage:
+                        "Precise control of particle sizes and morphology",
+                },
+            ],
+        },
+        applications: {
+            title: "Industrial Applications of ZnO",
+            description:
+                "Zinc oxide is used in many industrial sectors for its functional properties.",
+            industries: [
+                {
+                    title: "Rubber & Tires",
+                    description:
+                        "Essential vulcanization agent for tires and technical parts",
+                },
+                {
+                    title: "Technical Ceramics",
+                    description:
+                        "Sintering agent and stabilizer for industrial ceramics",
+                },
+                {
+                    title: "Pharmaceutical & Cosmetic",
+                    description:
+                        "Active ingredient in sunscreens and dermatological formulations",
+                },
+                {
+                    title: "Paints & Coatings",
+                    description:
+                        "White pigment, corrosion inhibitor and fungicide",
+                },
+                {
+                    title: "Agriculture & Nutrition",
+                    description:
+                        "Animal feed supplement and micronutrient fertilizer",
+                },
+                {
+                    title: "Electronics & Semiconductors",
+                    description:
+                        "Material for photovoltaic cells and electronic devices",
+                },
+            ],
+        },
+        market: {
+            title: "ZnO Market Analysis",
+            description:
+                "Understanding market trends to optimize supply decisions.",
+            indicators: [
+                {
+                    title: "Price indexing",
+                    description:
+                        "Price correlated to LME Zinc with quality premium based on purity and particle size",
+                },
+                {
+                    title: "Market volatility",
+                    description:
+                        "Requires proactive management through adapted hedging strategies",
+                },
+                {
+                    title: "Nano-ZnO growth",
+                    description:
+                        "Growing market thanks to high-tech applications and innovations",
+                },
+            ],
+            growth: {
+                title: "Samy Business Growth",
+                trend: "+50% annual growth",
+                description:
+                    "Our company operates in a high-potential environment, generating significant flows given the commercialized stock market value products.",
+                years: [
+                    { year: "2020", value: "872 KDA", height: 60 },
+                    { year: "2021", value: "1.184 KDA", height: 85 },
+                    { year: "2022", value: "1.977 KDA", height: 140 },
+                ],
+            },
+        },
+        company: {
+            title: "Samy Business - Your industrial partner",
+            description:
+                "Import company of various steel products in the field of ferrous and non-ferrous metals, intended for transformation and manufacturing.",
+            sections: {
+                companyInfo: {
+                    title: "Company presentation",
+                    items: [
+                        "Founded in 2007 as EURL",
+                        "Share capital: 250,000,000.00 DA",
+                        "15 specialized employees",
+                        "Headquarters in Algiers (Said Hamdine)",
+                        "Director: Mr. Rabah BOURRAI",
+                    ],
+                },
+                expertise: {
+                    title: "Our expertise",
+                    items: [
+                        "Over 15 years experience in ferrous and non-ferrous metals",
+                        "Complete import-export logistics mastery",
+                        "Partnerships with recognized European suppliers (Germany, Luxembourg, Belgium, Spain)",
+                        "LME (London Metal Exchange) listed products",
+                        "Compliance with European standards",
+                    ],
+                },
+                products: {
+                    title: "Product range",
+                    items: [
+                        "Zinc Oxide (ZnO)",
+                        "Soft Lead 99% pure",
+                        "Zamak 5",
+                        "Aluminum ingot",
+                        "Copper cathode/plate",
+                        "Zinc SHG 99.95%",
+                        "Steel/stainless coils",
+                        "Metallic wire rod",
+                    ],
+                },
+                values: {
+                    title: "Our values",
+                    items: [
+                        {
+                            title: "Mission",
+                            description:
+                                "Customer satisfaction, product quality and reliability",
+                        },
+                        {
+                            title: "Vision",
+                            description:
+                                "Sustainable development and local added value",
+                        },
+                        {
+                            title: "Values",
+                            description:
+                                "Innovation, perfection and execution speed",
+                        },
+                        {
+                            title: "Commitment",
+                            description:
+                                "Effective contribution to economic development",
+                        },
+                    ],
+                },
+            },
+        },
+        bottomCta: {
+            title: "Need quality zinc oxide?",
+            description:
+                "Our team of experts is available to advise you and respond to your specific steel product needs.",
+            button: "Request a custom quote",
         },
     },
     ar: {
-        pageTitle: "أكسيد الزنك (ZnO) - الخبرة الصناعية",
+        pageTitle: "أكسيد الزنك (ZnO) - Samy Business",
         pageSubtitle:
-            "تعرض هذه الصفحة البيانات الفنية والصناعية والاقتصادية الأساسية المتعلقة بأكسيد الزنك (ZnO)، مما يعكس نهج Samy Business: الدقة، إمكانية التتبع والموثوقية على المدى الطويل.",
+            "مورد معتمد لأكسيد الزنك عالي الجودة للصناعة الجزائرية، مع خبرة تزيد عن 15 عاماً.",
         companyInfo: {
             year: "منذ 2007",
             employees: "15 موظف",
             capital: "250 مليون دينار رأسمال",
         },
+        keyPoints: {
+            title: "التزاماتنا الجودة",
+            items: [
+                "منتجات مطابقة للمعايير الأوروبية",
+                "مدرجة في LME (بورصة لندن للمعادن)",
+                "اختيار صارم للموردين",
+                "ضوابط جودة منهجية",
+                "خبرة في المعادن الحديدية وغير الحديدية",
+            ],
+        },
+        productInfo: {
+            norm: "جميع منتجاتنا يتم اختيارها وتحليلها مسبقاً من موردين معترف بهم",
+        },
         ctaButton: "طلب عرض سعر",
         tabs: {
-            specs: "الخصائص الكيميائية",
+            specs: "الخصائص التقنية",
             manufacturing: "التصنيع",
             applications: "التطبيقات",
             market: "السوق والاتجاهات",
             company: "Samy Business",
         },
-        // Add Arabic translations similarly...
-        bottomCta: {
-            title: "مستعد للتحرك؟",
+        specs: {
+            title: "الخصائص التقنية لأكسيد الزنك",
             description:
-                "اتصل بنا لمناقشة احتياجاتك الخاصة من أكسيد الزنك أو أي منتج فولاذي آخر. فريق خبرائنا متاح لتقديم المشورة لك.",
+                "أكسيد الزنك (ZnO) هو منتج أساسي في العديد من الصناعات بفضل خصائصه الفيزيائية والكيميائية الاستثنائية.",
+            properties: [
+                { label: "الاسم الكيميائي", value: "أكسيد الزنك" },
+                { label: "الصيغة", value: "ZnO" },
+                { label: "رقم CAS", value: "1314-13-2" },
+                { label: "المظهر", value: "مسحوق أبيض ناعم" },
+                { label: "الكتلة المولية", value: "81.38 ج/مول" },
+                { label: "نقطة الانصهار", value: "1975 °C" },
+                { label: "الكثافة", value: "5.61 جم/سم³" },
+                { label: "فجوة النطاق", value: "≈ 3.37 إلكترون فولت" },
+            ],
+        },
+        manufacturing: {
+            title: "عمليات تصنيع أكسيد الزنك",
+            description:
+                "عمليات تصنيع مختلفة تنتج أكاسيد الزنك المناسبة لتطبيقات صناعية متنوعة.",
+            labels: {
+                principle: "مبدأ التصنيع",
+                material: "المادة الخام",
+                applications: "التطبيقات المستهدفة",
+            },
+            processes: [
+                {
+                    name: "الطريقة الفرنسية (غير مباشرة)",
+                    market: "≈ 58% من السوق العالمية",
+                    quality: "99.5% – 99.9%",
+                    principle:
+                        "صهر معدن الزنك النقي، التبخر ثم الأكسدة المتحكم بها تحت جو منظم",
+                    material: "معدن الزنك النقي (99.995% زنك)",
+                    applications: "الصيدلة، مستحضرات التجميل، المطاط التقني",
+                    advantage: "تحكم ممتاز في النقاوة وحجم الجسيمات",
+                },
+                {
+                    name: "الطريقة الأمريكية (مباشرة)",
+                    market: "الصناعة الثقيلة والبناء",
+                    quality: "98% – 99%",
+                    principle:
+                        "الاختزال المباشر للخام متبوعاً بإعادة أكسدة فورية في فرن دوار",
+                    material: "خامات ومركزات الزنك",
+                    applications:
+                        "المطاط القياسي، السيراميك، الدهانات الصناعية",
+                    advantage: "تحسين تكاليف الإنتاج على نطاق واسع",
+                },
+                {
+                    name: "الطريقة الكيميائية (رطبة)",
+                    market: "تطبيقات متخصصة وتقنية عالية",
+                    quality: "سطح نوعي مرتفع",
+                    principle:
+                        "ترسيب كيميائي متحكم به متبوع بالتكلس بدرجة حرارة مضبوطة",
+                    material: "محاليل أملاح الزنك المصفاة",
+                    applications:
+                        "أكسيد الزنك النانوي، الحفز، الكيمياء الدقيقة، الإلكترونيات",
+                    advantage: "تحكم دقيق بأحجام الجسيمات والبنية",
+                },
+            ],
+        },
+        applications: {
+            title: "التطبيقات الصناعية لأكسيد الزنك",
+            description:
+                "يستخدم أكسيد الزنك في العديد من القطاعات الصناعية لخصائصه الوظيفية.",
+            industries: [
+                {
+                    title: "المطاط والإطارات",
+                    description: "عامل كبريتة أساسي للإطارات والأجزاء التقنية",
+                },
+                {
+                    title: "السيراميك التقني",
+                    description: "عامل تلبيد ومثبت للسيراميك الصناعي",
+                },
+                {
+                    title: "الصيدلاني ومستحضرات التجميل",
+                    description:
+                        "مكون نشط في كريمات الوقاية من الشمس والمستحضرات الجلدية",
+                },
+                {
+                    title: "الدهانات والطلاءات",
+                    description: "صبغة بيضاء، مثبط للتآكل ومبيد للفطريات",
+                },
+                {
+                    title: "الزراعة والتغذية",
+                    description: "مكمل غذائي للحيوانات وسماد مغذي دقيق",
+                },
+                {
+                    title: "الإلكترونيات وأشباه الموصلات",
+                    description:
+                        "مادة لخلايا الطاقة الشمسية والأجهزة الإلكترونية",
+                },
+            ],
+        },
+        market: {
+            title: "تحليل سوق أكسيد الزنك",
+            description: "فهم اتجاهات السوق لتحسين قرارات التوريد.",
+            indicators: [
+                {
+                    title: "فهرسة الأسعار",
+                    description:
+                        "السعر مرتبط بسعر بورصة لندن للمعادن مع قسط جودة حسب النقاوة وحجم الجسيمات",
+                },
+                {
+                    title: "تقلب السوق",
+                    description:
+                        "يتطلب إدارة استباقية من خلال استراتيجيات التحوط المناسبة",
+                },
+                {
+                    title: "نمو أكسيد الزنك النانوي",
+                    description:
+                        "سوق متنام بفضل التطبيقات التقنية العالية والابتكارات",
+                },
+            ],
+            growth: {
+                title: "نمو Samy Business",
+                trend: "+50% نمو سنوي",
+                description:
+                    "تعمل شركتنا في بيئة عالية الإمكانات، وتولد تدفقات كبيرة نظراً للمنتجات ذات القيمة البورصية المسوقة.",
+                years: [
+                    { year: "2020", value: "872 ألف دينار", height: 60 },
+                    { year: "2021", value: "1.184 ألف دينار", height: 85 },
+                    { year: "2022", value: "1.977 ألف دينار", height: 140 },
+                ],
+            },
+        },
+        company: {
+            title: "Samy Business - شريكك الصناعي",
+            description:
+                "شركة استيراد منتجات حديدية متنوعة في مجال المعادن الحديدية وغير الحديدية، المخصصة للتحويل والتصنيع.",
+            sections: {
+                companyInfo: {
+                    title: "تقديم الشركة",
+                    items: [
+                        "تأسست عام 2007 كشركة EURL",
+                        "رأس المال: 250,000,000.00 دينار",
+                        "15 موظفاً متخصصاً",
+                        "المقر الرئيسي في الجزائر (سعيد حمدين)",
+                        "المدير: السيد رابح بوراعي",
+                    ],
+                },
+                expertise: {
+                    title: "خبرتنا",
+                    items: [
+                        "أكثر من 15 عاماً من الخبرة في المعادن الحديدية وغير الحديدية",
+                        "إتقان كامل لسلسلة التوريد للاستيراد والتصدير",
+                        "شراكات مع موردين أوروبيين معترف بهم (ألمانيا، لوكسمبورغ، بلجيكا، إسبانيا)",
+                        "منتجات مدرجة في بورصة لندن للمعادن",
+                        "المطابقة للمعايير الأوروبية",
+                    ],
+                },
+                products: {
+                    title: "مجموعة المنتجات",
+                    items: [
+                        "أكسيد الزنك (ZnO)",
+                        "رصاص ناعم نقي 99%",
+                        "زاماك 5",
+                        "ألومنيوم في سبائك",
+                        "نحاس كاثود/ألواح",
+                        "زنك SHG 99.95%",
+                        "لفائف الصلب/الستانلس",
+                        "سلك معدني",
+                    ],
+                },
+                values: {
+                    title: "قيمنا",
+                    items: [
+                        {
+                            title: "المهمة",
+                            description: "رضا العملاء، جودة المنتج والموثوقية",
+                        },
+                        {
+                            title: "الرؤية",
+                            description:
+                                "التنمية المستدامة والقيمة المضافة المحلية",
+                        },
+                        {
+                            title: "القيم",
+                            description: "الابتكار، الكمال وسرعة التنفيذ",
+                        },
+                        {
+                            title: "الالتزام",
+                            description: "مساهمة فعالة في التنمية الاقتصادية",
+                        },
+                    ],
+                },
+            },
+        },
+        bottomCta: {
+            title: "هل تحتاج إلى أكسيد زنك عالي الجودة؟",
+            description:
+                "فريق خبرائنا متاح لتقديم المشورة لك والاستجابة لاحتياجاتك المحددة في المنتجات الحديدية.",
             button: "طلب عرض سعر مخصص",
         },
     },

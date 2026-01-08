@@ -54,7 +54,7 @@ export default function ZincOxideIntro() {
                     } relative h-64 sm:h-80 md:h-[32rem] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl bg-base-300`}
                 >
                     <img
-                        src="Zinc_fragment_sublimed_and_1cm3_cube.jpg"
+                        src="/finals/oxyde_de_zinc2.png"
                         alt="Oxyde de zinc industriel de haute qualité"
                         className="w-full h-full object-cover"
                         loading="lazy"
