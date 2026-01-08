@@ -189,7 +189,7 @@ export default function Comp7() {
                     {/* Logo */}
                     <div className="flex-shrink-0">
                         <img
-                            src="/logo99.png"
+                            src="/finals/logo_samybusiness.svg"
                             alt="Samy Business"
                             className="w-60 sm:w-70 max-w-full"
                         />

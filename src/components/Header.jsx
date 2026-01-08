@@ -108,7 +108,7 @@ export default function NavBar({ transparentOnTop = false }) {
                 {/* LOGO */}
                 <Link href="/">
                     <img
-                        src="/finals/logo_samybusiness.ai"
+                        src="/finals/logo_samybusiness.svg"
                         alt="logo"
                         className="w-40 sm:w-48 md:w-52 lg:w-56 drop-shadow-md"
                     />
