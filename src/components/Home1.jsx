@@ -53,74 +53,50 @@ export default function Home1() {
                 }}
             />
 
-            {/* Dark overlay for better text contrast */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+            {/* Subtle overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
 
-            {/* CONTENT - Center aligned on mobile, top-left on desktop */}
+            {/* CONTENT - Simplified and focused */}
             <div
-                className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col justify-center md:justify-start md:pt-12 lg:pt-20"
+                className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 min-h-screen flex flex-col justify-center md:justify-start md:pt-20"
                 dir={isRtl ? "rtl" : "ltr"}
             >
-                {/* TEXT CONTENT - Centered on mobile, left-aligned on desktop */}
+                {/* TEXT CONTENT - Clean and focused */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className={`w-full md:max-w-[65ch] ${
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className={`w-full ${
                         isRtl ? "md:text-right md:ml-auto" : "md:text-left"
                     } text-center md:text-left`}
                 >
-                    {/* Logo/Brand Mark - Mobile only */}
+                    {/* Main Slogan - Clean and bold */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.1, duration: 0.7 }}
-                        className="mb-8 md:hidden flex justify-center"
-                    >
-                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500/10 to-cyan-400/10 border border-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <span
-                                className="text-4xl font-bold"
-                                style={{
-                                    background:
-                                        "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                SB
-                            </span>
-                        </div>
-                    </motion.div>
-
-                    {/* Main Slogan - Better mobile typography */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
-                        className="font-extrabold leading-tight"
+                        className="font-extrabold leading-[1.1]"
                         style={{
-                            fontSize: "clamp(2.5rem, 8vw, 4rem)",
+                            fontSize: "clamp(2.75rem, 9vw, 5rem)",
                             color: "white",
-                            textShadow: "0 4px 12px rgba(0, 0, 0, 0.6)",
+                            textShadow: "0 2px 10px rgba(0, 0, 0, 0.5)",
                         }}
                     >
                         <div
                             dangerouslySetInnerHTML={{ __html: t.slogan }}
-                            className="space-y-2 md:space-y-0"
+                            className="space-y-1 md:space-y-0"
                         />
                     </motion.div>
 
-                    {/* Subtitle - Improved mobile styling */}
+                    {/* Subtitle - Simple and clear */}
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5, duration: 0.8 }}
-                        className="mt-6 md:mt-8 font-semibold tracking-wide"
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                        className="mt-4 md:mt-6 font-medium"
                         style={{
-                            fontSize: "clamp(1.125rem, 4vw, 1.75rem)",
-                            color: "rgba(255, 255, 255, 0.95)",
-                            textShadow: "0 2px 8px rgba(0, 0, 0, 0.4)",
+                            fontSize: "clamp(1.125rem, 4vw, 1.5rem)",
+                            color: "rgba(255, 255, 255, 0.9)",
                         }}
                     >
                         <span
@@ -128,34 +104,14 @@ export default function Home1() {
                             className="inline-block md:block"
                         />
                     </motion.p>
-
-                    {/* Decorative line - Mobile centered, desktop aligned */}
-                    <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{
-                            delay: 0.7,
-                            duration: 0.8,
-                            ease: "easeOut",
-                        }}
-                        className={`h-1 mt-6 md:mt-8 ${
-                            isRtl ? "md:ml-auto" : "md:mr-auto"
-                        } mx-auto md:mx-0`}
-                        style={{
-                            width: "80px",
-                            background:
-                                "linear-gradient(90deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
-                            transformOrigin: isRtl ? "right" : "left",
-                        }}
-                    />
                 </motion.div>
 
-                {/* CTA - Better mobile positioning */}
+                {/* CTA - Clean and prominent */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    className={`mt-12 md:mt-auto mb-16 md:mb-24 ${
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                    className={`mt-8 md:mt-12 ${
                         isRtl ? "text-left" : "text-center md:text-left"
                     }`}
                 >
@@ -166,7 +122,7 @@ export default function Home1() {
                                 ? {
                                       boxShadow: [
                                           "0 0 0 rgba(47, 134, 253, 0)",
-                                          "0 0 40px rgba(47, 134, 253, 0.9)",
+                                          "0 0 30px rgba(47, 134, 253, 0.8)",
                                           "0 0 0 rgba(47, 134, 253, 0)",
                                       ],
                                   }
@@ -180,90 +136,36 @@ export default function Home1() {
                         }}
                         className="
                             relative
-                            px-10 py-4 md:px-14 md:py-6
+                            px-8 py-4 md:px-12 md:py-5
                             rounded-full font-bold
-                            text-base md:text-xl
+                            text-lg md:text-xl
                             text-white
-                            shadow-2xl shadow-blue-900/50
-                            hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/70
+                            shadow-xl
+                            hover:scale-105
                             active:scale-95
                             transition-all duration-300
                             w-full sm:w-auto
-                            flex items-center justify-center gap-3
                         "
                     >
-                        {/* Arrow icon for better UX */}
-                        <svg
-                            className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                        </svg>
-                        <span>{t.cta}</span>
-
-                        {/* Mobile hint */}
-                        <span className="absolute -bottom-8 text-xs opacity-70 md:hidden">
-                            {isRtl ? "انقر هنا" : "Tap to start"}
+                        <span className="flex items-center justify-center gap-2">
+                            {t.cta}
+                            <svg
+                                className={`w-5 h-5 ${
+                                    isRtl ? "rotate-180" : ""
+                                }`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                />
+                            </svg>
                         </span>
                     </motion.button>
-
-                    {/* Additional info - Mobile only */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.2, duration: 0.8 }}
-                        className="mt-10 md:hidden text-center"
-                    >
-                        <div className="inline-flex items-center gap-4 px-4 py-3 rounded-xl backdrop-blur-sm bg-white/10 border border-white/20">
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-pulse" />
-                                <span className="text-sm font-medium text-white/90">
-                                    15+ ans d'expérience
-                                </span>
-                            </div>
-                            <div className="h-4 w-px bg-white/30" />
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-pulse" />
-                                <span className="text-sm font-medium text-white/90">
-                                    100+ clients
-                                </span>
-                            </div>
-                        </div>
-                    </motion.div>
-                </motion.div>
-
-                {/* Scroll indicator - Mobile only */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 0.8 }}
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 md:hidden"
-                >
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="text-xs text-white/60 animate-pulse">
-                            Scroll
-                        </span>
-                        <svg
-                            className="w-6 h-6 text-white/60 animate-bounce"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                            />
-                        </svg>
-                    </div>
                 </motion.div>
             </div>
         </section>
