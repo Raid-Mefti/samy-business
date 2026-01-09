@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import {
@@ -21,6 +22,50 @@ import {
 
 export default function LegalPage() {
     const { language } = useLanguage();
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+    const isRTL = language === "ar";
+
+    // Color scheme
+    const gradientStart = "rgb(47, 134, 253)"; // #2f86fd
+    const gradientEnd = "rgb(76, 242, 255)"; // #4cf2ff
+    const blue = "rgb(25, 43, 94)"; // #192b5e
+    const mediumGray = "rgb(180, 180, 180)";
+    const lightGray = "rgb(240, 240, 240)";
+    const darkGray = "rgb(30, 35, 45)";
+    const white = "rgb(255, 255, 255)";
+
+    const gradientBlue = `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`;
+
+    // Theme-based colors
+    const pageBg = isDark
+        ? "linear-gradient(135deg, #0c121e 0%, #121a2c 100%)"
+        : `linear-gradient(135deg, ${lightGray} 0%, white 100%)`;
+    const cardBg = isDark ? darkGray : white;
+    const cardBorder = isDark
+        ? `1px solid rgba(76, 242, 255, 0.2)`
+        : `1px solid rgb(180, 180, 180)`;
+    const textPrimary = isDark ? white : blue;
+    const textSecondary = isDark ? mediumGray : blue;
+    const accentColor = gradientEnd;
+    const navCardBg = isDark
+        ? "rgba(25, 43, 94, 0.2)"
+        : "rgba(25, 43, 94, 0.03)";
+    const navCardBorder = isDark
+        ? "1px solid rgba(76, 242, 255, 0.1)"
+        : "1px solid rgba(47, 134, 253, 0.1)";
+    const sectionCardBg = isDark
+        ? "rgba(25, 43, 94, 0.1)"
+        : "rgba(25, 43, 94, 0.02)";
+    const sectionCardBorder = isDark
+        ? "1px solid rgba(76, 242, 255, 0.15)"
+        : "1px solid rgba(47, 134, 253, 0.1)";
+    const iconBg = isDark
+        ? "rgba(76, 242, 255, 0.1)"
+        : "rgba(47, 134, 253, 0.1)";
+    const iconColor = gradientEnd;
+    const printBtnBg = gradientBlue;
+    const hoverGradientBlue = `linear-gradient(135deg, ${gradientStart}15deg, ${gradientEnd} 100%)`;
 
     const translations = {
         fr: {
@@ -366,7 +411,6 @@ export default function LegalPage() {
     };
 
     const t = translations[language];
-    const isRTL = language === "ar";
 
     const handlePrint = () => {
         window.print();
@@ -377,26 +421,52 @@ export default function LegalPage() {
             <Header />
 
             <div
-                className={`min-h-screen bg-base-100 pt-32 pb-16 ${
+                className={`min-h-screen pt-32 pb-16 ${
                     isRTL ? "text-right" : "text-left"
                 }`}
                 dir={isRTL ? "rtl" : "ltr"}
+                style={{
+                    background: pageBg,
+                }}
             >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                     {/* Header Section */}
                     <div className="text-center mb-12">
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(223,126,60)] mb-4">
+                        <h1
+                            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+                            style={{
+                                background: gradientBlue,
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                backgroundClip: "text",
+                            }}
+                        >
                             {t.title}
                         </h1>
-                        <p className="text-base-content/70 text-lg sm:text-xl max-w-3xl mx-auto mb-8">
+                        <p
+                            className="text-lg sm:text-xl max-w-3xl mx-auto mb-8"
+                            style={{ color: textSecondary }}
+                        >
                             {t.subtitle}
                         </p>
                     </div>
 
-                    {/* Quick Navigation - Non-sticky */}
-                    <div className="bg-base-200 rounded-2xl p-6 mb-10 border border-base-300">
-                        <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                            <FaBook className="text-[rgb(223,126,60)]" />
+                    {/* Quick Navigation */}
+                    <div
+                        className="rounded-2xl p-6 mb-10"
+                        style={{
+                            backgroundColor: navCardBg,
+                            border: navCardBorder,
+                            boxShadow: isDark
+                                ? "0 8px 32px rgba(0, 0, 0, 0.3)"
+                                : "0 4px 20px rgba(0, 0, 0, 0.05)",
+                        }}
+                    >
+                        <h3
+                            className="text-lg font-semibold mb-4 flex items-center gap-2"
+                            style={{ color: textPrimary }}
+                        >
+                            <FaBook style={{ color: iconColor }} />
                             {t.navigation}
                         </h3>
                         <div
@@ -406,23 +476,77 @@ export default function LegalPage() {
                         >
                             <a
                                 href="#mentions"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-base-100 hover:bg-base-300 border border-base-300 transition-colors text-sm font-medium"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-colors text-sm font-medium hover:scale-105 transition-transform duration-200"
+                                style={{
+                                    backgroundColor: cardBg,
+                                    border: `1px solid ${
+                                        isDark
+                                            ? "rgba(76, 242, 255, 0.2)"
+                                            : "rgba(47, 134, 253, 0.2)"
+                                    }`,
+                                    color: textPrimary,
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.borderColor =
+                                        gradientEnd;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderColor = isDark
+                                        ? "rgba(76, 242, 255, 0.2)"
+                                        : "rgba(47, 134, 253, 0.2)";
+                                }}
                             >
-                                <FaFileContract />
+                                <FaFileContract style={{ color: iconColor }} />
                                 {t.mentionsTitle}
                             </a>
                             <a
                                 href="#conditions"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-base-100 hover:bg-base-300 border border-base-300 transition-colors text-sm font-medium"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-colors text-sm font-medium hover:scale-105 transition-transform duration-200"
+                                style={{
+                                    backgroundColor: cardBg,
+                                    border: `1px solid ${
+                                        isDark
+                                            ? "rgba(76, 242, 255, 0.2)"
+                                            : "rgba(47, 134, 253, 0.2)"
+                                    }`,
+                                    color: textPrimary,
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.borderColor =
+                                        gradientEnd;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderColor = isDark
+                                        ? "rgba(76, 242, 255, 0.2)"
+                                        : "rgba(47, 134, 253, 0.2)";
+                                }}
                             >
-                                <FaGavel />
+                                <FaGavel style={{ color: iconColor }} />
                                 {t.conditionsTitle}
                             </a>
                             <a
                                 href="#contact"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-base-100 hover:bg-base-300 border border-base-300 transition-colors text-sm font-medium"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-colors text-sm font-medium hover:scale-105 transition-transform duration-200"
+                                style={{
+                                    backgroundColor: cardBg,
+                                    border: `1px solid ${
+                                        isDark
+                                            ? "rgba(76, 242, 255, 0.2)"
+                                            : "rgba(47, 134, 253, 0.2)"
+                                    }`,
+                                    color: textPrimary,
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.borderColor =
+                                        gradientEnd;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderColor = isDark
+                                        ? "rgba(76, 242, 255, 0.2)"
+                                        : "rgba(47, 134, 253, 0.2)";
+                                }}
                             >
-                                <FaPhone />
+                                <FaPhone style={{ color: iconColor }} />
                                 {t.contactTitle}
                             </a>
                         </div>
@@ -433,37 +557,88 @@ export default function LegalPage() {
                         <div className="flex-1 space-y-8">
                             {/* Legal Notice Section */}
                             <section id="mentions" className="scroll-mt-32">
-                                <div className="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 sm:p-8">
+                                <div
+                                    className="rounded-2xl p-6 sm:p-8"
+                                    style={{
+                                        backgroundColor: cardBg,
+                                        border: cardBorder,
+                                        boxShadow: isDark
+                                            ? "0 20px 60px rgba(0, 0, 0, 0.3)"
+                                            : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                                    }}
+                                >
                                     <div className="flex items-center gap-3 mb-6">
-                                        <div className="p-3 rounded-xl bg-[rgb(223,126,60)]/10">
-                                            <FaFileContract className="text-2xl text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="p-3 rounded-xl"
+                                            style={{ backgroundColor: iconBg }}
+                                        >
+                                            <FaFileContract
+                                                style={{
+                                                    color: iconColor,
+                                                    fontSize: "1.5rem",
+                                                }}
+                                            />
                                         </div>
-                                        <h2 className="text-2xl font-bold text-base-content">
+                                        <h2
+                                            className="text-2xl font-bold"
+                                            style={{ color: textPrimary }}
+                                        >
                                             {t.mentionsTitle}
                                         </h2>
                                     </div>
 
                                     <div className="space-y-8">
                                         {/* Company Info */}
-                                        <div className="bg-base-200 rounded-xl p-6 border border-base-300">
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaBuilding className="text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
+                                        >
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaBuilding
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.companyInfo}
                                             </h3>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                 <div>
-                                                    <p className="text-sm text-base-content/60 mb-1">
+                                                    <p
+                                                        className="text-sm mb-1"
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {t.mentions.company}
                                                     </p>
-                                                    <p className="font-medium text-base-content">
+                                                    <p
+                                                        className="font-medium"
+                                                        style={{
+                                                            color: textPrimary,
+                                                        }}
+                                                    >
                                                         {t.mentions.managerName}
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm text-base-content/60 mb-1">
+                                                    <p
+                                                        className="text-sm mb-1"
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {t.mentions.capital}
                                                     </p>
-                                                    <p className="font-medium text-base-content">
+                                                    <p
+                                                        className="font-medium"
+                                                        style={{
+                                                            color: textPrimary,
+                                                        }}
+                                                    >
                                                         {
                                                             t.mentions
                                                                 .capitalAmount
@@ -471,10 +646,20 @@ export default function LegalPage() {
                                                     </p>
                                                 </div>
                                                 <div className="sm:col-span-2">
-                                                    <p className="text-sm text-base-content/60 mb-1">
+                                                    <p
+                                                        className="text-sm mb-1"
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {t.mentions.headOffice}
                                                     </p>
-                                                    <p className="font-medium text-base-content">
+                                                    <p
+                                                        className="font-medium"
+                                                        style={{
+                                                            color: textPrimary,
+                                                        }}
+                                                    >
                                                         {
                                                             t.mentions
                                                                 .headOfficeAddress
@@ -487,18 +672,37 @@ export default function LegalPage() {
                                         {/* Contact Info */}
                                         <div
                                             id="contact"
-                                            className="scroll-mt-32 bg-base-200 rounded-xl p-6 border border-base-300"
+                                            className="scroll-mt-32 rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
                                         >
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaPhone className="text-[rgb(223,126,60)]" />
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaPhone
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.contactTitle}
                                             </h3>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                 <div>
-                                                    <p className="text-sm text-base-content/60 mb-1">
+                                                    <p
+                                                        className="text-sm mb-1"
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {t.mentions.phone}
                                                     </p>
-                                                    <p className="font-medium text-base-content">
+                                                    <p
+                                                        className="font-medium"
+                                                        style={{
+                                                            color: textPrimary,
+                                                        }}
+                                                    >
                                                         {
                                                             t.mentions
                                                                 .phoneNumbers
@@ -506,10 +710,20 @@ export default function LegalPage() {
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm text-base-content/60 mb-1">
+                                                    <p
+                                                        className="text-sm mb-1"
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {t.mentions.email}
                                                     </p>
-                                                    <p className="font-medium text-base-content">
+                                                    <p
+                                                        className="font-medium hover:opacity-80 transition-opacity cursor-pointer"
+                                                        style={{
+                                                            color: gradientEnd,
+                                                        }}
+                                                    >
                                                         contact@samybusiness.dz
                                                     </p>
                                                 </div>
@@ -517,45 +731,89 @@ export default function LegalPage() {
                                         </div>
 
                                         {/* Activity */}
-                                        <div className="bg-base-200 rounded-xl p-6 border border-base-300">
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaGlobe className="text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
+                                        >
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaGlobe
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.mentions.activity}
                                             </h3>
-                                            <p className="text-base-content/80">
+                                            <p style={{ color: textSecondary }}>
                                                 {t.mentions.activityDesc}
                                             </p>
                                         </div>
 
                                         {/* Data Protection */}
-                                        <div className="bg-base-200 rounded-xl p-6 border border-base-300">
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaLock className="text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
+                                        >
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaLock
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.mentions.dataProtection}
                                             </h3>
-                                            <p className="text-base-content/80">
+                                            <p style={{ color: textSecondary }}>
                                                 {t.mentions.dataProtectionDesc}
                                             </p>
                                         </div>
 
                                         {/* Intellectual Property */}
-                                        <div className="bg-base-200 rounded-xl p-6 border border-base-300">
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaCopyright className="text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
+                                        >
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaCopyright
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.mentions.ip}
                                             </h3>
-                                            <p className="text-base-content/80">
+                                            <p style={{ color: textSecondary }}>
                                                 {t.mentions.ipDesc}
                                             </p>
                                         </div>
 
                                         {/* Liability */}
-                                        <div className="bg-base-200 rounded-xl p-6 border border-base-300">
-                                            <h3 className="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
-                                                <FaUserShield className="text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="rounded-xl p-6"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                            }}
+                                        >
+                                            <h3
+                                                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                                                style={{ color: textPrimary }}
+                                            >
+                                                <FaUserShield
+                                                    style={{ color: iconColor }}
+                                                />
                                                 {t.mentions.liability}
                                             </h3>
-                                            <p className="text-base-content/80">
+                                            <p style={{ color: textSecondary }}>
                                                 {t.mentions.liabilityDesc}
                                             </p>
                                         </div>
@@ -565,12 +823,32 @@ export default function LegalPage() {
 
                             {/* Terms and Conditions Section */}
                             <section id="conditions" className="scroll-mt-32">
-                                <div className="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 sm:p-8">
+                                <div
+                                    className="rounded-2xl p-6 sm:p-8"
+                                    style={{
+                                        backgroundColor: cardBg,
+                                        border: cardBorder,
+                                        boxShadow: isDark
+                                            ? "0 20px 60px rgba(0, 0, 0, 0.3)"
+                                            : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                                    }}
+                                >
                                     <div className="flex items-center gap-3 mb-6">
-                                        <div className="p-3 rounded-xl bg-[rgb(223,126,60)]/10">
-                                            <FaShieldAlt className="text-2xl text-[rgb(223,126,60)]" />
+                                        <div
+                                            className="p-3 rounded-xl"
+                                            style={{ backgroundColor: iconBg }}
+                                        >
+                                            <FaShieldAlt
+                                                style={{
+                                                    color: iconColor,
+                                                    fontSize: "1.5rem",
+                                                }}
+                                            />
                                         </div>
-                                        <h2 className="text-2xl font-bold text-base-content">
+                                        <h2
+                                            className="text-2xl font-bold"
+                                            style={{ color: textPrimary }}
+                                        >
                                             {t.conditionsTitle}
                                         </h2>
                                     </div>
@@ -580,12 +858,45 @@ export default function LegalPage() {
                                             (condition, index) => (
                                                 <div
                                                     key={index}
-                                                    className="bg-base-200 rounded-xl p-6 border border-base-300 hover:border-[rgb(223,126,60)]/30 transition-colors"
+                                                    className="rounded-xl p-6 transition-all duration-200 hover:shadow-lg"
+                                                    style={{
+                                                        backgroundColor:
+                                                            sectionCardBg,
+                                                        border: sectionCardBorder,
+                                                    }}
+                                                    onMouseEnter={(e) => {
+                                                        e.currentTarget.style.borderColor =
+                                                            gradientEnd;
+                                                        e.currentTarget.style.transform =
+                                                            "translateY(-2px)";
+                                                    }}
+                                                    onMouseLeave={(e) => {
+                                                        e.currentTarget.style.borderColor =
+                                                            sectionCardBorder;
+                                                        e.currentTarget.style.transform =
+                                                            "translateY(0)";
+                                                    }}
                                                 >
-                                                    <h4 className="text-lg font-semibold text-[rgb(223,126,60)] mb-2">
+                                                    <h4
+                                                        className="text-lg font-semibold mb-2"
+                                                        style={{
+                                                            background:
+                                                                gradientBlue,
+                                                            WebkitBackgroundClip:
+                                                                "text",
+                                                            WebkitTextFillColor:
+                                                                "transparent",
+                                                            backgroundClip:
+                                                                "text",
+                                                        }}
+                                                    >
                                                         {condition.title}
                                                     </h4>
-                                                    <p className="text-base-content/80">
+                                                    <p
+                                                        style={{
+                                                            color: textSecondary,
+                                                        }}
+                                                    >
                                                         {condition.desc}
                                                     </p>
                                                 </div>
@@ -600,40 +911,76 @@ export default function LegalPage() {
                         <div className="lg:w-80">
                             <div className="sticky top-32 space-y-6">
                                 {/* Quick Info Card */}
-                                <div className="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6">
-                                    <h3 className="text-lg font-semibold text-base-content mb-4">
+                                <div
+                                    className="rounded-2xl p-6"
+                                    style={{
+                                        backgroundColor: cardBg,
+                                        border: cardBorder,
+                                        boxShadow: isDark
+                                            ? "0 20px 60px rgba(0, 0, 0, 0.3)"
+                                            : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                                    }}
+                                >
+                                    <h3
+                                        className="text-lg font-semibold mb-4"
+                                        style={{ color: textPrimary }}
+                                    >
                                         {t.companyInfo}
                                     </h3>
                                     <div className="space-y-4">
                                         <div>
-                                            <p className="text-sm text-base-content/60">
+                                            <p
+                                                className="text-sm"
+                                                style={{ color: textSecondary }}
+                                            >
                                                 {t.mentions.rc}
                                             </p>
-                                            <p className="font-medium text-base-content">
+                                            <p
+                                                className="font-medium"
+                                                style={{ color: textPrimary }}
+                                            >
                                                 {t.mentions.rcNumber}
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-base-content/60">
+                                            <p
+                                                className="text-sm"
+                                                style={{ color: textSecondary }}
+                                            >
                                                 {t.mentions.nif}
                                             </p>
-                                            <p className="font-medium text-base-content">
+                                            <p
+                                                className="font-medium"
+                                                style={{ color: textPrimary }}
+                                            >
                                                 {t.mentions.nifNumber}
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-base-content/60">
+                                            <p
+                                                className="text-sm"
+                                                style={{ color: textSecondary }}
+                                            >
                                                 {t.mentions.nis}
                                             </p>
-                                            <p className="font-medium text-base-content">
+                                            <p
+                                                className="font-medium"
+                                                style={{ color: textPrimary }}
+                                            >
                                                 {t.mentions.nisNumber}
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-base-content/60">
+                                            <p
+                                                className="text-sm"
+                                                style={{ color: textSecondary }}
+                                            >
                                                 {t.mentions.article}
                                             </p>
-                                            <p className="font-medium text-base-content">
+                                            <p
+                                                className="font-medium"
+                                                style={{ color: textPrimary }}
+                                            >
                                                 {t.mentions.articleNumber}
                                             </p>
                                         </div>
@@ -641,8 +988,20 @@ export default function LegalPage() {
                                 </div>
 
                                 {/* Action Buttons - Sticky Navigation */}
-                                <div className="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6">
-                                    <h3 className="text-lg font-semibold text-base-content mb-4">
+                                <div
+                                    className="rounded-2xl p-6"
+                                    style={{
+                                        backgroundColor: cardBg,
+                                        border: cardBorder,
+                                        boxShadow: isDark
+                                            ? "0 20px 60px rgba(0, 0, 0, 0.3)"
+                                            : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                                    }}
+                                >
+                                    <h3
+                                        className="text-lg font-semibold mb-4"
+                                        style={{ color: textPrimary }}
+                                    >
                                         {t.navigation}
                                     </h3>
                                     <div className="space-y-3">
@@ -653,21 +1012,74 @@ export default function LegalPage() {
                                                     behavior: "smooth",
                                                 })
                                             }
-                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-base-200 hover:bg-base-300 border border-base-300 transition-colors text-sm font-medium text-base-content"
+                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-colors text-sm font-medium hover:scale-105 transition-transform duration-200"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                                color: textPrimary,
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.borderColor =
+                                                    gradientEnd;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.borderColor =
+                                                    sectionCardBorder;
+                                            }}
                                         >
-                                            <FaArrowUp />
+                                            <FaArrowUp
+                                                style={{ color: iconColor }}
+                                            />
                                             {t.goToTop}
                                         </button>
                                         <a
                                             href="/"
-                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-base-200 hover:bg-base-300 border border-base-300 transition-colors text-sm font-medium text-base-content"
+                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-colors text-sm font-medium hover:scale-105 transition-transform duration-200"
+                                            style={{
+                                                backgroundColor: sectionCardBg,
+                                                border: sectionCardBorder,
+                                                color: textPrimary,
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.borderColor =
+                                                    gradientEnd;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.borderColor =
+                                                    sectionCardBorder;
+                                            }}
                                         >
-                                            <FaHome />
+                                            <FaHome
+                                                style={{ color: iconColor }}
+                                            />
                                             {t.backToHome}
                                         </a>
                                         <button
                                             onClick={handlePrint}
-                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[rgb(223,126,60)] hover:bg-[rgb(223,126,60)]/90 text-white transition-colors text-sm font-medium"
+                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 text-sm font-medium"
+                                            style={{
+                                                background: printBtnBg,
+                                                color: white,
+                                                border: `1px solid ${
+                                                    isDark
+                                                        ? "rgba(255, 255, 255, 0.2)"
+                                                        : "rgba(255, 255, 255, 0.3)"
+                                                }`,
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.background =
+                                                    hoverGradientBlue;
+                                                e.currentTarget.style.boxShadow =
+                                                    isDark
+                                                        ? "0 10px 25px -5px rgba(76, 242, 255, 0.25)"
+                                                        : "0 10px 25px -5px rgba(47, 134, 253, 0.25)";
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.background =
+                                                    printBtnBg;
+                                                e.currentTarget.style.boxShadow =
+                                                    "none";
+                                            }}
                                         >
                                             <FaPrint />
                                             {t.print}

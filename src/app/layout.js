@@ -22,7 +22,13 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="dark">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-100 text-base-content`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                style={{
+                    margin: 0,
+                    padding: 0,
+                    minHeight: "100vh",
+                    width: "100%",
+                }}
             >
                 <ThemeProvider>
                     <LanguageProvider>{children}</LanguageProvider>

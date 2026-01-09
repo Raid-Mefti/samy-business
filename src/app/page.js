@@ -12,9 +12,17 @@ export default function Home() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    // Clean color scheme
-    const backgroundColor = isDark ? "rgb(15, 23, 42)" : "rgb(248, 250, 252)"; // Much softer gray/blue
-    const borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)"; // Very subtle borders
+    // Using the same background colors as SectionBridge
+    const backgroundColor = isDark
+        ? "linear-gradient(135deg, rgb(12,18,30) 0%, rgb(18,26,44) 100%)"
+        : "linear-gradient(135deg, rgb(240,240,240) 0%, rgb(245,245,245) 100%)";
+
+    const borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)";
+
+    // For the gradient transition
+    const gradientTransitionColor = isDark
+        ? "linear-gradient(to bottom, transparent, rgb(12,18,30))"
+        : "linear-gradient(to bottom, transparent, rgb(240,240,240))";
 
     return (
         <>
@@ -26,16 +34,14 @@ export default function Home() {
             <div
                 className="h-4 w-full"
                 style={{
-                    background: isDark
-                        ? "linear-gradient(to bottom, transparent, rgb(15, 23, 42))"
-                        : "linear-gradient(to bottom, transparent, rgb(248, 250, 252))",
+                    background: gradientTransitionColor,
                 }}
             />
 
             <div
                 className="site-stack"
                 style={{
-                    backgroundColor: backgroundColor,
+                    background: backgroundColor,
                 }}
             >
                 <SectionBridge />
