@@ -23,19 +23,28 @@ export default function NavBar({ transparentOnTop = false }) {
             setIsMobile(window.innerWidth < 768);
         };
 
-        const onScroll = () => {
+        const updateScrollState = () => {
             setScrolled(window.scrollY > 40);
         };
 
+        // Initial checks
         checkMobile();
-        window.addEventListener("scroll", onScroll);
+        updateScrollState(); // Check scroll position immediately
+
+        // Set up listeners
+        window.addEventListener("scroll", updateScrollState);
         window.addEventListener("resize", checkMobile);
 
         return () => {
-            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("scroll", updateScrollState);
             window.removeEventListener("resize", checkMobile);
         };
     }, []);
+
+    /* ---------------- SIMPLE LOGO LOGIC ---------------- */
+    // Show white logo when navbar is dark, dark logo when navbar is transparent
+    const showWhiteLogo = isMobile || scrolled || !transparentOnTop;
+    const showDarkLogo = !showWhiteLogo;
 
     /* ---------------- TRANSLATIONS ---------------- */
     const translations = {
@@ -81,14 +90,14 @@ export default function NavBar({ transparentOnTop = false }) {
     /* ---------------- HEADER STYLES ---------------- */
     const getHeaderClasses = () => {
         if (isMobile) {
-            return "bg-[#1E2438] shadow-lg border-b border-white/10";
+            return `bg-[rgb(25,43,94)] shadow-lg border-b border-white/10`; // Dark blue
         }
 
         if (transparentOnTop && !scrolled) {
             return "bg-transparent backdrop-blur-md";
         }
 
-        return "bg-[#1E2438] shadow-lg border-b border-white/10";
+        return `bg-[rgb(25,43,94)] shadow-lg border-b border-white/10`; // Dark blue
     };
 
     const headerClasses = `
@@ -105,16 +114,24 @@ export default function NavBar({ transparentOnTop = false }) {
             <nav
                 className={`flex ${navFlexClass} items-center px-4 sm:px-5 lg:px-8 xl:px-[5%] py-3 ${headerClasses}`}
             >
-                {/* LOGO */}
+                {/* LOGO - SIMPLEST APPROACH */}
                 <Link href="/">
-                    <img
-                        src="/finals/logo_samybusiness.svg"
-                        alt="logo"
-                        className="w-40 sm:w-48 md:w-52 lg:w-56 drop-shadow-md"
-                    />
+                    {showWhiteLogo ? (
+                        <img
+                            src="/finals/logos/logo3.png"
+                            alt="Samy Business Logo White"
+                            className="w-40 sm:w-48 md:w-52 lg:w-56 drop-shadow-md transition-opacity duration-300"
+                        />
+                    ) : (
+                        <img
+                            src="/finals/logos/logo2.png"
+                            alt="Samy Business Logo Dark"
+                            className="w-40 sm:w-48 md:w-52 lg:w-56 drop-shadow-md transition-opacity duration-300"
+                        />
+                    )}
                 </Link>
 
-                {/* DESKTOP MENU */}
+                {/* DESKTOP MENU - Updated colors */}
                 <ul
                     className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3
                     bg-white/10 border border-white/20 backdrop-blur
@@ -123,7 +140,8 @@ export default function NavBar({ transparentOnTop = false }) {
                     <li>
                         <Link
                             href="/zinc-oxyde"
-                            className="text-white text-base lg:text-lg font-semibold hover:text-[rgb(223,126,60)] transition"
+                            className="text-white text-base lg:text-lg font-semibold transition
+                            hover:text-[rgb(76,242,255)] hover:drop-shadow-[0_0_8px_rgba(76,242,255,0.5)]"
                         >
                             {t.about}
                         </Link>
@@ -131,7 +149,8 @@ export default function NavBar({ transparentOnTop = false }) {
                     <li>
                         <Link
                             href="/produits"
-                            className="text-white text-base lg:text-lg hover:text-[rgb(223,60)] transition"
+                            className="text-white text-base lg:text-lg font-semibold transition
+                            hover:text-[rgb(76,242,255)] hover:drop-shadow-[0_0_8px_rgba(76,242,255,0.5)]"
                         >
                             {t.products}
                         </Link>
@@ -139,14 +158,15 @@ export default function NavBar({ transparentOnTop = false }) {
                     <li>
                         <Link
                             href="/aboutus"
-                            className="text-white text-base lg:text-lg hover:text-[rgb(223,126,60)] transition"
+                            className="text-white text-base lg:text-lg font-semibold transition
+                            hover:text-[rgb(76,242,255)] hover:drop-shadow-[0_0_8px_rgba(76,242,255,0.5)]"
                         >
                             {t.aboutus}
                         </Link>
                     </li>
                 </ul>
 
-                {/* RIGHT CONTROLS */}
+                {/* RIGHT CONTROLS - Updated colors */}
                 <div
                     className={`flex items-center ${
                         isArabic
@@ -154,12 +174,17 @@ export default function NavBar({ transparentOnTop = false }) {
                             : "space-x-3 sm:space-x-4"
                     }`}
                 >
-                    {/* DESKTOP BUTTONS */}
+                    {/* DESKTOP BUTTONS - Gradient blue */}
                     <button
                         onClick={() => router.push("/devis")}
                         className="hidden lg:flex items-center px-5 lg:px-6 py-1.5 lg:py-2 font-bold rounded-full
-                        bg-[rgb(223,126,60)] text-white text-sm lg:text-base
-                        hover:bg-white hover:text-[rgb(223,126,60)] transition"
+                        text-white text-sm lg:text-base transition-all duration-300 shadow-lg
+                        hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30"
+                        style={{
+                            background:
+                                "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
+                            border: "1px solid rgba(255, 255, 255, 0.2)",
+                        }}
                     >
                         {t.devis}
                     </button>
@@ -167,8 +192,9 @@ export default function NavBar({ transparentOnTop = false }) {
                     <button
                         onClick={() => router.push("/contact")}
                         className="hidden lg:flex items-center px-5 lg:px-6 py-1.5 lg:py-2 rounded-full
-                        border border-white/40 text-white text-sm lg:text-base
-                        hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition"
+                        border border-white/40 text-white text-sm lg:text-base font-semibold
+                        hover:bg-white/10 hover:border-[rgb(76,242,255)] 
+                        hover:text-[rgb(76,242,255)] transition-all duration-300"
                     >
                         {t.contact}
                     </button>
@@ -201,18 +227,19 @@ export default function NavBar({ transparentOnTop = false }) {
                     />
                 )}
 
-                {/* MOBILE MENU - Only render when menu is open */}
+                {/* MOBILE MENU - Updated colors */}
                 {isMenuOpen && (
                     <div
                         ref={sideMenuRef}
                         className={`fixed top-0 right-0 w-80 max-w-[85vw] h-full flex md:hidden flex-col gap-6 pt-24 px-6 pb-8
-                        bg-[#1E2438] text-white shadow-2xl z-50 animate-in slide-in-from-right duration-300`}
+                        bg-[rgb(25,43,94)] text-white shadow-2xl z-50 animate-in slide-in-from-right duration-300`}
                         dir={isArabic ? "rtl" : "ltr"}
                     >
                         {/* CLOSE BUTTON */}
                         <button
                             onClick={closeMenu}
-                            className={`absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors`}
+                            className={`absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full 
+                            bg-white/10 hover:bg-[rgb(76,242,255)]/20 transition-colors`}
                             aria-label="Close menu"
                         >
                             <div className="w-5 h-5 relative">
@@ -264,16 +291,20 @@ export default function NavBar({ transparentOnTop = false }) {
                             </Link>
                         </div>
 
-                        {/* ACTION BUTTONS */}
+                        {/* ACTION BUTTONS - Gradient blue */}
                         <div className="mt-6 flex flex-col gap-3">
                             <button
                                 onClick={() => {
                                     router.push("/devis");
                                     closeMenu();
                                 }}
-                                className="w-full py-3 rounded-lg font-semibold
-                                bg-[rgb(223,126,60)] text-white
-                                hover:bg-[rgb(223,126,60)]/90 transition-colors shadow-md"
+                                className="w-full py-3 rounded-lg font-semibold text-white
+                                transition-all duration-300 shadow-md hover:scale-[1.02]"
+                                style={{
+                                    background:
+                                        "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
+                                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                                }}
                             >
                                 {t.devis}
                             </button>
@@ -285,7 +316,8 @@ export default function NavBar({ transparentOnTop = false }) {
                                 }}
                                 className="w-full py-3 rounded-lg font-semibold
                                 border border-white/40 text-white
-                                hover:bg-[rgb(223,126,60)] hover:border-[rgb(223,126,60)] transition-colors"
+                                hover:bg-white/10 hover:border-[rgb(76,242,255)] 
+                                hover:text-[rgb(76,242,255)] transition-all duration-300"
                             >
                                 {t.contact}
                             </button>

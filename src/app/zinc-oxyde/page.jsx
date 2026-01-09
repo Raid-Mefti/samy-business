@@ -5,6 +5,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
 
 /* ======================================================
@@ -13,6 +14,7 @@ import Link from "next/link";
 
 export default function ZincOxidePage() {
     const { language } = useLanguage();
+    const { theme } = useTheme();
     const [activeTab, setActiveTab] = useState("specs");
 
     const t = TRANSLATIONS[language] || TRANSLATIONS.fr;
@@ -25,115 +27,239 @@ export default function ZincOxidePage() {
         { id: "company", label: t.tabs.company },
     ];
 
+    // Theme-based color system
+    const isDark = theme === "dark";
+
+    // Primary colors
+    const gradientBlue =
+        "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)";
+    const gradientBlueHover =
+        "linear-gradient(135deg, rgb(60, 145, 255) 0%, rgb(90, 250, 255) 100%)";
+    const darkBlue = "rgb(25,43,94)";
+
+    // Backgrounds
+    const backgroundColor = isDark ? darkBlue : "rgb(255,255,255)";
+    const cardBackground = isDark
+        ? "rgba(255,255,255,0.05)"
+        : "rgb(248,249,250)";
+    const elevatedCardBackground = isDark
+        ? "rgba(255,255,255,0.08)"
+        : "rgb(255,255,255)";
+
+    // Text colors
+    const textPrimary = isDark ? "rgb(240,240,240)" : "rgb(25,43,94)";
+    const textSecondary = isDark ? "rgb(180,180,180)" : "rgb(75,85,99)";
+    const textTertiary = isDark ? "rgb(140,140,140)" : "rgb(107,114,128)";
+
+    // Borders & dividers
+    const borderColor = isDark ? "rgba(255,255,255,0.1)" : "rgb(229,231,235)";
+    const accentBorder = isDark
+        ? "rgba(76,242,255,0.3)"
+        : "rgba(47,134,253,0.2)";
+
+    // Interactive elements
+    const buttonShadow = isDark
+        ? "0 10px 25px -5px rgba(76, 242, 255, 0.15)"
+        : "0 10px 25px -5px rgba(47, 134, 253, 0.15)";
+
+    const buttonShadowHover = isDark
+        ? "0 20px 40px -10px rgba(76, 242, 255, 0.25)"
+        : "0 20px 40px -10px rgba(47, 134, 253, 0.25)";
+
     return (
         <>
             <Header />
 
-            <main className="bg-base-100 text-base-content">
+            <main
+                style={{
+                    backgroundColor,
+                    color: textPrimary,
+                    minHeight: "100vh",
+                }}
+            >
                 {/* Hero Section */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+                    {/* Background decorative elements */}
+                    {isDark && (
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-[rgb(47,134,253,0.3)] to-transparent" />
+                    )}
+
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
                         {/* Left Column - Content */}
-                        <div className="space-y-8">
+                        <div className="space-y-10 relative z-10">
+                            {/* Title with decorative underline */}
                             <div>
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[rgb(223,126,60)] leading-tight">
+                                <h1
+                                    className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6"
+                                    style={{ color: textPrimary }}
+                                >
                                     {t.pageTitle}
                                 </h1>
-                                <p className="text-lg md:text-xl text-base-content/80 mt-6 leading-relaxed">
+                                <div className="flex items-center gap-6 mb-8">
+                                    <div
+                                        className="h-1 w-20 rounded-full"
+                                        style={{ background: gradientBlue }}
+                                    />
+                                    <div
+                                        className="h-px flex-1"
+                                        style={{ backgroundColor: borderColor }}
+                                    />
+                                </div>
+                                <p
+                                    className="text-xl md:text-2xl leading-relaxed font-light"
+                                    style={{ color: textSecondary }}
+                                >
                                     {t.pageSubtitle}
                                 </p>
                             </div>
 
-                            {/* Company Info Badge */}
-                            <div className="inline-flex flex-wrap items-center justify-center gap-4 px-6 py-4 bg-base-200/60 rounded-2xl border border-base-300">
-                                <div className="flex items-center gap-2">
-                                    <svg
-                                        className="w-5 h-5 text-[rgb(223,126,60)]"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
+                            {/* Company Info Cards */}
+                            <div className="grid grid-cols-3 gap-4">
+                                {[
+                                    {
+                                        icon: "calendar",
+                                        value: t.companyInfo.year,
+                                    },
+                                    {
+                                        icon: "users",
+                                        value: t.companyInfo.employees,
+                                    },
+                                    {
+                                        icon: "bank",
+                                        value: t.companyInfo.capital,
+                                    },
+                                ].map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="p-4 rounded-xl text-center transition-all duration-300 hover:scale-105"
+                                        style={{
+                                            backgroundColor: cardBackground,
+                                            border: `1px solid ${borderColor}`,
+                                            boxShadow: isDark
+                                                ? "0 4px 12px rgba(0,0,0,0.2)"
+                                                : "0 4px 12px rgba(0,0,0,0.05)",
+                                        }}
                                     >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                    <span className="font-medium">
-                                        {t.companyInfo.year}
-                                    </span>
-                                </div>
-                                <div className="hidden sm:block h-4 w-px bg-base-300"></div>
-                                <div className="flex items-center gap-2">
-                                    <svg
-                                        className="w-5 h-5 text-[rgb(223,126,60)]"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                    <span className="font-medium">
-                                        {t.companyInfo.employees}
-                                    </span>
-                                </div>
-                                <div className="hidden sm:block h-4 w-px bg-base-300"></div>
-                                <div className="flex items-center gap-2">
-                                    <svg
-                                        className="w-5 h-5 text-[rgb(223,126,60)]"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                    <span className="font-medium">
-                                        {t.companyInfo.capital}
-                                    </span>
-                                </div>
+                                        <div
+                                            className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"
+                                            style={{ background: gradientBlue }}
+                                        >
+                                            {item.icon === "calendar" && (
+                                                <svg
+                                                    className="w-5 h-5 text-white"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            )}
+                                            {item.icon === "users" && (
+                                                <svg
+                                                    className="w-5 h-5 text-white"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                                </svg>
+                                            )}
+                                            {item.icon === "bank" && (
+                                                <svg
+                                                    className="w-5 h-5 text-white"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                                                </svg>
+                                            )}
+                                        </div>
+                                        <p
+                                            className="font-semibold text-sm md:text-base"
+                                            style={{ color: textPrimary }}
+                                        >
+                                            {item.value}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
 
-                            {/* Key Points from PDF */}
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-[rgb(223,126,60)]">
-                                    {t.keyPoints.title}
-                                </h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {/* Key Points */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div
+                                        className="w-3 h-6 rounded-r"
+                                        style={{ background: gradientBlue }}
+                                    />
+                                    <h3
+                                        className="text-xl font-semibold"
+                                        style={{ color: textPrimary }}
+                                    >
+                                        {t.keyPoints.title}
+                                    </h3>
+                                </div>
+                                <div className="grid gap-3">
                                     {t.keyPoints.items.map((item, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-start gap-3"
+                                            className="flex items-center gap-4 p-3 rounded-lg transition-all duration-300 hover:pl-4"
+                                            style={{
+                                                backgroundColor: cardBackground,
+                                                border: `1px solid ${borderColor}`,
+                                            }}
                                         >
-                                            <svg
-                                                className="w-5 h-5 text-[rgb(223,126,60)] mt-0.5 flex-shrink-0"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
+                                            <div
+                                                className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                                                style={{
+                                                    background: gradientBlue,
+                                                }}
                                             >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            <span className="text-base-content/80 text-sm">
+                                                <svg
+                                                    className="w-3 h-3 text-white"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </div>
+                                            <p
+                                                className="text-base"
+                                                style={{ color: textSecondary }}
+                                            >
                                                 {item}
-                                            </span>
+                                            </p>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
                             {/* CTA Button */}
-                            <div className="pt-4">
+                            <div className="pt-6">
                                 <Link
                                     href="/devis"
-                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                                    className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105"
+                                    style={{
+                                        background: gradientBlue,
+                                        boxShadow: buttonShadow,
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.background =
+                                            gradientBlueHover;
+                                        e.currentTarget.style.boxShadow =
+                                            buttonShadowHover;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.background =
+                                            gradientBlue;
+                                        e.currentTarget.style.boxShadow =
+                                            buttonShadow;
+                                    }}
                                 >
                                     <svg
                                         className="w-5 h-5"
@@ -149,56 +275,106 @@ export default function ZincOxidePage() {
                                         />
                                     </svg>
                                     {t.ctaButton}
+                                    <svg
+                                        className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                        />
+                                    </svg>
                                 </Link>
                             </div>
                         </div>
 
-                        {/* Right Column - Product Image */}
-                        <div className="flex justify-center lg:justify-end">
-                            <div className="relative w-full max-w-md">
-                                <div className="rounded-2xl bg-gradient-to-br from-base-200 to-base-300 p-8 shadow-xl">
-                                    {/* Product Image */}
-                                    <div className="relative h-64 md:h-80 rounded-xl overflow-hidden mb-6 bg-white">
-                                        <Image
-                                            src="/finals/oxyde_de_zinc2.png"
-                                            alt="Zinc Oxide High Purity - Samy Business"
-                                            fill
-                                            className="object-contain p-4"
-                                            priority
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                        />
-                                    </div>
+                        {/* Right Column - Product Showcase */}
+                        <div className="relative">
+                            {/* Floating card effect */}
+                            <div
+                                className="relative rounded-3xl p-8"
+                                style={{
+                                    backgroundColor: elevatedCardBackground,
+                                    border: `1px solid ${borderColor}`,
+                                    boxShadow: isDark
+                                        ? "0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(76,242,255,0.1)"
+                                        : "0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(47,134,253,0.05)",
+                                }}
+                            >
+                                {/* Glow effect */}
+                                {isDark && (
+                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[rgb(47,134,253,0.2)] to-[rgb(76,242,255,0.2)] rounded-3xl blur-xl -z-10" />
+                                )}
 
-                                    {/* Product Info */}
-                                    <div className="space-y-4 text-center">
-                                        <div>
-                                            <h3 className="text-xl font-bold text-[rgb(223,126,60)]">
-                                                ZINC OXIDE
-                                            </h3>
-                                            <p className="text-base-content/70 mt-1">
-                                                High Purity • Consistent Quality
-                                            </p>
-                                        </div>
-                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)]">
-                                            <svg
-                                                className="w-4 h-4"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            <span className="font-semibold">
-                                                25 kg packaging
-                                            </span>
-                                        </div>
-                                        <p className="text-sm text-base-content/60">
-                                            {t.productInfo.norm}
+                                {/* Product Image */}
+                                <div className="relative h-72 md:h-80 rounded-xl overflow-hidden mb-8 bg-gradient-to-br from-white to-gray-50">
+                                    <Image
+                                        src="/finals/oxyde_de_zinc2.png"
+                                        alt="Zinc Oxide High Purity - Samy Business"
+                                        fill
+                                        className="object-contain p-6"
+                                        priority
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                    />
+                                </div>
+
+                                {/* Product Info */}
+                                <div className="text-center space-y-6">
+                                    <div>
+                                        <h3
+                                            className="text-2xl font-bold mb-2"
+                                            style={{ color: textPrimary }}
+                                        >
+                                            ZINC OXIDE
+                                        </h3>
+                                        <p
+                                            className="text-sm uppercase tracking-wider font-medium"
+                                            style={{ color: textSecondary }}
+                                        >
+                                            High Purity • Consistent Quality
                                         </p>
                                     </div>
+
+                                    {/* Quality Badge */}
+                                    <div
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border"
+                                        style={{
+                                            backgroundColor: isDark
+                                                ? "rgba(76,242,255,0.1)"
+                                                : "rgba(47,134,253,0.1)",
+                                            borderColor: accentBorder,
+                                            color: isDark
+                                                ? "rgb(76,242,255)"
+                                                : "rgb(47,134,253)",
+                                        }}
+                                    >
+                                        <svg
+                                            className="w-4 h-4"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                        <span className="font-bold text-sm">
+                                            25 kg packaging
+                                        </span>
+                                    </div>
+
+                                    {/* Quality Statement */}
+                                    <p
+                                        className="text-sm leading-relaxed px-4"
+                                        style={{ color: textTertiary }}
+                                    >
+                                        {t.productInfo.norm}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -206,17 +382,30 @@ export default function ZincOxidePage() {
                 </section>
 
                 {/* Tabs Navigation */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+                    <div
+                        className="flex flex-wrap justify-center gap-2 p-1 rounded-2xl"
+                        style={{ backgroundColor: cardBackground }}
+                    >
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`px-6 py-3 rounded-full text-sm font-semibold border transition-all duration-300 ${
+                                className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
                                     activeTab === tab.id
-                                        ? "bg-[rgb(223,126,60)] text-white border-[rgb(223,126,60)] shadow-lg transform -translate-y-1"
-                                        : "bg-base-200/60 border-base-300 hover:border-[rgb(223,126,60)] hover:text-[rgb(223,126,60)] hover:shadow-md"
+                                        ? "shadow-lg transform -translate-y-0.5"
+                                        : "hover:opacity-80"
                                 }`}
+                                style={{
+                                    background:
+                                        activeTab === tab.id
+                                            ? gradientBlue
+                                            : "transparent",
+                                    color:
+                                        activeTab === tab.id
+                                            ? "white"
+                                            : textSecondary,
+                                }}
                             >
                                 {tab.label}
                             </button>
@@ -225,44 +414,140 @@ export default function ZincOxidePage() {
                 </section>
 
                 {/* Content Section */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                    <div className="rounded-3xl bg-base-200/40 border border-base-300 p-6 sm:p-8 md:p-12 shadow-sm">
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+                    <div
+                        className="rounded-3xl p-6 sm:p-8 md:p-12"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 20px 40px rgba(0,0,0,0.2)"
+                                : "0 20px 40px rgba(0,0,0,0.05)",
+                        }}
+                    >
                         {activeTab === "specs" && (
-                            <TechnicalSpecs t={t.specs} />
+                            <TechnicalSpecs
+                                t={t.specs}
+                                textPrimary={textPrimary}
+                                textSecondary={textSecondary}
+                                textTertiary={textTertiary}
+                                borderColor={borderColor}
+                                cardBackground={cardBackground}
+                                gradientBlue={gradientBlue}
+                            />
                         )}
                         {activeTab === "manufacturing" && (
-                            <ManufacturingProcess t={t.manufacturing} />
+                            <ManufacturingProcess
+                                t={t.manufacturing}
+                                textPrimary={textPrimary}
+                                textSecondary={textSecondary}
+                                textTertiary={textTertiary}
+                                borderColor={borderColor}
+                                cardBackground={cardBackground}
+                                elevatedCardBackground={elevatedCardBackground}
+                                gradientBlue={gradientBlue}
+                                isDark={isDark}
+                            />
                         )}
                         {activeTab === "applications" && (
-                            <ApplicationsByIndustry t={t.applications} />
+                            <ApplicationsByIndustry
+                                t={t.applications}
+                                textPrimary={textPrimary}
+                                textSecondary={textSecondary}
+                                textTertiary={textTertiary}
+                                borderColor={borderColor}
+                                cardBackground={cardBackground}
+                                elevatedCardBackground={elevatedCardBackground}
+                                gradientBlue={gradientBlue}
+                                isDark={isDark}
+                            />
                         )}
                         {activeTab === "market" && (
-                            <MarketAnalysis t={t.market} />
+                            <MarketAnalysis
+                                t={t.market}
+                                textPrimary={textPrimary}
+                                textSecondary={textSecondary}
+                                textTertiary={textTertiary}
+                                borderColor={borderColor}
+                                cardBackground={cardBackground}
+                                elevatedCardBackground={elevatedCardBackground}
+                                gradientBlue={gradientBlue}
+                                gradientBlueHover={gradientBlueHover}
+                                isDark={isDark}
+                                buttonShadow={buttonShadow}
+                                buttonShadowHover={buttonShadowHover}
+                            />
                         )}
                         {activeTab === "company" && (
-                            <CompanyProfile t={t.company} />
+                            <CompanyProfile
+                                t={t.company}
+                                textPrimary={textPrimary}
+                                textSecondary={textSecondary}
+                                textTertiary={textTertiary}
+                                borderColor={borderColor}
+                                cardBackground={cardBackground}
+                                elevatedCardBackground={elevatedCardBackground}
+                                gradientBlue={gradientBlue}
+                                isDark={isDark}
+                            />
                         )}
                     </div>
                 </section>
 
                 {/* Bottom CTA */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-                    <div className="text-center space-y-8 bg-gradient-to-br from-base-200/50 to-base-300/30 rounded-3xl border border-base-300 p-8 md:p-12">
-                        <div>
-                            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+                    {/* Background decoration */}
+                    {isDark && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(47,134,253,0.05)] to-[rgb(76,242,255,0.05)] rounded-3xl" />
+                    )}
+
+                    <div
+                        className="relative text-center space-y-10 rounded-3xl border p-12 backdrop-blur-sm"
+                        style={{
+                            backgroundColor: isDark
+                                ? "rgba(255,255,255,0.03)"
+                                : "rgba(255,255,255,0.9)",
+                            borderColor: accentBorder,
+                            boxShadow: isDark
+                                ? "0 20px 60px rgba(0,0,0,0.3)"
+                                : "0 20px 60px rgba(0,0,0,0.08)",
+                        }}
+                    >
+                        <div className="space-y-6">
+                            <h3
+                                className="text-3xl md:text-4xl font-bold"
+                                style={{ color: textPrimary }}
+                            >
                                 {t.bottomCta.title}
                             </h3>
-                            <p className="text-lg text-base-content/70 max-w-3xl mx-auto leading-relaxed">
+                            <p
+                                className="text-xl max-w-2xl mx-auto leading-relaxed font-light"
+                                style={{ color: textSecondary }}
+                            >
                                 {t.bottomCta.description}
                             </p>
                         </div>
                         <Link
                             href="/devis"
-                            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full text-white font-semibold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
+                            style={{
+                                background: gradientBlue,
+                                boxShadow: buttonShadow,
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background =
+                                    gradientBlueHover;
+                                e.currentTarget.style.boxShadow =
+                                    buttonShadowHover;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = gradientBlue;
+                                e.currentTarget.style.boxShadow = buttonShadow;
+                            }}
                         >
                             {t.bottomCta.button}
                             <svg
-                                className="w-5 h-5"
+                                className="w-6 h-6 ml-2 transform group-hover:translate-x-2 transition-transform"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -288,33 +573,80 @@ export default function ZincOxidePage() {
    TECHNICAL SPECS COMPONENT
 ====================================================== */
 
-function TechnicalSpecs({ t }) {
+function TechnicalSpecs({
+    t,
+    textPrimary,
+    textSecondary,
+    textTertiary,
+    borderColor,
+    cardBackground,
+    gradientBlue,
+}) {
     return (
         <section className="space-y-12">
-            <header className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
-                <p className="text-lg text-base-content/80 max-w-3xl">
+            <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-4 h-12 rounded-full"
+                        style={{ background: gradientBlue }}
+                    />
+                    <div>
+                        <h2
+                            className="text-3xl md:text-4xl font-bold"
+                            style={{ color: textPrimary }}
+                        >
+                            {t.title}
+                        </h2>
+                        <div
+                            className="h-px w-20 mt-2"
+                            style={{ background: gradientBlue }}
+                        />
+                    </div>
+                </div>
+                <p
+                    className="text-xl max-w-3xl leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.description}
                 </p>
             </header>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {t.properties.map((property) => (
+                {t.properties.map((property, idx) => (
                     <div
                         key={property.label}
-                        className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:border-[rgb(223,126,60)]/30 transition-colors"
+                        className="group relative p-6 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                        style={{
+                            backgroundColor: cardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                        }}
                     >
-                        <p className="text-sm uppercase tracking-wide text-base-content/50 font-semibold">
-                            {property.label}
-                        </p>
-                        <p className="mt-2 font-bold text-2xl text-[rgb(223,126,60)]">
-                            {property.value}
-                        </p>
-                        {property.note && (
-                            <p className="mt-1 text-xs text-base-content/60">
-                                {property.note}
+                        {/* Hover effect */}
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[rgb(47,134,253,0)] to-[rgb(76,242,255,0)] group-hover:from-[rgb(47,134,253,0.05)] group-hover:to-[rgb(76,242,255,0.05)] transition-all duration-300" />
+
+                        <div className="relative">
+                            <p
+                                className="text-xs uppercase tracking-wider font-semibold mb-3"
+                                style={{ color: textTertiary }}
+                            >
+                                {property.label}
                             </p>
-                        )}
+                            <p
+                                className="text-3xl font-bold mb-2"
+                                style={{ color: textPrimary }}
+                            >
+                                {property.value}
+                            </p>
+                            {property.note && (
+                                <p
+                                    className="text-xs"
+                                    style={{ color: textTertiary }}
+                                >
+                                    {property.note}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>
@@ -326,61 +658,143 @@ function TechnicalSpecs({ t }) {
    MANUFACTURING PROCESS COMPONENT
 ====================================================== */
 
-function ManufacturingProcess({ t }) {
+function ManufacturingProcess({
+    t,
+    textPrimary,
+    textSecondary,
+    textTertiary,
+    borderColor,
+    cardBackground,
+    elevatedCardBackground,
+    gradientBlue,
+    isDark,
+}) {
     return (
         <section className="space-y-16">
-            <header className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
-                <p className="text-lg text-base-content/80 max-w-3xl">
+            <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-4 h-12 rounded-full"
+                        style={{ background: gradientBlue }}
+                    />
+                    <div>
+                        <h2
+                            className="text-3xl md:text-4xl font-bold"
+                            style={{ color: textPrimary }}
+                        >
+                            {t.title}
+                        </h2>
+                        <div
+                            className="h-px w-20 mt-2"
+                            style={{ background: gradientBlue }}
+                        />
+                    </div>
+                </div>
+                <p
+                    className="text-xl max-w-3xl leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.description}
                 </p>
             </header>
 
-            <div className="grid gap-10">
+            <div className="grid gap-8">
                 {t.processes.map((process, index) => (
                     <div
                         key={process.name}
-                        className="relative rounded-3xl bg-base-200/60 border border-base-300 p-8 shadow-sm hover:shadow-md transition-shadow"
+                        className="relative rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02]"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 10px 30px rgba(0,0,0,0.2)"
+                                : "0 10px 30px rgba(0,0,0,0.05)",
+                        }}
                     >
-                        <div className="absolute left-0 top-8 bottom-8 w-1 rounded-full bg-[rgb(223,126,60)]"></div>
+                        {/* Step indicator */}
+                        <div
+                            className="absolute -left-3 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg"
+                            style={{ background: gradientBlue }}
+                        >
+                            {index + 1}
+                        </div>
 
-                        <div className="ml-6">
-                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
-                                <div>
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <div className="w-8 h-8 rounded-full bg-[rgb(223,126,60)] text-white flex items-center justify-center font-bold text-sm">
-                                            {index + 1}
-                                        </div>
-                                        <h3 className="text-xl font-bold">
-                                            {process.name}
-                                        </h3>
+                        <div className="ml-8">
+                            {/* Header */}
+                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                                <div className="space-y-2">
+                                    <h3
+                                        className="text-2xl font-bold"
+                                        style={{ color: textPrimary }}
+                                    >
+                                        {process.name}
+                                    </h3>
+                                    <div className="flex items-center gap-3">
+                                        <span
+                                            className="text-sm font-medium px-3 py-1 rounded-full"
+                                            style={{
+                                                backgroundColor: isDark
+                                                    ? "rgba(76,242,255,0.1)"
+                                                    : "rgba(47,134,253,0.1)",
+                                                color: isDark
+                                                    ? "rgb(76,242,255)"
+                                                    : "rgb(47,134,253)",
+                                            }}
+                                        >
+                                            {process.market}
+                                        </span>
+                                        <span
+                                            className="text-sm font-bold"
+                                            style={{ color: textTertiary }}
+                                        >
+                                            {process.quality}
+                                        </span>
                                     </div>
-                                    <p className="text-sm text-base-content/60">
-                                        {process.market}
-                                    </p>
                                 </div>
-                                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)] text-sm font-medium">
-                                    {process.quality}
-                                </span>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-8 ml-6">
-                                <Info
-                                    label={t.labels.principle}
-                                    value={process.principle}
+                            {/* Details */}
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <InfoBlock
+                                    title={t.labels.principle}
+                                    content={process.principle}
+                                    textPrimary={textPrimary}
+                                    textSecondary={textSecondary}
                                 />
-                                <Info
-                                    label={t.labels.material}
-                                    value={process.material}
+                                <InfoBlock
+                                    title={t.labels.material}
+                                    content={process.material}
+                                    textPrimary={textPrimary}
+                                    textSecondary={textSecondary}
                                 />
-                                <Info
-                                    label={t.labels.applications}
-                                    value={process.applications}
+                                <InfoBlock
+                                    title={t.labels.applications}
+                                    content={process.applications}
+                                    textPrimary={textPrimary}
+                                    textSecondary={textSecondary}
                                 />
                             </div>
 
-                            <div className="mt-6 ml-6 p-4 rounded-xl bg-[rgb(223,126,60)]/5 border border-[rgb(223,126,60)]/10">
-                                <p className="font-semibold text-[rgb(223,126,60)] flex items-center gap-2">
+                            {/* Advantage highlight */}
+                            <div
+                                className="mt-8 p-4 rounded-xl border-l-4"
+                                style={{
+                                    backgroundColor: isDark
+                                        ? "rgba(76,242,255,0.05)"
+                                        : "rgba(47,134,253,0.05)",
+                                    borderLeftColor: isDark
+                                        ? "rgb(76,242,255)"
+                                        : "rgb(47,134,253)",
+                                }}
+                            >
+                                <p
+                                    className="font-semibold flex items-center gap-3"
+                                    style={{
+                                        color: isDark
+                                            ? "rgb(76,242,255)"
+                                            : "rgb(47,134,253)",
+                                    }}
+                                >
                                     <svg
                                         className="w-5 h-5"
                                         fill="currentColor"
@@ -388,7 +802,7 @@ function ManufacturingProcess({ t }) {
                                     >
                                         <path
                                             fillRule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                             clipRule="evenodd"
                                         />
                                     </svg>
@@ -403,13 +817,18 @@ function ManufacturingProcess({ t }) {
     );
 }
 
-function Info({ label, value }) {
+function InfoBlock({ title, content, textPrimary, textSecondary }) {
     return (
         <div>
-            <p className="font-semibold text-sm text-base-content/70 mb-1">
-                {label}
+            <h4
+                className="font-bold text-lg mb-2"
+                style={{ color: textPrimary }}
+            >
+                {title}
+            </h4>
+            <p className="leading-relaxed" style={{ color: textSecondary }}>
+                {content}
             </p>
-            <p className="text-base-content/80 leading-relaxed">{value}</p>
         </div>
     );
 }
@@ -418,12 +837,42 @@ function Info({ label, value }) {
    APPLICATIONS BY INDUSTRY COMPONENT
 ====================================================== */
 
-function ApplicationsByIndustry({ t }) {
+function ApplicationsByIndustry({
+    t,
+    textPrimary,
+    textSecondary,
+    textTertiary,
+    borderColor,
+    cardBackground,
+    elevatedCardBackground,
+    gradientBlue,
+    isDark,
+}) {
     return (
         <section className="space-y-12">
-            <header className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
-                <p className="text-lg text-base-content/80 max-w-3xl">
+            <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-4 h-12 rounded-full"
+                        style={{ background: gradientBlue }}
+                    />
+                    <div>
+                        <h2
+                            className="text-3xl md:text-4xl font-bold"
+                            style={{ color: textPrimary }}
+                        >
+                            {t.title}
+                        </h2>
+                        <div
+                            className="h-px w-20 mt-2"
+                            style={{ background: gradientBlue }}
+                        />
+                    </div>
+                </div>
+                <p
+                    className="text-xl max-w-3xl leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.description}
                 </p>
             </header>
@@ -432,32 +881,43 @@ function ApplicationsByIndustry({ t }) {
                 {t.industries.map((industry, index) => (
                     <div
                         key={industry.title}
-                        className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:border-[rgb(223,126,60)]/30 transition-colors"
+                        className="group relative p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02]"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 8px 25px rgba(0,0,0,0.15)"
+                                : "0 8px 25px rgba(0,0,0,0.04)",
+                        }}
                     >
-                        <div className="flex items-start gap-4">
-                            <div className="p-3 rounded-lg bg-[rgb(223,126,60)]/10 flex-shrink-0">
-                                <svg
-                                    className="w-6 h-6 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-xs font-semibold px-2 py-1 rounded bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)]">
-                                        {String(index + 1).padStart(2, "0")}
-                                    </span>
-                                    <h3 className="font-bold text-lg">
-                                        {industry.title}
-                                    </h3>
+                        {/* Hover glow */}
+                        {isDark && (
+                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[rgb(47,134,253,0)] to-[rgb(76,242,255,0)] group-hover:from-[rgb(47,134,253,0.05)] group-hover:to-[rgb(76,242,255,0.05)] transition-all duration-300" />
+                        )}
+
+                        <div className="relative flex items-start gap-4">
+                            {/* Icon */}
+                            <div
+                                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg"
+                                style={{ background: gradientBlue }}
+                            >
+                                <div className="text-white font-bold text-sm">
+                                    {String(index + 1).padStart(2, "0")}
                                 </div>
-                                <p className="text-base-content/70 text-sm">
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1">
+                                <h3
+                                    className="font-bold text-xl mb-2"
+                                    style={{ color: textPrimary }}
+                                >
+                                    {industry.title}
+                                </h3>
+                                <p
+                                    className="leading-relaxed"
+                                    style={{ color: textSecondary }}
+                                >
                                     {industry.description}
                                 </p>
                             </div>
@@ -473,79 +933,163 @@ function ApplicationsByIndustry({ t }) {
    MARKET ANALYSIS COMPONENT
 ====================================================== */
 
-function MarketAnalysis({ t }) {
+function MarketAnalysis({
+    t,
+    textPrimary,
+    textSecondary,
+    textTertiary,
+    borderColor,
+    cardBackground,
+    elevatedCardBackground,
+    gradientBlue,
+    gradientBlueHover,
+    isDark,
+    buttonShadow,
+    buttonShadowHover,
+}) {
     return (
         <section className="space-y-14">
-            <header className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
-                <p className="text-lg text-base-content/80 max-w-3xl">
+            <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-4 h-12 rounded-full"
+                        style={{ background: gradientBlue }}
+                    />
+                    <div>
+                        <h2
+                            className="text-3xl md:text-4xl font-bold"
+                            style={{ color: textPrimary }}
+                        >
+                            {t.title}
+                        </h2>
+                        <div
+                            className="h-px w-20 mt-2"
+                            style={{ background: gradientBlue }}
+                        />
+                    </div>
+                </div>
+                <p
+                    className="text-xl max-w-3xl leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.description}
                 </p>
             </header>
 
+            {/* Indicators */}
             <div className="grid md:grid-cols-3 gap-6">
-                {t.indicators.map((indicator) => (
+                {t.indicators.map((indicator, idx) => (
                     <div
                         key={indicator.title}
-                        className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow"
+                        className="group relative p-6 rounded-2xl transition-all duration-300 hover:scale-[1.03]"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 8px 25px rgba(0,0,0,0.15)"
+                                : "0 8px 25px rgba(0,0,0,0.04)",
+                        }}
                     >
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                        <div className="relative">
+                            <div
+                                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                                style={{ background: gradientBlue }}
+                            >
                                 <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    className="w-6 h-6 text-white"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >
                                     <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                                 </svg>
                             </div>
-                            <p className="font-bold text-lg">
+                            <h3
+                                className="font-bold text-xl mb-3"
+                                style={{ color: textPrimary }}
+                            >
                                 {indicator.title}
+                            </h3>
+                            <p
+                                className="leading-relaxed"
+                                style={{ color: textSecondary }}
+                            >
+                                {indicator.description}
                             </p>
                         </div>
-                        <p className="text-sm text-base-content/70">
-                            {indicator.description}
-                        </p>
                     </div>
                 ))}
             </div>
 
-            {/* Growth Chart - Based on PDF data */}
-            <div className="mt-12 p-8 rounded-2xl bg-base-200/60 border border-base-300">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                    <h3 className="text-xl font-bold">{t.growth.title}</h3>
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(223,126,60)]/10 text-[rgb(223,126,60)] text-sm font-medium">
-                        <svg
-                            className="w-4 h-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
+            {/* Growth Chart */}
+            <div
+                className="mt-12 p-8 rounded-2xl"
+                style={{
+                    backgroundColor: elevatedCardBackground,
+                    border: `1px solid ${borderColor}`,
+                    boxShadow: isDark
+                        ? "0 15px 35px rgba(0,0,0,0.2)"
+                        : "0 15px 35px rgba(0,0,0,0.06)",
+                }}
+            >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+                    <div>
+                        <h3
+                            className="text-2xl font-bold mb-2"
+                            style={{ color: textPrimary }}
                         >
-                            <path
-                                fillRule="evenodd"
-                                d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                        {t.growth.trend}
-                    </span>
+                            {t.growth.title}
+                        </h3>
+                        <p className="text-lg" style={{ color: textSecondary }}>
+                            {t.growth.trend}
+                        </p>
+                    </div>
+                    <div
+                        className="px-4 py-2 rounded-full font-bold text-sm"
+                        style={{
+                            backgroundColor: isDark
+                                ? "rgba(76,242,255,0.1)"
+                                : "rgba(47,134,253,0.1)",
+                            color: isDark
+                                ? "rgb(76,242,255)"
+                                : "rgb(47,134,253)",
+                        }}
+                    >
+                        ↗️ Growing Market
+                    </div>
                 </div>
-                <div className="flex flex-col md:flex-row items-end justify-between gap-6">
+
+                {/* Chart */}
+                <div className="flex flex-col md:flex-row items-end justify-between gap-8 py-6">
                     {t.growth.years.map((year) => (
                         <div key={year.year} className="flex-1 text-center">
                             <div
-                                className="w-full bg-gradient-to-t from-[rgb(223,126,60)]/30 via-[rgb(223,126,60)]/15 to-transparent rounded-t-lg mb-3"
-                                style={{ height: `${year.height}px` }}
-                            ></div>
-                            <p className="font-bold text-2xl text-[rgb(223,126,60)]">
+                                className="w-full rounded-t-lg mx-auto mb-4 transition-all duration-300 hover:opacity-90"
+                                style={{
+                                    height: `${year.height}px`,
+                                    maxWidth: "60px",
+                                    background: gradientBlue,
+                                }}
+                            />
+                            <p
+                                className="text-2xl font-bold mb-1"
+                                style={{ color: textPrimary }}
+                            >
                                 {year.value}
                             </p>
-                            <p className="text-sm text-base-content/60 mt-2">
+                            <p
+                                className="text-sm font-medium"
+                                style={{ color: textTertiary }}
+                            >
                                 {year.year}
                             </p>
                         </div>
                     ))}
                 </div>
-                <p className="text-center mt-8 text-base-content/70 max-w-2xl mx-auto">
+
+                <p
+                    className="text-center mt-10 max-w-2xl mx-auto text-lg leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.growth.description}
                 </p>
             </div>
@@ -557,113 +1101,106 @@ function MarketAnalysis({ t }) {
    COMPANY PROFILE COMPONENT
 ====================================================== */
 
-function CompanyProfile({ t }) {
+function CompanyProfile({
+    t,
+    textPrimary,
+    textSecondary,
+    textTertiary,
+    borderColor,
+    cardBackground,
+    elevatedCardBackground,
+    gradientBlue,
+    isDark,
+}) {
     return (
         <section className="space-y-16">
-            <header className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">{t.title}</h2>
-                <p className="text-lg text-base-content/80 max-w-3xl">
+            <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-4 h-12 rounded-full"
+                        style={{ background: gradientBlue }}
+                    />
+                    <div>
+                        <h2
+                            className="text-3xl md:text-4xl font-bold"
+                            style={{ color: textPrimary }}
+                        >
+                            {t.title}
+                        </h2>
+                        <div
+                            className="h-px w-20 mt-2"
+                            style={{ background: gradientBlue }}
+                        />
+                    </div>
+                </div>
+                <p
+                    className="text-xl max-w-3xl leading-relaxed"
+                    style={{ color: textSecondary }}
+                >
                     {t.description}
                 </p>
             </header>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-2 gap-8">
+                {/* Left Column */}
                 <div className="space-y-8">
                     {/* Company Info */}
-                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
-                                <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </div>
-                            <h3 className="font-bold text-xl">
-                                {t.sections.companyInfo.title}
-                            </h3>
-                        </div>
-                        <div className="space-y-4">
-                            {t.sections.companyInfo.items.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-center gap-3 p-3 rounded-lg bg-base-300/30"
-                                >
-                                    <div className="w-2 h-2 rounded-full bg-[rgb(223,126,60)] flex-shrink-0"></div>
-                                    <span className="text-base-content/80">
-                                        {item}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <CompanyCard
+                        title={t.sections.companyInfo.title}
+                        icon="building"
+                        items={t.sections.companyInfo.items}
+                        textPrimary={textPrimary}
+                        textSecondary={textSecondary}
+                        borderColor={borderColor}
+                        elevatedCardBackground={elevatedCardBackground}
+                        gradientBlue={gradientBlue}
+                        isDark={isDark}
+                    />
 
                     {/* Expertise */}
-                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
-                                <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </div>
-                            <h3 className="font-bold text-xl">
-                                {t.sections.expertise.title}
-                            </h3>
-                        </div>
-                        <div className="space-y-4">
-                            {t.sections.expertise.items.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-start gap-4 p-3 rounded-lg bg-base-300/30"
-                                >
-                                    <svg
-                                        className="w-4 h-4 text-[rgb(223,126,60)] mt-1 flex-shrink-0"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                    <span className="text-base-content/80">
-                                        {item}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <CompanyCard
+                        title={t.sections.expertise.title}
+                        icon="lightbulb"
+                        items={t.sections.expertise.items}
+                        textPrimary={textPrimary}
+                        textSecondary={textSecondary}
+                        borderColor={borderColor}
+                        elevatedCardBackground={elevatedCardBackground}
+                        gradientBlue={gradientBlue}
+                        isDark={isDark}
+                    />
                 </div>
 
+                {/* Right Column */}
                 <div className="space-y-8">
                     {/* Products */}
-                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                    <div
+                        className="rounded-2xl p-8"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 10px 30px rgba(0,0,0,0.15)"
+                                : "0 10px 30px rgba(0,0,0,0.04)",
+                        }}
+                    >
+                        <div className="flex items-center gap-3 mb-8">
+                            <div
+                                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                                style={{ background: gradientBlue }}
+                            >
                                 <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    className="w-5 h-5 text-white"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >
                                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                                 </svg>
                             </div>
-                            <h3 className="font-bold text-xl">
+                            <h3
+                                className="font-bold text-xl"
+                                style={{ color: textPrimary }}
+                            >
                                 {t.sections.products.title}
                             </h3>
                         </div>
@@ -671,20 +1208,20 @@ function CompanyProfile({ t }) {
                             {t.sections.products.items.map((product, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center gap-2 p-2 rounded bg-base-300/30 hover:bg-base-300/50 transition-colors"
+                                    className="flex items-center gap-2 p-3 rounded-lg transition-all duration-300 hover:scale-105"
+                                    style={{
+                                        backgroundColor: cardBackground,
+                                        border: `1px solid ${borderColor}`,
+                                    }}
                                 >
-                                    <svg
-                                        className="w-3 h-3 text-[rgb(223,126,60)] flex-shrink-0"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
+                                    <div
+                                        className="w-2 h-2 rounded-full"
+                                        style={{ background: gradientBlue }}
+                                    />
+                                    <span
+                                        className="text-sm font-medium"
+                                        style={{ color: textSecondary }}
                                     >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                    <span className="text-sm text-base-content/80 truncate">
                                         {product}
                                     </span>
                                 </div>
@@ -693,11 +1230,23 @@ function CompanyProfile({ t }) {
                     </div>
 
                     {/* Values */}
-                    <div className="rounded-2xl bg-base-200/60 border border-base-300 p-6 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 rounded-lg bg-[rgb(223,126,60)]/10">
+                    <div
+                        className="rounded-2xl p-8"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                            boxShadow: isDark
+                                ? "0 10px 30px rgba(0,0,0,0.15)"
+                                : "0 10px 30px rgba(0,0,0,0.04)",
+                        }}
+                    >
+                        <div className="flex items-center gap-3 mb-8">
+                            <div
+                                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                                style={{ background: gradientBlue }}
+                            >
                                 <svg
-                                    className="w-5 h-5 text-[rgb(223,126,60)]"
+                                    className="w-5 h-5 text-white"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >
@@ -708,7 +1257,10 @@ function CompanyProfile({ t }) {
                                     />
                                 </svg>
                             </div>
-                            <h3 className="font-bold text-xl">
+                            <h3
+                                className="font-bold text-xl"
+                                style={{ color: textPrimary }}
+                            >
                                 {t.sections.values.title}
                             </h3>
                         </div>
@@ -716,12 +1268,22 @@ function CompanyProfile({ t }) {
                             {t.sections.values.items.map((value) => (
                                 <div
                                     key={value.title}
-                                    className="text-center p-4 rounded-lg bg-base-300/40 border border-base-300/50"
+                                    className="p-4 rounded-xl text-center transition-all duration-300 hover:scale-105"
+                                    style={{
+                                        backgroundColor: cardBackground,
+                                        border: `1px solid ${borderColor}`,
+                                    }}
                                 >
-                                    <h4 className="font-bold text-[rgb(223,126,60)] mb-2">
+                                    <h4
+                                        className="font-bold text-lg mb-2"
+                                        style={{ color: textPrimary }}
+                                    >
                                         {value.title}
                                     </h4>
-                                    <p className="text-sm text-base-content/70">
+                                    <p
+                                        className="text-sm leading-relaxed"
+                                        style={{ color: textSecondary }}
+                                    >
                                         {value.description}
                                     </p>
                                 </div>
@@ -734,8 +1296,83 @@ function CompanyProfile({ t }) {
     );
 }
 
+function CompanyCard({
+    title,
+    icon,
+    items,
+    textPrimary,
+    textSecondary,
+    borderColor,
+    elevatedCardBackground,
+    gradientBlue,
+    isDark,
+}) {
+    const icons = {
+        building:
+            "M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z",
+        lightbulb:
+            "M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z",
+    };
+
+    return (
+        <div
+            className="rounded-2xl p-8"
+            style={{
+                backgroundColor: elevatedCardBackground,
+                border: `1px solid ${borderColor}`,
+                boxShadow: isDark
+                    ? "0 10px 30px rgba(0,0,0,0.15)"
+                    : "0 10px 30px rgba(0,0,0,0.04)",
+            }}
+        >
+            <div className="flex items-center gap-3 mb-8">
+                <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    style={{ background: gradientBlue }}
+                >
+                    <svg
+                        className="w-5 h-5 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d={icons[icon]}
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </div>
+                <h3
+                    className="font-bold text-xl"
+                    style={{ color: textPrimary }}
+                >
+                    {title}
+                </h3>
+            </div>
+            <div className="space-y-4">
+                {items.map((item, index) => (
+                    <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:pl-4"
+                        style={{
+                            backgroundColor: elevatedCardBackground,
+                            border: `1px solid ${borderColor}`,
+                        }}
+                    >
+                        <div
+                            className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                            style={{ background: gradientBlue }}
+                        />
+                        <span style={{ color: textSecondary }}>{item}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 /* ======================================================
-   TRANSLATIONS - BASED ONLY ON PDF CONTENT
+   TRANSLATIONS (Same as before)
 ====================================================== */
 
 const TRANSLATIONS = {

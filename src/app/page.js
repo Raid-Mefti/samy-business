@@ -1,35 +1,66 @@
-import AboutSection from "@/components/AboutSection";
-import ProductsGrid from "@/components/ProductsGrid";
-import ImageCarousel from "@/components/ImageCarousel";
-import ProcessSteps from "@/components/ProcessSteps";
-import VideoComp from "@/components/VideoComp";
-import Services from "@/components/Services";
+"use client";
+
+import { useTheme } from "@/contexts/ThemeContext";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Home1 from "@/components/Home1";
 import ZincOxyde from "@/components/ZincOxyde";
 import Produits from "@/components/Produits";
 import SectionBridge from "@/components/SectionBridge";
+
 export default function Home() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
+    // Clean color scheme
+    const backgroundColor = isDark ? "rgb(15, 23, 42)" : "rgb(248, 250, 252)"; // Much softer gray/blue
+    const borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)"; // Very subtle borders
+
     return (
         <>
-            <section id="top">
+            <section id="top" className="relative">
                 <Header transparentOnTop />
                 <Home1 />
             </section>
 
-            {/* <div className="site-container site-stack"> */}
-            <div className=" site-stack">
-                {/* Products section directly under the hero, as requested */}
+            <div
+                className="h-4 w-full"
+                style={{
+                    background: isDark
+                        ? "linear-gradient(to bottom, transparent, rgb(15, 23, 42))"
+                        : "linear-gradient(to bottom, transparent, rgb(248, 250, 252))",
+                }}
+            />
+
+            <div
+                className="site-stack"
+                style={{
+                    backgroundColor: backgroundColor,
+                }}
+            >
                 <SectionBridge />
+
+                <div className="relative">
+                    <div
+                        className="h-[0.5px] w-full"
+                        style={{
+                            backgroundColor: borderColor,
+                        }}
+                    />
+                </div>
+
                 <ZincOxyde />
+
+                <div className="relative">
+                    <div
+                        className="h-[0.5px] w-full"
+                        style={{
+                            backgroundColor: borderColor,
+                        }}
+                    />
+                </div>
+
                 <Produits />
-                {/* <ProcessSteps /> */}
-                {/* <section id="propos" className="pt-20 px-4">
-                    <AboutSection />
-                </section> */}
-                :{/* <VideoComp /> */}
-                {/* <ImageCarousel /> */}
             </div>
 
             <Footer />

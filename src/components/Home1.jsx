@@ -7,26 +7,21 @@ import { useEffect, useState } from "react";
 
 const translations = {
     fr: {
-        line1: "Plus qu'un importateur,",
-        line2: "votre architecte en solution métallique",
-        subtitle: "Bureau d’affaires & consulting import-export",
+        slogan: "Excellence<br />industrielle<br />sans frontières",
+        subtitle: "Bureau d'affaires &<br />consulting import-export",
         cta: "Demander un devis",
     },
     en: {
-        line1: "More than an importer,",
-        line2: "your architect in metal solutions",
-        subtitle: "Business office & import-export consulting",
+        slogan: "Industrial<br />excellence<br />without borders",
+        subtitle: "Business office &<br />import-export consulting",
         cta: "Request a quote",
     },
     ar: {
-        line1: "أكثر من مجرد مستورد",
-        line2: "مهندس حلولك المعدنية",
-        subtitle: "مكتب أعمال واستشارات في الاستيراد والتصدير",
+        slogan: "تميز<br />صناعي<br />بلا حدود",
+        subtitle: "مكتب أعمال واستشارات<br />في الاستيراد والتصدير",
         cta: "طلب عرض سعر",
     },
 };
-
-const LineBreak = (text) => text.replace(/,/g, ",<br />");
 
 export default function Home1() {
     const { language } = useLanguage();
@@ -42,7 +37,7 @@ export default function Home1() {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex items-end overflow-hidden">
+        <section className="relative min-h-screen overflow-hidden">
             {/* PARALLAX BACKGROUND */}
             <motion.img
                 src="/finals/HeroVisual.png"
@@ -58,107 +53,106 @@ export default function Home1() {
                 }}
             />
 
-            {/* Overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" /> */}
-
-            {/* CONTENT */}
+            {/* CONTENT - Positioned top-left */}
             <div
-                className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-16 md:pb-24 pt-20"
+                className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-12 md:pt-20 min-h-screen flex flex-col"
                 dir={isRtl ? "rtl" : "ltr"}
             >
-                <div
-                    className={`w-full flex flex-col md:flex-row items-end justify-between gap-14 ${
-                        isRtl ? "md:flex-row-reverse" : ""
+                {/* TEXT CONTENT - Top-left aligned */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className={`max-w-[65ch] mt-8 md:mt-16 ${
+                        isRtl ? "text-right ml-auto" : "text-left"
                     }`}
                 >
-                    {/* TEXT */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className={`max-w-[70ch] ${
-                            isRtl ? "text-right" : "text-left"
-                        }`}
-                    >
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            className="font-extrabold tracking-tight text-white drop-shadow-2xl"
-                            style={{
-                                fontSize: "min(8vw, 56px)",
-                                lineHeight: 1.1,
-                            }}
-                            dangerouslySetInnerHTML={{
-                                __html: LineBreak(t.line1),
-                            }}
-                        />
-
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
-                            className="font-extrabold tracking-tight text-[rgb(238,128,56)] drop-shadow-2xl mt-2"
-                            style={{
-                                fontSize: "min(8vw, 56px)",
-                                lineHeight: 1.1,
-                            }}
-                            dangerouslySetInnerHTML={{
-                                __html: LineBreak(t.line2),
-                            }}
-                        />
-
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                            className="mt-4 text-gray-200/90 italic tracking-wide"
-                            style={{
-                                fontSize: "min(3.5vw, 22px)",
-                                textShadow: "0 0 8px rgba(0,0,0,0.4)",
-                            }}
-                        >
-                            {t.subtitle}
-                        </motion.p>
-                    </motion.div>
-
-                    {/* CTA */}
+                    {/* Main Slogan - Stacked vertically */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1, duration: 0.8 }}
-                        className={`w-full md:w-auto flex ${
-                            isRtl ? "justify-start" : "justify-end"
-                        } md:self-end`}
+                        transition={{ delay: 0.2, duration: 0.8 }}
+                        className="font-extrabold tracking-tight leading-[0.9]"
+                        style={{
+                            fontSize: "min(7.5vw, 60px)",
+                            color: "rgb(25, 43, 94)",
+                            textShadow: "2px 2px 6px rgba(255, 255, 255, 0.8)",
+                        }}
                     >
-                        <motion.button
-                            onClick={() => router.push("/devis")}
-                            animate={
-                                pulse
-                                    ? {
-                                          boxShadow: [
-                                              "0 0 0 rgba(223,126,60,0)",
-                                              "0 0 30px rgba(223,126,60,0.8)",
-                                              "0 0 0 rgba(223,126,60,0)",
-                                          ],
-                                      }
-                                    : {}
-                            }
-                            transition={{ duration: 1.2 }}
-                            className="
-                                px-12 py-5 md:px-14 md:py-6
-                                rounded-full font-extrabold
-                                text-lg md:text-xl
-                                bg-[rgb(223,126,60)] text-white
-                                shadow-xl shadow-black/40
-                                hover:bg-white hover:text-[rgb(223,126,60)]
-                                transition-all duration-300
-                            "
-                        >
-                            {t.cta}
-                        </motion.button>
+                        <div
+                            dangerouslySetInnerHTML={{ __html: t.slogan }}
+                            className="[&>br]:hidden md:[&>br]:block"
+                        />
                     </motion.div>
-                </div>
+
+                    {/* Subtitle - Stacked on mobile, single line on desktop */}
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 0.8 }}
+                        className="mt-6 md:mt-8 font-semibold tracking-wide"
+                        style={{
+                            fontSize: "min(4vw, 26px)",
+                            color: "rgb(25,43,94)", // solid blue
+                            borderLeft: isRtl
+                                ? "none"
+                                : "4px solid rgb(47,134,253)",
+                            borderRight: isRtl
+                                ? "4px solid rgb(47,134,253)"
+                                : "none",
+                            paddingLeft: isRtl ? 0 : "14px",
+                            paddingRight: isRtl ? "14px" : 0,
+                        }}
+                    >
+                        <span
+                            dangerouslySetInnerHTML={{ __html: t.subtitle }}
+                            className="[&>br]:hidden md:[&>br]:block"
+                        />
+                    </motion.p>
+                </motion.div>
+
+                {/* CTA - Positioned at bottom-left (under text) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.8 }}
+                    className={`mt-auto pb-16 md:pb-24 ${
+                        isRtl ? "text-left" : ""
+                    }`}
+                >
+                    <motion.button
+                        onClick={() => router.push("/devis")}
+                        animate={
+                            pulse
+                                ? {
+                                      boxShadow: [
+                                          "0 0 0 rgba(47, 134, 253, 0)",
+                                          "0 0 40px rgba(47, 134, 253, 0.9)",
+                                          "0 0 0 rgba(47, 134, 253, 0)",
+                                      ],
+                                  }
+                                : {}
+                        }
+                        transition={{ duration: 1.2 }}
+                        style={{
+                            background:
+                                "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
+                            border: "2px solid rgba(255, 255, 255, 0.3)",
+                        }}
+                        className="
+                            px-12 py-5 md:px-14 md:py-6
+                            rounded-full font-extrabold
+                            text-lg md:text-xl
+                            text-white
+                            shadow-2xl shadow-blue-900/50
+                            hover:scale-105 hover:shadow-2xl hover:shadow-blue-500
+                            active:scale-95
+                            transition-all duration-300
+                        "
+                    >
+                        {t.cta}
+                    </motion.button>
+                </motion.div>
             </div>
         </section>
     );

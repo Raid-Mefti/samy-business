@@ -4,7 +4,9 @@ import React, { useState, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
+
 /* ==========================================================
    TRANSLATIONS
 ========================================================== */
@@ -13,8 +15,8 @@ const translations = {
         contact_title: "Contactez-nous",
         contact_subtitle: "Nous sommes là pour répondre à vos questions.",
         name: "Nom complet",
-        company: "Nom de l’entreprise",
-        company_size: "Taille de l’entreprise",
+        company: "Nom de l'entreprise",
+        company_size: "Taille de l'entreprise",
         phone: "Numéro de téléphone",
         email: "Adresse e-mail",
         subject: "Sujet",
@@ -87,16 +89,99 @@ const translations = {
 };
 
 /* ==========================================================
+   INPUT COMPONENT
+========================================================== */
+function Input({ label, name, type = "text", isArabic, isDark, colors }) {
+    return (
+        <div>
+            <label className="label font-semibold">
+                <span className="label-text" style={{ color: colors.label }}>
+                    {label}
+                </span>
+            </label>
+            <input
+                type={type}
+                name={name}
+                required
+                className={`w-full transition-all duration-200 focus:outline-none ${
+                    isArabic ? "text-right" : "text-left"
+                }`}
+                style={{
+                    backgroundColor: colors.inputBg,
+                    border: `1px solid ${colors.inputBorder}`,
+                    color: colors.inputText,
+                    borderRadius: "0.5rem",
+                    padding: "0.625rem 1rem",
+                    boxShadow: isDark
+                        ? "0 2px 4px rgba(0,0,0,0.2)"
+                        : "0 2px 4px rgba(0,0,0,0.05)",
+                }}
+                onFocus={(e) => {
+                    e.target.style.borderColor = isDark
+                        ? "rgb(76, 242, 255)"
+                        : "rgb(47, 134, 253)";
+                    e.target.style.boxShadow = isDark
+                        ? "0 0 0 3px rgba(76, 242, 255, 0.1)"
+                        : "0 0 0 3px rgba(47, 134, 253, 0.1)";
+                }}
+                onBlur={(e) => {
+                    e.target.style.borderColor = colors.inputBorder;
+                    e.target.style.boxShadow = isDark
+                        ? "0 2px 4px rgba(0,0,0,0.2)"
+                        : "0 2px 4px rgba(0,0,0,0.05)";
+                }}
+            />
+        </div>
+    );
+}
+
+/* ==========================================================
    CONTACT FORM
 ========================================================== */
 function ContactForm() {
     const { language } = useLanguage();
+    const { theme } = useTheme();
     const t = translations[language];
     const isArabic = language === "ar";
+    const isDark = theme === "dark";
 
     const form = useRef();
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // Color scheme
+    const gradientStart = "rgb(47, 134, 253)"; // #2f86fd
+    const gradientEnd = "rgb(76, 242, 255)"; // #4cf2ff
+    const blue = "rgb(25, 43, 94)"; // #192b5e
+    const mediumGray = "rgb(180, 180, 180)";
+    const lightGray = "rgb(240, 240, 240)";
+    const darkGray = "rgb(30, 35, 45)";
+    const white = "rgb(255, 255, 255)";
+
+    const gradientBlue = `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`;
+
+    // Theme-based colors
+    const mainBg = isDark
+        ? "linear-gradient(135deg, #0c121e 0%, #121a2c 100%)"
+        : `linear-gradient(135deg, ${lightGray} 0%, white 100%)`;
+    const cardBg = isDark ? darkGray : white;
+    const cardBorder = isDark
+        ? `1px solid rgba(76, 242, 255, 0.2)`
+        : `1px solid rgb(180, 180, 180)`;
+    const titleColor = isDark ? white : blue;
+    const subtitleColor = isDark ? mediumGray : blue;
+    const inputBg = isDark ? "rgb(20, 25, 35)" : white;
+    const inputBorder = isDark ? "rgb(60, 65, 75)" : "rgb(180, 180, 180)";
+    const inputText = isDark ? white : blue;
+    const labelColor = isDark ? gradientEnd : blue;
+    const selectArrowColor = isDark ? gradientEnd : blue;
+    const statusBg = isDark
+        ? "rgba(25, 43, 94, 0.3)"
+        : "rgba(25, 43, 94, 0.05)";
+    const statusBorder = isDark
+        ? `1px solid rgba(76, 242, 255, 0.3)`
+        : `1px solid rgb(180, 180, 180)`;
+    const statusText = isDark ? mediumGray : blue;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -111,19 +196,46 @@ function ContactForm() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row items-center gap-8 mb-24">
+        <div className="flex flex-col lg:flex-row items-start gap-8 mb-24 max-w-7xl mx-auto">
             {/* Left: Contact form */}
-            <div className="bg-base-100 border border-base-300 p-6 md:p-10 rounded-3xl shadow-xl md:w-[70%] md:ml-20 flex flex-col items-center">
-                <h1 className="text-4xl font-bold text-[rgb(223,126,60)] text-center md:text-left">
+            <div
+                className="p-6 md:p-10 rounded-3xl shadow-xl lg:w-[70%] flex flex-col items-center w-full"
+                style={{
+                    backgroundColor: cardBg,
+                    border: cardBorder,
+                    boxShadow: isDark
+                        ? "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
+                        : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                }}
+            >
+                <h1
+                    className="text-4xl font-bold text-center lg:text-left w-full"
+                    style={{
+                        background: gradientBlue,
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                    }}
+                >
                     {t.contact_title}
                 </h1>
 
-                <p className="text-base-content/70 mt-2 mb-8 text-center md:text-left">
+                <p
+                    className="mt-2 mb-8 text-center lg:text-left w-full"
+                    style={{ color: subtitleColor }}
+                >
                     {t.contact_subtitle}
                 </p>
 
                 {status && (
-                    <div className="mb-6 p-4 rounded-xl bg-base-200 border border-base-300 text-base-content font-medium w-full md:w-[90%]">
+                    <div
+                        className="mb-6 p-4 rounded-xl w-full lg:w-[90%]"
+                        style={{
+                            backgroundColor: statusBg,
+                            border: statusBorder,
+                            color: statusText,
+                        }}
+                    >
                         {status}
                     </div>
                 )}
@@ -131,35 +243,104 @@ function ContactForm() {
                 <form
                     ref={form}
                     onSubmit={handleSubmit}
-                    className="space-y-5 w-full md:w-[90%]"
+                    className="space-y-5 w-full lg:w-[90%]"
                 >
                     <Input
                         label={t.name}
                         name="user_name"
                         isArabic={isArabic}
+                        isDark={isDark}
+                        colors={{
+                            inputBg,
+                            inputBorder,
+                            inputText,
+                            label: labelColor,
+                        }}
                     />
                     <Input
                         label={t.company}
                         name="company_name"
                         isArabic={isArabic}
+                        isDark={isDark}
+                        colors={{
+                            inputBg,
+                            inputBorder,
+                            inputText,
+                            label: labelColor,
+                        }}
                     />
 
                     <div>
                         <label className="label font-semibold">
-                            <span className="label-text">{t.company_size}</span>
+                            <span
+                                className="label-text"
+                                style={{ color: labelColor }}
+                            >
+                                {t.company_size}
+                            </span>
                         </label>
-                        <select
-                            name="company_size"
-                            required
-                            className="select select-bordered w-full bg-base-100"
-                        >
-                            <option value="">—</option>
-                            {t.size_options.map((opt, i) => (
-                                <option key={i} value={opt}>
-                                    {opt}
+                        <div className="relative">
+                            <select
+                                name="company_size"
+                                required
+                                className="w-full appearance-none cursor-pointer transition-all duration-200 focus:outline-none"
+                                style={{
+                                    backgroundColor: inputBg,
+                                    border: `1px solid ${inputBorder}`,
+                                    color: inputText,
+                                    borderRadius: "0.5rem",
+                                    padding: "0.625rem 2.5rem 0.625rem 1rem",
+                                    boxShadow: isDark
+                                        ? "0 2px 4px rgba(0,0,0,0.2)"
+                                        : "0 2px 4px rgba(0,0,0,0.05)",
+                                }}
+                                onFocus={(e) => {
+                                    e.target.style.borderColor = isDark
+                                        ? "rgb(76, 242, 255)"
+                                        : "rgb(47, 134, 253)";
+                                    e.target.style.boxShadow = isDark
+                                        ? "0 0 0 3px rgba(76, 242, 255, 0.1)"
+                                        : "0 0 0 3px rgba(47, 134, 253, 0.1)";
+                                }}
+                                onBlur={(e) => {
+                                    e.target.style.borderColor = inputBorder;
+                                    e.target.style.boxShadow = isDark
+                                        ? "0 2px 4px rgba(0,0,0,0.2)"
+                                        : "0 2px 4px rgba(0,0,0,0.05)";
+                                }}
+                            >
+                                <option value="" style={{ color: mediumGray }}>
+                                    —
                                 </option>
-                            ))}
-                        </select>
+                                {t.size_options.map((opt, i) => (
+                                    <option
+                                        key={i}
+                                        value={opt}
+                                        style={{ color: inputText }}
+                                    >
+                                        {opt}
+                                    </option>
+                                ))}
+                            </select>
+                            <div
+                                className="absolute inset-y-0 right-3 flex items-center pointer-events-none"
+                                style={{ color: selectArrowColor }}
+                            >
+                                <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M19 9l-7 7-7-7"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
 
                     <Input
@@ -167,28 +348,78 @@ function ContactForm() {
                         name="phone"
                         type="tel"
                         isArabic={isArabic}
+                        isDark={isDark}
+                        colors={{
+                            inputBg,
+                            inputBorder,
+                            inputText,
+                            label: labelColor,
+                        }}
                     />
                     <Input
                         label={t.email}
                         name="user_email"
                         type="email"
                         isArabic={isArabic}
+                        isDark={isDark}
+                        colors={{
+                            inputBg,
+                            inputBorder,
+                            inputText,
+                            label: labelColor,
+                        }}
                     />
                     <Input
                         label={t.subject}
                         name="subject"
                         isArabic={isArabic}
+                        isDark={isDark}
+                        colors={{
+                            inputBg,
+                            inputBorder,
+                            inputText,
+                            label: labelColor,
+                        }}
                     />
 
                     <div>
                         <label className="label font-semibold">
-                            <span className="label-text">{t.message}</span>
+                            <span
+                                className="label-text"
+                                style={{ color: labelColor }}
+                            >
+                                {t.message}
+                            </span>
                         </label>
                         <textarea
                             name="message"
                             rows="4"
                             required
-                            className="textarea textarea-bordered w-full bg-base-100"
+                            className="w-full transition-all duration-200 focus:outline-none resize-none"
+                            style={{
+                                backgroundColor: inputBg,
+                                border: `1px solid ${inputBorder}`,
+                                color: inputText,
+                                borderRadius: "0.5rem",
+                                padding: "0.625rem 1rem",
+                                boxShadow: isDark
+                                    ? "0 2px 4px rgba(0,0,0,0.2)"
+                                    : "0 2px 4px rgba(0,0,0,0.05)",
+                            }}
+                            onFocus={(e) => {
+                                e.target.style.borderColor = isDark
+                                    ? "rgb(76, 242, 255)"
+                                    : "rgb(47, 134, 253)";
+                                e.target.style.boxShadow = isDark
+                                    ? "0 0 0 3px rgba(76, 242, 255, 0.1)"
+                                    : "0 0 0 3px rgba(47, 134, 253, 0.1)";
+                            }}
+                            onBlur={(e) => {
+                                e.target.style.borderColor = inputBorder;
+                                e.target.style.boxShadow = isDark
+                                    ? "0 2px 4px rgba(0,0,0,0.2)"
+                                    : "0 2px 4px rgba(0,0,0,0.05)";
+                            }}
                         />
                     </div>
 
@@ -196,7 +427,28 @@ function ContactForm() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-10 py-4 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
+                            className="px-10 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                            style={{
+                                background: gradientBlue,
+                                color: white,
+                                border: `1px solid ${
+                                    isDark
+                                        ? "rgba(255, 255, 255, 0.2)"
+                                        : "rgba(255, 255, 255, 0.3)"
+                                }`,
+                                minWidth: "200px",
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart}15deg, ${gradientEnd} 100%)`;
+                                e.currentTarget.style.boxShadow = isDark
+                                    ? `0 10px 25px -5px rgba(76, 242, 255, 0.25)`
+                                    : `0 15px 30px -5px rgba(47, 134, 253, 0.25)`;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = gradientBlue;
+                                e.currentTarget.style.boxShadow =
+                                    "0 10px 25px -5px rgba(0, 0, 0, 0.1)";
+                            }}
                         >
                             {loading ? t.loading : t.send}
                         </button>
@@ -205,18 +457,55 @@ function ContactForm() {
             </div>
 
             {/* Right: Quote CTA */}
-            <div className="bg-base-100 border border-base-300 p-8 rounded-3xl shadow-lg md:w-[30%] flex flex-col items-center text-center">
-                <h2 className="text-3xl font-bold text-[rgb(223,126,60)] mb-4">
+            <div
+                className="p-8 rounded-3xl shadow-lg lg:w-[30%] flex flex-col items-center text-center w-full sticky top-24"
+                style={{
+                    backgroundColor: cardBg,
+                    border: cardBorder,
+                    boxShadow: isDark
+                        ? "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
+                        : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                }}
+            >
+                <h2
+                    className="text-3xl font-bold mb-4"
+                    style={{
+                        background: gradientBlue,
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                    }}
+                >
                     {t.request_quote_title}
                 </h2>
 
-                <p className="text-base-content/70 mb-6">
+                <p className="mb-6" style={{ color: subtitleColor }}>
                     {t.request_quote_text}
                 </p>
 
                 <Link
                     href="/devis"
-                    className="px-8 py-3 rounded-full bg-[rgb(223,126,60)] text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition w-full md:w-auto"
+                    className="px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full lg:w-auto text-center"
+                    style={{
+                        background: gradientBlue,
+                        color: white,
+                        border: `1px solid ${
+                            isDark
+                                ? "rgba(255, 255, 255, 0.2)"
+                                : "rgba(255, 255, 255, 0.3)"
+                        }`,
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart}15deg, ${gradientEnd} 100%)`;
+                        e.currentTarget.style.boxShadow = isDark
+                            ? `0 10px 25px -5px rgba(76, 242, 255, 0.25)`
+                            : `0 15px 30px -5px rgba(47, 134, 253, 0.25)`;
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.background = gradientBlue;
+                        e.currentTarget.style.boxShadow =
+                            "0 10px 25px -5px rgba(0, 0, 0, 0.1)";
+                    }}
                 >
                     {t.request_quote_btn}
                 </Link>
@@ -226,33 +515,27 @@ function ContactForm() {
 }
 
 /* ==========================================================
-   INPUT COMPONENT
-========================================================== */
-function Input({ label, name, type = "text", isArabic }) {
-    return (
-        <div>
-            <label className="label font-semibold">
-                <span className="label-text">{label}</span>
-            </label>
-            <input
-                type={type}
-                name={name}
-                required
-                className={`input input-bordered w-full bg-base-100 ${
-                    isArabic ? "text-right" : "text-left"
-                }`}
-            />
-        </div>
-    );
-}
-/* ==========================================================
    PAGE
 ========================================================== */
 export default function ContactPage() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
+    // Color scheme
+    const lightGray = "rgb(240, 240, 240)";
+    const mainBg = isDark
+        ? "linear-gradient(135deg, #0c121e 0%, #121a2c 100%)"
+        : `linear-gradient(135deg, ${lightGray} 0%, white 100%)`;
+
     return (
         <>
             <Header />
-            <main className="pt-[120px] px-6 bg-base-200 min-h-screen">
+            <main
+                className="pt-[120px] px-6 min-h-screen"
+                style={{
+                    background: mainBg,
+                }}
+            >
                 <ContactForm />
             </main>
             <Footer />
