@@ -518,7 +518,7 @@ export default function ArticlePage({
 
         // ===== ALUMINIUM =====
         aluminium: {
-            image: "/finals/aluminum.png",
+            image: "/finals/aluminium.png",
             imageTableau: "/tableaux/tableau_aluminium.jpeg",
             fr: {
                 shortTitle: "Aluminium",

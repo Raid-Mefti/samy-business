@@ -8,68 +8,73 @@ import { motion, useAnimation } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 /* --------------------------------------------------
-   PRODUCTS
+   PRODUCTS with correct business models
 -------------------------------------------------- */
 const PRODUCTS = [
     {
         name: "Aluminium",
         img: "/finals/aluminium.png",
         color: "#3B82F6",
-        shortName: "Aluminium",
-        category: "Métal",
+        businessModel: "import", // Imported product
     },
     {
-        name: "Plomb Doux",
+        name: "Plomb",
         img: "/finals/plomb.png",
         color: "#6B7280",
-        shortName: "Plomb Doux",
-        category: "Métal",
+        businessModel: "import", // Imported product
     },
     {
         name: "Oxyde de Zinc",
         img: "/finals/oxyde_de_zinc2.png",
         color: "#10B981",
-        shortName: "Oxyde Zinc",
-        category: "Chimique",
+        businessModel: "export", // Exported product
     },
     {
         name: "Zinc SHG",
         img: "/finals/zinc_hg.png",
         color: "#F59E0B",
-        shortName: "Zinc SHG",
-        category: "Métal",
+        businessModel: "import", // Imported product
     },
     {
         name: "ZAMAK",
         img: "/finals/zamak.png",
         color: "#8B5CF6",
-        shortName: "ZAMAK",
-        category: "Alliage",
+        businessModel: "import", // Imported product
     },
     {
         name: "Carton",
         img: "/finals/carton.png",
         color: "#DC2626",
-        shortName: "Carton",
-        category: "Emballage",
+        businessModel: "export", // Exported product
     },
     {
         name: "Zinc Aluminé",
         img: "/finals/zinc_alumine.png",
         color: "#0891B2",
-        shortName: "Zinc Aluminé",
-        category: "Alliage",
+        businessModel: "fabrication", // Fabricated product
     },
     {
-        name: "Cuivres",
+        name: "Cuivre",
         img: "/finals/cuivre.png",
         color: "#B45309",
-        shortName: "Cuivres",
-        category: "Métal",
+        businessModel: "import", // Imported product
     },
 ];
 
-const slugify = (name) => name.toLowerCase().replace(/\s+/g, "-");
+const slugify = (name) => {
+    // Special case for "Zinc SHG" to match your productData key
+    if (name.toLowerCase() === "zinc shg") {
+        return "zinc";
+    }
+
+    // Default slugify logic
+    return String(name || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-\u00C0-\u024F]/g, "");
+};
 
 /* --------------------------------------------------
    MAIN COMPONENT
@@ -85,12 +90,17 @@ export default function HomeProductsScroller() {
     const controls = useAnimation();
     const lastPositionRef = useRef(0);
     const isPausedRef = useRef(false);
+    const isDraggingRef = useRef(false);
+    const startXRef = useRef(0);
+    const dragStartXRef = useRef(0);
 
     const [isHovering, setIsHovering] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [reducedMotion, setReducedMotion] = useState(false);
-    const [contentWidth, setContentWidth] = useState(0); // Width of ONE set of products
+    const [contentWidth, setContentWidth] = useState(0);
     const [containerWidth, setContainerWidth] = useState(0);
+    const [currentPosition, setCurrentPosition] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
 
     // Theme-based colors
     const gradientBlue =
@@ -105,7 +115,6 @@ export default function HomeProductsScroller() {
         : "linear-gradient(135deg, rgb(240, 240, 240) 0%, rgb(245, 245, 245) 100%)";
 
     const cardBackground = isDark ? "rgba(255,255,255,0.05)" : "white";
-    const elevatedCardBackground = isDark ? "rgba(255,255,255,0.08)" : "white";
 
     // Text colors
     const textPrimary = isDark ? "rgb(240,240,240)" : "rgb(25, 43, 94)";
@@ -127,7 +136,9 @@ export default function HomeProductsScroller() {
                 cta: "Voir tout le catalogue",
                 view: "Voir",
                 paused: "En pause",
-                stock: "En stock",
+                import: "Import",
+                export: "Export",
+                fabrication: "Fabrication",
             },
             en: {
                 title: "Our Products",
@@ -135,7 +146,9 @@ export default function HomeProductsScroller() {
                 cta: "View full catalog",
                 view: "View",
                 paused: "Paused",
-                stock: "In stock",
+                import: "Import",
+                export: "Export",
+                fabrication: "Manufacturing",
             },
             ar: {
                 title: "منتجاتنا",
@@ -143,7 +156,9 @@ export default function HomeProductsScroller() {
                 cta: "عرض جميع المنتجات",
                 view: "عرض",
                 paused: "الإيقاف مؤقتاً",
-                stock: "متوفر",
+                import: "استيراد",
+                export: "تصدير",
+                fabrication: "تصنيع",
             },
         }[language] ?? t.fr;
 
@@ -166,7 +181,7 @@ export default function HomeProductsScroller() {
     useEffect(() => {
         const updateWidths = () => {
             if (!contentRef.current || !containerRef.current) return;
-            const singleSetWidth = contentRef.current.scrollWidth / 4; // 4 copies
+            const singleSetWidth = contentRef.current.scrollWidth / 4;
             setContentWidth(singleSetWidth);
             setContainerWidth(containerRef.current.offsetWidth);
         };
@@ -180,10 +195,9 @@ export default function HomeProductsScroller() {
     useEffect(() => {
         if (reducedMotion || !contentWidth || !containerWidth) return;
 
-        // LTR: scroll left  → start at 0, go to -contentWidth
-        // RTL: scroll right → start at 0, go to +contentWidth
         const distance = isRtl ? contentWidth : -contentWidth;
 
+        // Start animation for both desktop and mobile
         controls.start({
             x: [0, distance],
             transition: {
@@ -203,7 +217,6 @@ export default function HomeProductsScroller() {
         isPausedRef.current = true;
         controls.stop();
 
-        // Capture current position
         if (contentRef.current) {
             const transform =
                 contentRef.current.style.transform || "translateX(0px)";
@@ -231,76 +244,135 @@ export default function HomeProductsScroller() {
         });
     };
 
+    /* ----------------- Touch Handling (for mobile swipe) ----------------- */
+    const handleDragStart = (event, info) => {
+        isDraggingRef.current = true;
+        setIsDragging(true);
+        startXRef.current = currentPosition;
+        dragStartXRef.current = info.point.x;
+
+        // Pause the animation when user starts dragging
+        controls.stop();
+        isPausedRef.current = true;
+    };
+
+    const handleDrag = (event, info) => {
+        if (!isDraggingRef.current) return;
+
+        const dragDistance = info.point.x - dragStartXRef.current;
+        const newPosition = startXRef.current + dragDistance;
+
+        // Update position
+        setCurrentPosition(newPosition);
+        controls.set({ x: newPosition });
+    };
+
+    const handleDragEnd = (event, info) => {
+        isDraggingRef.current = false;
+        setIsDragging(false);
+
+        // Resume animation after a short delay
+        setTimeout(() => {
+            if (!isPausedRef.current) {
+                const distance = isRtl ? contentWidth : -contentWidth;
+                const targetPosition = currentPosition + distance;
+
+                controls.start({
+                    x: [currentPosition, targetPosition],
+                    transition: {
+                        duration: 65,
+                        ease: "linear",
+                        repeat: Infinity,
+                    },
+                });
+                setCurrentPosition(targetPosition);
+                isPausedRef.current = false;
+            }
+        }, 100);
+    };
+
     /* --------------------------------------------------
        RENDER
     -------------------------------------------------- */
     return (
         <section
-            className="relative overflow-hidden"
+            className="relative overflow-hidden py-12 md:py-20"
             dir={isRtl ? "rtl" : "ltr"}
             style={{ background: backgroundColor }}
         >
             {/* Header */}
-            <div className="max-w-7xl mx-auto px-6 text-center mb-14">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center mb-12 md:mb-16">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold"
+                    className="text-3xl md:text-5xl font-bold mb-4 px-4"
                     style={{ color: textPrimary }}
                 >
                     {t.title}
                 </motion.h2>
                 <p
-                    className="mt-4 max-w-3xl mx-auto text-lg font-light"
+                    className="text-base md:text-lg font-light max-w-3xl mx-auto px-4"
                     style={{ color: textSecondary }}
                 >
                     {t.subtitle}
                 </p>
             </div>
 
-            {/* Scroller */}
-            <div
-                ref={containerRef}
-                onMouseEnter={pause}
-                onMouseLeave={resume}
-                className="relative w-full cursor-pointer"
-            >
-                <div className="overflow-hidden">
-                    <motion.div
-                        ref={contentRef}
-                        animate={controls}
-                        className="flex gap-6"
-                        style={{
-                            width: "max-content",
-                        }}
-                    >
-                        {[
-                            ...PRODUCTS,
-                            ...PRODUCTS,
-                            ...PRODUCTS,
-                            ...PRODUCTS,
-                        ].map((p, i) => (
-                            <ProductCard
-                                key={`${p.name}-${i}`}
-                                product={p}
-                                t={t}
-                                isMobile={isMobile}
-                                isDark={isDark}
-                                isRtl={isRtl}
-                                cardBackground={cardBackground}
-                                borderColor={borderColor}
-                                gradientBlue={gradientBlue}
-                            />
-                        ))}
-                    </motion.div>
+            {/* Scroller Container */}
+            <div className="relative">
+                <div
+                    ref={containerRef}
+                    onMouseEnter={pause}
+                    onMouseLeave={resume}
+                    className="relative w-full cursor-pointer overflow-hidden"
+                >
+                    <div className="overflow-visible">
+                        <motion.div
+                            ref={contentRef}
+                            animate={controls}
+                            drag="x"
+                            dragConstraints={{
+                                left: -contentWidth * 3,
+                                right: 0,
+                            }}
+                            dragElastic={0.2}
+                            onDragStart={handleDragStart}
+                            onDrag={handleDrag}
+                            onDragEnd={handleDragEnd}
+                            className="flex gap-4 md:gap-6 px-4 md:px-6 touch-pan-x"
+                            style={{
+                                width: "max-content",
+                                cursor: isDragging ? "grabbing" : "grab",
+                            }}
+                        >
+                            {[
+                                ...PRODUCTS,
+                                ...PRODUCTS,
+                                ...PRODUCTS,
+                                ...PRODUCTS,
+                            ].map((p, i) => (
+                                <ProductCard
+                                    key={`${p.name}-${i}`}
+                                    product={p}
+                                    t={t}
+                                    isMobile={isMobile}
+                                    isDark={isDark}
+                                    isRtl={isRtl}
+                                    cardBackground={cardBackground}
+                                    borderColor={borderColor}
+                                    gradientBlue={gradientBlue}
+                                />
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
 
                 {/* Pause indicator */}
                 <motion.div
                     animate={{ opacity: isHovering ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="mt-6 flex justify-center items-center gap-2 text-xs"
+                    className="mt-6 flex justify-center items-center gap-2 text-xs px-4"
                     style={{ color: textPrimary }}
                 >
                     <span
@@ -312,7 +384,7 @@ export default function HomeProductsScroller() {
             </div>
 
             {/* CTA */}
-            <div className="mt-16 text-center">
+            <div className="mt-12 md:mt-16 text-center px-4">
                 <Link
                     href="/products"
                     className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-white"
@@ -322,6 +394,9 @@ export default function HomeProductsScroller() {
                         boxShadow: isDark
                             ? "0 10px 25px -5px rgba(76, 242, 255, 0.15)"
                             : "0 10px 25px -5px rgba(47, 134, 253, 0.15)",
+                        // Mobile touch target size
+                        minWidth: isMobile ? "min(280px, 85vw)" : "auto",
+                        minHeight: isMobile ? "56px" : "auto",
                     }}
                     onMouseEnter={(e) => {
                         e.currentTarget.style.background = gradientBlueHover;
@@ -373,25 +448,48 @@ function ProductCard({
 }) {
     const [loaded, setLoaded] = useState(false);
 
+    // Use the same image for both desktop and mobile
+    const imageSrc = product.img;
+
+    // Card dimensions optimized for mobile - more compact
+    const cardWidth = isMobile ? "w-[280px]" : "w-[320px]";
+    const cardHeight = isMobile ? "h-[340px]" : "h-[400px]"; // Reduced mobile height
+
+    // Adjusted ratios for better mobile experience
+    const imageHeight = isMobile ? "h-[60%]" : "h-[65%]"; // More image on mobile
+    const infoHeight = isMobile ? "h-[40%]" : "h-[35%]"; // Less info space on mobile
+
+    // Get business model text based on product
+    const getBusinessModelText = (businessModel) => {
+        switch (businessModel) {
+            case "import":
+                return t.import;
+            case "export":
+                return t.export;
+            case "fabrication":
+                return t.fabrication;
+            default:
+                return businessModel;
+        }
+    };
+
     return (
         <Link
             href={`/produits/${slugify(product.name)}`}
-            className={`group relative flex-shrink-0 ${
-                isMobile ? "w-72 h-64" : "w-80 h-96"
-            } rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl`}
+            className={`group relative flex-shrink-0 ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl active:scale-95`}
             style={{
                 backgroundColor: cardBackground,
                 border: `1px solid ${borderColor}`,
                 boxShadow: isDark
-                    ? "0 20px 60px rgba(0,0,0,0.3)"
-                    : "0 20px 60px rgba(0,0,0,0.08)",
+                    ? "0 15px 40px rgba(0,0,0,0.25)"
+                    : "0 15px 40px rgba(0,0,0,0.08)",
             }}
         >
-            {/* Image container with dark mode overlay */}
-            <div className="relative h-2/3">
+            {/* Image container - More space on mobile */}
+            <div className={`relative ${imageHeight} w-full`}>
                 {!loaded && (
                     <div
-                        className="absolute inset-0 animate-pulse"
+                        className="absolute inset-0 animate-pulse rounded-t-2xl md:rounded-t-3xl"
                         style={{
                             backgroundColor: isDark
                                 ? "rgba(255,255,255,0.05)"
@@ -399,25 +497,29 @@ function ProductCard({
                         }}
                     />
                 )}
-                <Image
-                    src={product.img}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    onLoad={() => setLoaded(true)}
-                />
+                <div className="relative w-full h-full rounded-t-xl md:rounded-t-2xl overflow-hidden">
+                    <Image
+                        src={imageSrc}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes={isMobile ? "280px" : "320px"}
+                        priority={false}
+                        onLoad={() => setLoaded(true)}
+                    />
+                </div>
                 {isDark && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgb(25,43,94,0.3)] to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgb(25,43,94,0.3)] to-transparent rounded-t-2xl md:rounded-t-3xl" />
                 )}
             </div>
 
-            {/* Bottom info panel - Dark mode adjusted */}
+            {/* Bottom info panel - Optimized for mobile with better text sizing */}
             <div
-                className="absolute bottom-0 w-full h-1/3 p-5 rounded-b-3xl flex flex-col justify-between"
+                className={`absolute bottom-0 w-full ${infoHeight} p-3 md:p-5 rounded-b-2xl md:rounded-b-3xl flex flex-col justify-between`}
                 style={{
                     background: isDark
-                        ? "linear-gradient(135deg, rgba(25, 43, 94, 0.9) 0%, rgba(18, 26, 44, 0.95) 100%)"
-                        : "linear-gradient(135deg, rgb(25, 43, 94) 0%, rgba(25, 43, 94, 0.9) 100%)",
+                        ? "linear-gradient(135deg, rgba(25, 43, 94, 0.98) 0%, rgba(18, 26, 44, 0.98) 100%)"
+                        : "linear-gradient(135deg, rgb(25, 43, 94) 0%, rgba(25, 43, 94, 0.95) 100%)",
                     borderTop: `1px solid ${
                         isDark
                             ? "rgba(255,255,255,0.1)"
@@ -425,16 +527,43 @@ function ProductCard({
                     }`,
                 }}
             >
-                <div className="flex justify-between items-start gap-3">
+                {/* Top section: Product name */}
+                <div className="flex flex-col">
                     <h3
                         className={`text-white font-bold truncate ${
-                            isRtl ? "text-right" : ""
+                            isRtl ? "text-right" : "text-left"
                         }`}
+                        style={{
+                            fontSize: isMobile ? "1.2rem" : "1.35rem", // Bigger text
+                            lineHeight: "1.3",
+                            marginBottom: "0.75rem",
+                        }}
                     >
                         {product.name}
                     </h3>
+                </div>
+
+                {/* Bottom section: Business model and CTA - Compact on mobile */}
+                <div className="flex justify-between items-center mt-auto pt-2 border-t border-white/10">
+                    {/* Business model status - Replaced "stock" */}
+                    <span className="flex items-center gap-2">
+                        <span
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ background: product.color }}
+                        />
+                        <span
+                            className="text-white/80 text-xs md:text-sm truncate"
+                            style={{
+                                fontSize: isMobile ? "0.75rem" : "0.875rem",
+                            }}
+                        >
+                            {getBusinessModelText(product.businessModel)}
+                        </span>
+                    </span>
+
+                    {/* View button - More prominent */}
                     <span
-                        className="text-xs text-white/90 rounded-full px-3 py-1 transition-all duration-300 group-hover:bg-white/20"
+                        className="text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-1.5 md:py-2 transition-all duration-300 group-hover:bg-white/20 group-hover:scale-105 flex-shrink-0 flex items-center gap-1"
                         style={{
                             border: `1px solid ${
                                 isDark
@@ -447,23 +576,19 @@ function ProductCard({
                         }}
                     >
                         {t.view}
-                    </span>
-                </div>
-
-                <div className="flex justify-between items-center text-white/80 text-sm">
-                    <span className="flex items-center gap-2">
-                        <span
-                            className="w-2 h-2 rounded-full animate-pulse"
-                            style={{ background: gradientBlue }}
-                        />
-                        {t.stock}
-                    </span>
-                    <span className="flex items-center gap-2">
-                        <span
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: product.color }}
-                        />
-                        {product.shortName}
+                        <svg
+                            className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                        </svg>
                     </span>
                 </div>
             </div>
