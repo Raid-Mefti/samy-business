@@ -15,57 +15,56 @@ const PRODUCTS = [
         name: "Aluminium",
         img: "/finals/aluminium.png",
         color: "#3B82F6",
-        businessModel: "import",
+        businessModel: "import", // Imported product
     },
     {
         name: "Plomb",
         img: "/finals/plomb.png",
         color: "#6B7280",
-        businessModel: "import",
+        businessModel: "import", // Imported product
     },
     {
         name: "Oxyde de Zinc",
         img: "/finals/oxyde_de_zinc2.png",
         color: "#10B981",
-        businessModel: "export",
+        businessModel: "export", // Exported product
     },
     {
         name: "Zinc SHG",
         img: "/finals/zinc_hg.png",
         color: "#F59E0B",
-        businessModel: "import",
+        businessModel: "import", // Imported product
     },
     {
         name: "ZAMAK",
         img: "/finals/zamak.png",
         color: "#8B5CF6",
-        businessModel: "import",
+        businessModel: "import", // Imported product
     },
     {
         name: "Carton",
         img: "/finals/carton.png",
         color: "#DC2626",
-        businessModel: "export",
+        businessModel: "export", // Exported product
     },
     {
         name: "Zinc Aluminé",
         img: "/finals/zinc_alumine.png",
         color: "#0891B2",
-        businessModel: "fabrication",
+        businessModel: "fabrication", // Fabricated product
     },
     {
         name: "Cuivre",
         img: "/finals/cuivre.png",
         color: "#B45309",
-        businessModel: "import",
+        businessModel: "import", // Imported product
     },
 ];
 
-// Updated slugify function with special case for Zinc SHG
 const slugify = (name) => {
     // Special case for "Zinc SHG" to match your productData key
     if (name.toLowerCase() === "zinc shg") {
-        return "zinc-shg";
+        return "zinc";
     }
 
     // Default slugify logic
@@ -477,7 +476,7 @@ function ProductCard({
     return (
         <Link
             href={`/produits/${slugify(product.name)}`}
-            className={`group relative flex-shrink-0 ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl active:scale-95 p-2`}
+            className={`group relative flex-shrink-0 ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl active:scale-95`}
             style={{
                 backgroundColor: cardBackground,
                 border: `1px solid ${borderColor}`,
@@ -516,7 +515,7 @@ function ProductCard({
 
             {/* Bottom info panel - Optimized for mobile with better text sizing */}
             <div
-                className={`absolute bottom-2 left-2 right-2 ${infoHeight} p-3 md:p-5 rounded-b-2xl md:rounded-b-3xl flex flex-col justify-between`}
+                className={`absolute bottom-0 w-full ${infoHeight} p-3 md:p-5 rounded-b-2xl md:rounded-b-3xl flex flex-col justify-between`}
                 style={{
                     background: isDark
                         ? "linear-gradient(135deg, rgba(25, 43, 94, 0.98) 0%, rgba(18, 26, 44, 0.98) 100%)"

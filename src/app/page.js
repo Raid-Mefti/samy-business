@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Home1 from "@/components/Home1";
 import ZincOxyde from "@/components/ZincOxyde";
 import Produits from "@/components/Produits";
+import ProduitsTemporaire from "@/components/Produitstemporaire";
 import SectionBridge from "@/components/SectionBridge";
 
 export default function Home() {
@@ -67,6 +68,7 @@ export default function Home() {
                 </div>
 
                 <Produits />
+                <ProduitsTemporaire />
             </div>
 
             <Footer />
