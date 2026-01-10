@@ -15,56 +15,57 @@ const PRODUCTS = [
         name: "Aluminium",
         img: "/finals/aluminium.png",
         color: "#3B82F6",
-        businessModel: "import", // Imported product
+        businessModel: "import",
     },
     {
         name: "Plomb",
         img: "/finals/plomb.png",
         color: "#6B7280",
-        businessModel: "import", // Imported product
+        businessModel: "import",
     },
     {
         name: "Oxyde de Zinc",
         img: "/finals/oxyde_de_zinc2.png",
         color: "#10B981",
-        businessModel: "export", // Exported product
+        businessModel: "export",
     },
     {
         name: "Zinc SHG",
         img: "/finals/zinc_hg.png",
         color: "#F59E0B",
-        businessModel: "import", // Imported product
+        businessModel: "import",
     },
     {
         name: "ZAMAK",
         img: "/finals/zamak.png",
         color: "#8B5CF6",
-        businessModel: "import", // Imported product
+        businessModel: "import",
     },
     {
         name: "Carton",
         img: "/finals/carton.png",
         color: "#DC2626",
-        businessModel: "export", // Exported product
+        businessModel: "export",
     },
     {
         name: "Zinc Aluminé",
         img: "/finals/zinc_alumine.png",
         color: "#0891B2",
-        businessModel: "fabrication", // Fabricated product
+        businessModel: "fabrication",
     },
     {
         name: "Cuivre",
         img: "/finals/cuivre.png",
         color: "#B45309",
-        businessModel: "import", // Imported product
+        businessModel: "import",
     },
 ];
 
+// Updated slugify function with special case for Zinc SHG
 const slugify = (name) => {
     // Special case for "Zinc SHG" to match your productData key
     if (name.toLowerCase() === "zinc shg") {
-        return "zinc";
+        return "zinc-shg";
     }
 
     // Default slugify logic
@@ -296,7 +297,7 @@ export default function HomeProductsScroller() {
     -------------------------------------------------- */
     return (
         <section
-            className="relative overflow-hidden py-12 md:py-20"
+            className="relative overflow-hidden pb-12 md:pb-20"
             dir={isRtl ? "rtl" : "ltr"}
             style={{ background: backgroundColor }}
         >
@@ -476,17 +477,18 @@ function ProductCard({
     return (
         <Link
             href={`/produits/${slugify(product.name)}`}
-            className={`group relative flex-shrink-0 ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl active:scale-95`}
+            className={`group relative flex-shrink-0 ${cardWidth} ${cardHeight} rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl active:scale-95 p-2`}
             style={{
-                backgroundColor: cardBackground,
+                background:
+                    "linear-gradient(135deg, rgba(25,43,94,0.92) 0%, rgba(18,26,44,0.92) 100%)",
                 border: `1px solid ${borderColor}`,
                 boxShadow: isDark
                     ? "0 15px 40px rgba(0,0,0,0.25)"
                     : "0 15px 40px rgba(0,0,0,0.08)",
             }}
         >
-            {/* Image container - More space on mobile */}
-            <div className={`relative ${imageHeight} w-full`}>
+            {/* Image container - 70% of height */}
+            <div className={`relative h-[70%] w-full`}>
                 {!loaded && (
                     <div
                         className="absolute inset-0 animate-pulse rounded-t-2xl md:rounded-t-3xl"
@@ -513,9 +515,9 @@ function ProductCard({
                 )}
             </div>
 
-            {/* Bottom info panel - Optimized for mobile with better text sizing */}
+            {/* Bottom info panel - 30% of height with unified padding */}
             <div
-                className={`absolute bottom-0 w-full ${infoHeight} p-3 md:p-5 rounded-b-2xl md:rounded-b-3xl flex flex-col justify-between`}
+                className={`absolute bottom-2 left-2 right-2 h-[30%] p-4 md:p-5 rounded-b-2xl md:rounded-b-3xl flex flex-col justify-between`}
                 style={{
                     background: isDark
                         ? "linear-gradient(135deg, rgba(25, 43, 94, 0.98) 0%, rgba(18, 26, 44, 0.98) 100%)"
@@ -527,69 +529,68 @@ function ProductCard({
                     }`,
                 }}
             >
-                {/* Top section: Product name */}
-                <div className="flex flex-col ">
+                {/* Top section: Product name with unified spacing */}
+                <div className="flex flex-col h-full justify-between">
                     <h3
                         className={`text-white font-bold truncate ${
                             isRtl ? "text-right" : "text-left"
                         }`}
                         style={{
-                            fontSize: isMobile ? "1.2rem" : "1.35rem", // Bigger text
-                            lineHeight: "1.3",
-                            marginBottom: "0.75rem",
+                            fontSize: isMobile ? "1.2rem" : "1.35rem",
+                            lineHeight: "1.2",
                         }}
                     >
                         {product.name}
                     </h3>
-                </div>
 
-                {/* Bottom section: Business model and CTA - Compact on mobile */}
-                <div className="flex justify-between items-center mt-auto pt-2 border-t border-white/10">
-                    {/* Business model status - Replaced "stock" */}
-                    <span className="flex items-center gap-2">
+                    {/* Bottom section: Business model and CTA */}
+                    <div className="flex justify-between items-center pt-2 border-t border-white/10">
+                        {/* Business model status */}
+                        <span className="flex items-center gap-2">
+                            <span
+                                className="w-2 h-2 rounded-full flex-shrink-0"
+                                style={{ background: product.color }}
+                            />
+                            <span
+                                className="text-white/80 text-xs md:text-sm truncate"
+                                style={{
+                                    fontSize: isMobile ? "0.75rem" : "0.875rem",
+                                }}
+                            >
+                                {getBusinessModelText(product.businessModel)}
+                            </span>
+                        </span>
+
+                        {/* View button */}
                         <span
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{ background: product.color }}
-                        />
-                        <span
-                            className="text-white/80 text-xs md:text-sm truncate"
+                            className="text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-1.5 md:py-2 transition-all duration-300 group-hover:bg-white/20 group-hover:scale-105 flex-shrink-0 flex items-center gap-1"
                             style={{
-                                fontSize: isMobile ? "0.75rem" : "0.875rem",
+                                border: `1px solid ${
+                                    isDark
+                                        ? "rgba(255, 255, 255, 0.4)"
+                                        : "rgba(255, 255, 255, 0.4)"
+                                }`,
+                                background: isDark
+                                    ? "rgba(255, 255, 255, 0.15)"
+                                    : "rgba(255, 255, 255, 0.1)",
                             }}
                         >
-                            {getBusinessModelText(product.businessModel)}
+                            {t.view}
+                            <svg
+                                className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                />
+                            </svg>
                         </span>
-                    </span>
-
-                    {/* View button - More prominent */}
-                    <span
-                        className="text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-1.5 md:py-2 transition-all duration-300 group-hover:bg-white/20 group-hover:scale-105 flex-shrink-0 flex items-center gap-1"
-                        style={{
-                            border: `1px solid ${
-                                isDark
-                                    ? "rgba(255, 255, 255, 0.4)"
-                                    : "rgba(255, 255, 255, 0.4)"
-                            }`,
-                            background: isDark
-                                ? "rgba(255, 255, 255, 0.15)"
-                                : "rgba(255, 255, 255, 0.1)",
-                        }}
-                    >
-                        {t.view}
-                        <svg
-                            className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                        </svg>
-                    </span>
+                    </div>
                 </div>
             </div>
         </Link>
