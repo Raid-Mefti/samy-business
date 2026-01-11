@@ -68,7 +68,6 @@ export default function Home() {
                 </div>
 
                 <Produits />
-                <ProduitsTemporaire />
             </div>
 
             <Footer />
