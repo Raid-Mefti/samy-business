@@ -372,7 +372,7 @@ export default function DevisPage() {
                             type="button"
                             onClick={addRow}
                             className="mt-4 text-sm font-semibold hover:opacity-80 transition-all duration-300 flex items-center gap-2 group"
-                            style={{ color: gradientEnd }}
+                            style={{ color: blue }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.transform =
                                     "translateY(-1px)";

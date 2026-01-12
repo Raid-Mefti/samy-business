@@ -58,7 +58,7 @@ export default function Home1() {
 
             {/* CONTENT - Simplified and focused */}
             <div
-                className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 min-h-screen flex flex-col justify-center md:justify-start md:pt-20"
+                className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 min-h-screen flex flex-col justify-center md:pt-32 pt-24" // Added pt-24 (96px) for mobile, md:pt-32 (128px) for desktop
                 dir={isRtl ? "rtl" : "ltr"}
             >
                 {/* TEXT CONTENT - Clean and focused */}
@@ -88,7 +88,7 @@ export default function Home1() {
                         />
                     </motion.div>
 
-                    {/* Subtitle - Simple and clear */}
+                    {/* Subtitle - Simple and clear with better color */}
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -96,7 +96,8 @@ export default function Home1() {
                         className="mt-4 md:mt-6 font-medium"
                         style={{
                             fontSize: "clamp(1.125rem, 4vw, 1.5rem)",
-                            color: "rgba(255, 255, 255, 0.9)",
+                            color: "rgba(255, 255, 255, 0.95)", // Increased opacity from 0.9 to 0.95
+                            textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)", // Added subtle shadow
                         }}
                     >
                         <span
