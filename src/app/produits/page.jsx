@@ -87,7 +87,7 @@ const PRODUCTS = [
     {
         name: "Oxyde de Zinc",
         iconPath: "/finals/oxyde_de_zinc2.png",
-        category: "exportation",
+        category: "fabrication",
     },
     {
         name: "Carton",

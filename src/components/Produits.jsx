@@ -27,7 +27,7 @@ const PRODUCTS = [
         name: "Oxyde de Zinc",
         img: "/finals/oxyde_de_zinc2.png",
         color: "#10B981",
-        businessModel: "export",
+        businessModel: "fabrication",
     },
     {
         name: "Zinc SHG",
