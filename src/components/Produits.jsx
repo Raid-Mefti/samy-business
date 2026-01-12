@@ -388,7 +388,7 @@ export default function HomeProductsScroller() {
             {/* CTA */}
             <div className="mt-12 md:mt-16 text-center px-4">
                 <Link
-                    href="/products"
+                    href="/produits"
                     className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-white"
                     style={{
                         background: gradientBlue,

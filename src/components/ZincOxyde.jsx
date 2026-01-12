@@ -162,7 +162,7 @@ export default function ZincOxideIntro() {
                         } md:justify-start`}
                     >
                         <Link
-                            href="/oxyde-de-zinc"
+                            href="/zinc-oxyde"
                             className="group inline-flex items-center justify-center
                                 rounded-full
                                 px-6 py-3 sm:px-8 sm:py-3
