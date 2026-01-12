@@ -88,28 +88,22 @@ export default function Home1() {
                         />
                     </motion.div>
 
-                    {/* Subtitle - Improved contrast with gradient text */}
-                    <motion.div
+                    {/* Subtitle - Simple and clear */}
+                    <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4, duration: 0.8 }}
-                        className="mt-4 md:mt-6"
+                        className="mt-4 md:mt-6 font-medium"
+                        style={{
+                            fontSize: "clamp(1.125rem, 4vw, 1.5rem)",
+                            color: "rgba(255, 255, 255, 0.9)",
+                        }}
                     >
                         <span
                             dangerouslySetInnerHTML={{ __html: t.subtitle }}
-                            className="
-                                font-bold
-                                bg-gradient-to-r from-[rgb(47,134,253)] to-[rgb(76,242,255)]
-                                bg-clip-text text-transparent
-                                drop-shadow-md
-                                inline-block md:block
-                            "
-                            style={{
-                                fontSize: "clamp(1.25rem, 4vw, 1.75rem)",
-                                textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
-                            }}
+                            className="inline-block md:block"
                         />
-                    </motion.div>
+                    </motion.p>
                 </motion.div>
 
                 {/* CTA - Clean and prominent */}
