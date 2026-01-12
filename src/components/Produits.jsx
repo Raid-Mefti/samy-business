@@ -30,7 +30,7 @@ const PRODUCTS = [
         businessModel: "fabrication",
     },
     {
-        name: "Zinc SHG",
+        name: "Zinc",
         img: "/finals/zinc_hg.png",
         color: "#F59E0B",
         businessModel: "import",
