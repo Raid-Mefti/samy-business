@@ -39,7 +39,7 @@ export default function SectionBridge() {
     return (
         <section
             aria-label="Présentation de l'entreprise Samy Business"
-            className="relative"
+            className="relative py-24"
             style={{ background: colors.background }}
         >
             <motion.div
@@ -47,9 +47,7 @@ export default function SectionBridge() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className={`max-w-6xl mx-auto px-6 text-center ${
-                    isRtl ? "text-right" : "text-left"
-                }`}
+                className="max-w-6xl mx-auto px-6 text-center"
                 dir={isRtl ? "rtl" : "ltr"}
             >
                 {/* Divider */}
