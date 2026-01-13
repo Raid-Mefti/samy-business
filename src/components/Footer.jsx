@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Link from "next/link";
 
 export default function Comp7() {
     const { language } = useLanguage();
@@ -206,11 +207,13 @@ export default function Comp7() {
                 >
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <img
-                            src="/finals/logos/logo3.png"
-                            alt="Samy Business"
-                            className="w-60 sm:w-70 max-w-full filter brightness-0 invert"
-                        />
+                        <Link href="/">
+                            <img
+                                src="/finals/logos/logo3.png"
+                                alt="Samy Business"
+                                className="w-60 sm:w-70 max-w-full filter brightness-0 invert cursor-pointer"
+                            />
+                        </Link>
                     </div>
 
                     {/* Contact Info */}
@@ -332,7 +335,7 @@ export default function Comp7() {
                                                 </span>
                                             </a>
                                         ) : (
-                                            <a
+                                            <Link
                                                 href={link.href}
                                                 className="hover:text-white transition-colors text-sm sm:text-base block py-1"
                                                 style={{
@@ -354,7 +357,7 @@ export default function Comp7() {
                                                 }}
                                             >
                                                 {link.name}
-                                            </a>
+                                            </Link>
                                         )}
                                     </li>
                                 ))}
