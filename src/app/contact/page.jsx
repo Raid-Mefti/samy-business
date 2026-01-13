@@ -6,10 +6,8 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
+import emailjs from '@emailjs/browser';
 
-/* ==========================================================
-   TRANSLATIONS
-========================================================== */
 const translations = {
     fr: {
         contact_title: "Contactez-nous",
@@ -88,9 +86,6 @@ const translations = {
     },
 };
 
-/* ==========================================================
-   INPUT COMPONENT
-========================================================== */
 function Input({ label, name, type = "text", isArabic, isDark, colors }) {
     return (
         <div>
@@ -102,7 +97,6 @@ function Input({ label, name, type = "text", isArabic, isDark, colors }) {
             <input
                 type={type}
                 name={name}
-                required
                 className={`w-full transition-all duration-200 focus:outline-none ${
                     isArabic ? "text-right" : "text-left"
                 }`}
@@ -135,9 +129,6 @@ function Input({ label, name, type = "text", isArabic, isDark, colors }) {
     );
 }
 
-/* ==========================================================
-   CONTACT FORM
-========================================================== */
 function ContactForm() {
     const { language } = useLanguage();
     const { theme } = useTheme();
@@ -149,10 +140,9 @@ function ContactForm() {
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // Color scheme
-    const gradientStart = "rgb(47, 134, 253)"; // #2f86fd
-    const gradientEnd = "rgb(76, 242, 255)"; // #4cf2ff
-    const blue = "rgb(25, 43, 94)"; // #192b5e
+    const gradientStart = "rgb(47, 134, 253)";
+    const gradientEnd = "rgb(76, 242, 255)";
+    const blue = "rgb(25, 43, 94)";
     const mediumGray = "rgb(180, 180, 180)";
     const lightGray = "rgb(240, 240, 240)";
     const darkGray = "rgb(30, 35, 45)";
@@ -160,7 +150,6 @@ function ContactForm() {
 
     const gradientBlue = `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`;
 
-    // Theme-based colors
     const mainBg = isDark
         ? "linear-gradient(135deg, #0c121e 0%, #121a2c 100%)"
         : `linear-gradient(135deg, ${lightGray} 0%, white 100%)`;
@@ -183,21 +172,30 @@ function ContactForm() {
         : `1px solid rgb(180, 180, 180)`;
     const statusText = isDark ? mediumGray : blue;
 
-    const handleSubmit = async (e) => {
+    const sendEmail = async (e) => {
         e.preventDefault();
         setLoading(true);
         setStatus(t.loading);
 
-        setTimeout(() => {
+        try {
+            await emailjs.sendForm(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT,
+                form.current,
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+            );
             setStatus(t.success);
             form.current.reset();
+        } catch (error) {
+            console.error("EmailJS error:", error);
+            setStatus(t.error);
+        } finally {
             setLoading(false);
-        }, 1500);
+        }
     };
 
     return (
         <div className="flex flex-col lg:flex-row items-start gap-8 mb-24 max-w-7xl mx-auto">
-            {/* Left: Contact form */}
             <div
                 className="p-6 md:p-10 rounded-3xl shadow-xl lg:w-[70%] flex flex-col items-center w-full"
                 style={{
@@ -242,7 +240,7 @@ function ContactForm() {
 
                 <form
                     ref={form}
-                    onSubmit={handleSubmit}
+                    onSubmit={sendEmail}
                     className="space-y-5 w-full lg:w-[90%]"
                 >
                     <Input
@@ -282,7 +280,6 @@ function ContactForm() {
                         <div className="relative">
                             <select
                                 name="company_size"
-                                required
                                 className="w-full appearance-none cursor-pointer transition-all duration-200 focus:outline-none"
                                 style={{
                                     backgroundColor: inputBg,
@@ -394,7 +391,6 @@ function ContactForm() {
                         <textarea
                             name="message"
                             rows="4"
-                            required
                             className="w-full transition-all duration-200 focus:outline-none resize-none"
                             style={{
                                 backgroundColor: inputBg,
@@ -439,7 +435,7 @@ function ContactForm() {
                                 minWidth: "200px",
                             }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart}15deg, ${gradientEnd} 100%)`;
+                                e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart} 15deg, ${gradientEnd} 100%)`;
                                 e.currentTarget.style.boxShadow = isDark
                                     ? `0 10px 25px -5px rgba(76, 242, 255, 0.25)`
                                     : `0 15px 30px -5px rgba(47, 134, 253, 0.25)`;
@@ -456,7 +452,6 @@ function ContactForm() {
                 </form>
             </div>
 
-            {/* Right: Quote CTA */}
             <div
                 className="p-8 rounded-3xl shadow-lg lg:w-[30%] flex flex-col items-center text-center w-full sticky top-24"
                 style={{
@@ -496,7 +491,7 @@ function ContactForm() {
                         }`,
                     }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart}15deg, ${gradientEnd} 100%)`;
+                        e.currentTarget.style.background = `linear-gradient(135deg, ${gradientStart} 15deg, ${gradientEnd} 100%)`;
                         e.currentTarget.style.boxShadow = isDark
                             ? `0 10px 25px -5px rgba(76, 242, 255, 0.25)`
                             : `0 15px 30px -5px rgba(47, 134, 253, 0.25)`;
@@ -514,14 +509,10 @@ function ContactForm() {
     );
 }
 
-/* ==========================================================
-   PAGE
-========================================================== */
 export default function ContactPage() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    // Color scheme
     const lightGray = "rgb(240, 240, 240)";
     const mainBg = isDark
         ? "linear-gradient(135deg, #0c121e 0%, #121a2c 100%)"
