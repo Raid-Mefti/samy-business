@@ -85,7 +85,6 @@ export default function Home1() {
                             className="space-y-1 md:space-y-0"
                         />
                     </motion.div>
-
                     {/* Subtitle */}
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -93,16 +92,18 @@ export default function Home1() {
                         transition={{ delay: 0.4, duration: 0.8 }}
                         className="mt-4 md:mt-6 font-medium"
                         style={{
+                            fontWeight: 500,
                             fontSize: "clamp(1.125rem, 4vw, 1.5rem)",
-                            color: "rgba(255, 255, 255, 0.95)",
-                            textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)",
+                            color: "rgba(255, 255, 255, 1)",
+                            textShadow:
+                                "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 0, 0, 0.6)",
                         }}
                     >
                         <span
                             dangerouslySetInnerHTML={{ __html: t.subtitle }}
                             className="inline-block md:block"
                         />
-                    </motion.p>
+                    </motion.p>{" "}
                 </motion.div>
 
                 {/* CTA */}

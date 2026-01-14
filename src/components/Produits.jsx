@@ -9,6 +9,7 @@ import { useState, useEffect, useRef } from "react";
 
 /* --------------------------------------------------
    PRODUCTS with correct business models
+   UPDATED: Oxyde de Zinc now has both fabrication and export
 -------------------------------------------------- */
 const PRODUCTS = [
     {
@@ -27,7 +28,7 @@ const PRODUCTS = [
         name: "Oxyde de Zinc",
         img: "/finals/oxyde_de_zinc2.png",
         color: "#10B981",
-        businessModel: "fabrication",
+        businessModel: ["fabrication", "export"], // CHANGED: Now an array with both categories
     },
     {
         name: "Zinc",
@@ -115,7 +116,6 @@ export default function HomeProductsScroller() {
         ? "linear-gradient(135deg, rgb(12,18,30) 0%, rgb(18,26,44) 100%)"
         : "linear-gradient(135deg, rgb(240, 240, 240) 0%, rgb(245, 245, 245) 100%)";
 
-    // const cardBackground = isDark ? "rgba(255,255,255,0.05)" : "white";
     const cardBackground = "rgba(255,255,255,0.05)";
 
     // Text colors
@@ -436,7 +436,7 @@ export default function HomeProductsScroller() {
 }
 
 /* --------------------------------------------------
-   PRODUCT CARD
+   PRODUCT CARD - Updated to handle multiple business models
 -------------------------------------------------- */
 function ProductCard({
     product,
@@ -455,14 +455,29 @@ function ProductCard({
 
     // Card dimensions optimized for mobile - more compact
     const cardWidth = isMobile ? "w-[280px]" : "w-[320px]";
-    const cardHeight = isMobile ? "h-[340px]" : "h-[400px]"; // Reduced mobile height
+    const cardHeight = isMobile ? "h-[340px]" : "h-[400px]";
 
-    // Adjusted ratios for better mobile experience
-    const imageHeight = isMobile ? "h-[60%]" : "h-[65%]"; // More image on mobile
-    const infoHeight = isMobile ? "h-[40%]" : "h-[35%]"; // Less info space on mobile
-
-    // Get business model text based on product
+    // Get business model text based on product - UPDATED to handle arrays
     const getBusinessModelText = (businessModel) => {
+        // If it's an array, join them with " & "
+        if (Array.isArray(businessModel)) {
+            return businessModel
+                .map((model) => {
+                    switch (model) {
+                        case "import":
+                            return t.import;
+                        case "export":
+                            return t.export;
+                        case "fabrication":
+                            return t.fabrication;
+                        default:
+                            return model;
+                    }
+                })
+                .join(" & ");
+        }
+
+        // Single business model (string)
         switch (businessModel) {
             case "import":
                 return t.import;
@@ -545,7 +560,7 @@ function ProductCard({
 
                     {/* Bottom section: Business model and CTA */}
                     <div className="flex justify-between items-center pt-2 border-t border-white/10">
-                        {/* Business model status */}
+                        {/* Business model status - Updated for multiple models */}
                         <span className="flex items-center gap-2">
                             <span
                                 className="w-2 h-2 rounded-full flex-shrink-0"

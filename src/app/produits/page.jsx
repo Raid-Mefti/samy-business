@@ -55,7 +55,7 @@ const TRANSLATIONS = {
     },
 };
 
-/* ------------------ UPDATED DATA BASED ON REQUEST ------------------ */
+/* ------------------ UPDATED DATA WITH MULTI-CATEGORY SUPPORT ------------------ */
 const PRODUCTS = [
     // Produits Importation: zinc, plomb, aluminium, cuivre, zamak
     {
@@ -83,11 +83,11 @@ const PRODUCTS = [
         iconPath: "/finals/zamak.png",
         category: "importation",
     },
-    // Produits Exportation: oxyde et carton
+    // Oxyde de Zinc - BELONGS TO BOTH CATEGORIES
     {
         name: "Oxyde de Zinc",
         iconPath: "/finals/oxyde_de_zinc2.png",
-        category: "fabrication",
+        category: ["fabrication", "exportation"], // Array for multiple categories
     },
     {
         name: "Carton",
@@ -201,8 +201,12 @@ export default function ProduitsPage() {
 
     const filteredProducts = useMemo(() => {
         return PRODUCTS.filter((p) => {
+            // Handle both single category (string) and multiple categories (array)
             const matchCat =
-                activeCategory === "all" || p.category === activeCategory;
+                activeCategory === "all" ||
+                (Array.isArray(p.category)
+                    ? p.category.includes(activeCategory)
+                    : p.category === activeCategory);
             const matchSearch = p.name
                 .toLowerCase()
                 .includes(search.toLowerCase());
