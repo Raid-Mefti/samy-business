@@ -14,7 +14,7 @@ export default function Home() {
     const isDark = theme === "dark";
 
     // Maintenance configuration
-    const MAINTENANCE_DATE = new Date("2026-02-14");
+    const MAINTENANCE_DATE = new Date("2026-02-05");
     const [showMaintenance, setShowMaintenance] = useState(false);
 
     useEffect(() => {
@@ -72,60 +72,6 @@ export default function Home() {
                                 This website is temporarily unavailable due to
                                 service requirements.
                             </p>
-                        </div>
-
-                        <div
-                            className="mb-8 p-6 rounded-xl"
-                            style={{
-                                background: isDark
-                                    ? "rgba(25, 43, 94, 0.3)"
-                                    : "rgba(25, 43, 94, 0.1)",
-                                border: `1px solid ${
-                                    isDark
-                                        ? "rgba(76, 242, 255, 0.2)"
-                                        : "rgba(47, 134, 253, 0.2)"
-                                }`,
-                            }}
-                        >
-                            <h2 className="text-xl font-semibold mb-3">
-                                For Continued Service:
-                            </h2>
-                            <p className="mb-4">
-                                Please contact the service provider to resolve
-                                account requirements.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a
-                                    href="mailto:contact@samybusiness.dz?subject=Website%20Service%20Inquiry"
-                                    className="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-white"
-                                    style={{
-                                        background:
-                                            "linear-gradient(135deg, rgb(47, 134, 253) 0%, rgb(76, 242, 255) 100%)",
-                                        border: "1px solid rgba(255, 255, 255, 0.3)",
-                                    }}
-                                >
-                                    ✉️ Email Support
-                                </a>
-                                <a
-                                    href="tel:+213XXXXXXXXX"
-                                    className="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
-                                    style={{
-                                        background: isDark
-                                            ? "rgba(255,255,255,0.1)"
-                                            : "rgba(25,43,94,0.1)",
-                                        border: `1px solid ${
-                                            isDark
-                                                ? "rgba(255,255,255,0.3)"
-                                                : "rgba(25,43,94,0.3)"
-                                        }`,
-                                        color: isDark
-                                            ? "rgb(240,240,240)"
-                                            : "rgb(25, 43, 94)",
-                                    }}
-                                >
-                                    📞 Call Support
-                                </a>
-                            </div>
                         </div>
 
                         <div className="text-sm opacity-70 mt-6">

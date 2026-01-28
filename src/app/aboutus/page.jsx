@@ -147,8 +147,8 @@ export default function AboutPage() {
                                 {lang === "fr"
                                     ? "Notre Histoire"
                                     : lang === "ar"
-                                    ? "تاريخنا"
-                                    : "Our Story"}
+                                      ? "تاريخنا"
+                                      : "Our Story"}
                             </div>
 
                             <h1
@@ -166,7 +166,7 @@ export default function AboutPage() {
                             </p>
                         </div>
 
-                        {/* Company Stats */}
+                        {/* Company Stats - UPDATED: 21 collaborators instead of 15 */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                             {[
                                 {
@@ -175,17 +175,17 @@ export default function AboutPage() {
                                         lang === "fr"
                                             ? "Année de Création"
                                             : lang === "ar"
-                                            ? "سنة التأسيس"
-                                            : "Year Founded",
+                                              ? "سنة التأسيس"
+                                              : "Year Founded",
                                 },
                                 {
-                                    value: "15+",
+                                    value: "21", // CHANGED: 21 instead of 15
                                     label:
                                         lang === "fr"
-                                            ? "Années d'Expérience"
+                                            ? "Collaborateurs"
                                             : lang === "ar"
-                                            ? "سنوات الخبرة"
-                                            : "Years of Experience",
+                                              ? "متعاونين"
+                                              : "Collaborators",
                                 },
                                 {
                                     value: "100+",
@@ -193,8 +193,8 @@ export default function AboutPage() {
                                         lang === "fr"
                                             ? "Clients Industriels"
                                             : lang === "ar"
-                                            ? "عماء صناعيين"
-                                            : "Industrial Clients",
+                                              ? "عملاء صناعيين"
+                                              : "Industrial Clients",
                                 },
                             ].map((stat, index) => (
                                 <div
@@ -236,7 +236,7 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* SERVICES SECTION */}
+                {/* SERVICES SECTION - UPDATED: Changed service descriptions */}
                 <section className="py-20 md:py-32">
                     <div className="max-w-6xl mx-auto px-6">
                         <div className="text-center mb-16">
@@ -253,8 +253,8 @@ export default function AboutPage() {
                                 {lang === "fr"
                                     ? "Une expertise métallurgique complète au service de l'industrie algérienne"
                                     : lang === "ar"
-                                    ? "خبرة معدنية شاملة في خدمة الصناعة الجزائرية"
-                                    : "Complete metallurgical expertise for Algerian industry"}
+                                      ? "خبرة معدنية شاملة في خدمة الصناعة الجزائرية"
+                                      : "Complete metallurgical expertise for Algerian industry"}
                             </p>
                         </div>
 
@@ -304,7 +304,7 @@ export default function AboutPage() {
                                         {s.desc}
                                     </p>
 
-                                    {/* Service Features */}
+                                    {/* Service Features - UPDATED with new features */}
                                     <div
                                         className="mt-8 pt-6 border-t"
                                         style={{
@@ -362,7 +362,7 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* VALUES SECTION */}
+                {/* VALUES SECTION - UPDATED: Changed values descriptions */}
                 <section
                     className="py-20 md:py-32"
                     style={getBackgroundStyle("values")}
@@ -374,20 +374,20 @@ export default function AboutPage() {
                                 style={{ color: currentColors.blue }}
                             >
                                 {lang === "fr"
-                                    ? "Nos Valeurs"
+                                    ? "Nos Engagements"
                                     : lang === "ar"
-                                    ? "قيمنا"
-                                    : "Our Values"}
+                                      ? "التزاماتنا"
+                                      : "Our Commitments"}
                             </h2>
                             <p
                                 className="text-lg max-w-3xl mx-auto"
                                 style={{ color: currentColors.mediumGray }}
                             >
                                 {lang === "fr"
-                                    ? "Les principes qui guident notre engagement quotidien"
+                                    ? "Nos standards de qualité et d'excellence"
                                     : lang === "ar"
-                                    ? "المبادئ التي توجه التزامنا اليومي"
-                                    : "Principles guiding our daily commitment"}
+                                      ? "معاييرنا للجودة والتميز"
+                                      : "Our standards of quality and excellence"}
                             </p>
                         </div>
 
@@ -481,8 +481,8 @@ export default function AboutPage() {
                                     {lang === "fr"
                                         ? "Prêt à collaborer ?"
                                         : lang === "ar"
-                                        ? "مستعد للتعاون؟"
-                                        : "Ready to collaborate?"}
+                                          ? "مستعد للتعاون؟"
+                                          : "Ready to collaborate?"}
                                 </h2>
 
                                 <p
@@ -492,8 +492,8 @@ export default function AboutPage() {
                                     {lang === "fr"
                                         ? "Notre équipe d'experts est disponible pour analyser vos besoins et vous proposer la solution métallurgique optimale."
                                         : lang === "ar"
-                                        ? "فريق خبرائنا متاح لتحليل احتياجاتك واقتراح الحل المعدني الأمثل."
-                                        : "Our team of experts is available to analyze your needs and propose the optimal metallurgical solution."}
+                                          ? "فريق خبرائنا متاح لتحليل احتياجاتك واقتراح الحل المعدني الأمثل."
+                                          : "Our team of experts is available to analyze your needs and propose the optimal metallurgical solution."}
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -544,8 +544,8 @@ export default function AboutPage() {
                                         {lang === "fr"
                                             ? "Contactez-nous"
                                             : lang === "ar"
-                                            ? "اتصل بنا"
-                                            : "Contact Us"}
+                                              ? "اتصل بنا"
+                                              : "Contact Us"}
                                     </a>
 
                                     <a
@@ -587,8 +587,8 @@ export default function AboutPage() {
                                         {lang === "fr"
                                             ? "Voir nos produits"
                                             : lang === "ar"
-                                            ? "عرض منتجاتنا"
-                                            : "View our products"}
+                                              ? "عرض منتجاتنا"
+                                              : "View our products"}
                                     </a>
                                 </div>
 
@@ -605,8 +605,8 @@ export default function AboutPage() {
                                                     lang === "fr"
                                                         ? "Réponse sous 24h"
                                                         : lang === "ar"
-                                                        ? "الرد خلال 24 ساعة"
-                                                        : "Response within 24h",
+                                                          ? "الرد خلال 24 ساعة"
+                                                          : "Response within 24h",
                                                 icon: "⏱️",
                                             },
                                             {
@@ -614,8 +614,8 @@ export default function AboutPage() {
                                                     lang === "fr"
                                                         ? "Analyse technique gratuite"
                                                         : lang === "ar"
-                                                        ? "تحليل فني مجاني"
-                                                        : "Free technical analysis",
+                                                          ? "تحليل فني مجاني"
+                                                          : "Free technical analysis",
                                                 icon: "🔬",
                                             },
                                             {
@@ -623,8 +623,8 @@ export default function AboutPage() {
                                                     lang === "fr"
                                                         ? "Support permanent"
                                                         : lang === "ar"
-                                                        ? "دعم دائم"
-                                                        : "Permanent support",
+                                                          ? "دعم دائم"
+                                                          : "Permanent support",
                                                 icon: "🤝",
                                             },
                                         ].map((item, index) => (
@@ -667,67 +667,67 @@ export default function AboutPage() {
     );
 }
 
-// Helper function to get service features based on language
+// Helper function to get service features based on language - UPDATED
 function getServiceFeatures(serviceName, lang) {
     const features = {
         "Import & Distribution": {
             fr: [
                 "Sourcing international certifié",
-                "Prix indexés LME",
-                "Traçabilité complète ERP",
+                "Produits aux normes internationales",
+                "Sélection rigoureuse des fournisseurs",
                 "Contrôle qualité rigoureux",
             ],
             en: [
                 "Certified international sourcing",
-                "LME-indexed pricing",
-                "Complete ERP traceability",
-                "Rigorous quality control",
+                "Products meeting international standards",
+                "Rigorous supplier selection",
+                "Comprehensive quality control",
             ],
             ar: [
                 "تزويد دولي معتمد",
-                "أسعار مرتبطة بـ LME",
-                "تتبع كامل عبر ERP",
-                "مراقبة جودة صارمة",
+                "منتجات مطابقة للمعايير الدولية",
+                "اختيار صارم للموردين",
+                "مراقبة جودة شاملة",
             ],
         },
         "Transformation & ZnO": {
             fr: [
                 "Expertise procédés industriels",
-                "Qualité constante garantie",
-                "Logistique sécurisée",
+                "Analyse périodique des produits",
+                "Logistique complète maîtrisée",
                 "Support technique dédié",
             ],
             en: [
                 "Industrial process expertise",
-                "Guaranteed consistent quality",
-                "Secured logistics",
+                "Periodic product analysis",
+                "Complete logistics mastery",
                 "Dedicated technical support",
             ],
             ar: [
                 "خبرة في العمليات الصناعية",
-                "جودة ثابتة مضمونة",
-                "لوجستيك مؤمن",
+                "تحليل دوري للمنتجات",
+                "إتقان كامل للوجستيك",
                 "دعم فني مخصص",
             ],
         },
         "Consulting Métallurgique": {
             fr: [
-                "Audits fournisseurs",
-                "Conformité normes UE",
+                "Partenariats européens reconnus",
+                "Conformité normes internationales",
                 "Optimisation coûts-délais",
                 "Décisions stratégiques",
             ],
             en: [
-                "Supplier audits",
-                "EU standards compliance",
+                "Recognized European partnerships",
+                "International standards compliance",
                 "Cost-time optimization",
-                "Strategic decisions",
+                "Strategic decision support",
             ],
             ar: [
-                "تدقيق الموردين",
-                "مطابقة معايير الاتحاد الأوروبي",
+                "شراكات أوروبية معترف بها",
+                "مطابقة المعايير الدولية",
                 "تحسين التكاليف والآجال",
-                "قرارات استراتيجية",
+                "دعم القرارات الاستراتيجية",
             ],
         },
     };
@@ -747,19 +747,21 @@ function getServiceFeatures(serviceName, lang) {
         : [];
 }
 
-// Helper function to get company values
+// Helper function to get company values - UPDATED
 function getValues(lang) {
     const values = {
         fr: [
             {
-                title: "Excellence",
-                description: "Qualité certifiée et standards internationaux",
+                title: "Normes Internationales",
+                description:
+                    "Produits certifiés conformes aux standards mondiaux",
                 icon: "🏆",
             },
             {
-                title: "Innovation",
-                description: "Solutions techniques adaptées aux besoins locaux",
-                icon: "🚀",
+                title: "Croissance Appréciable",
+                description:
+                    "Santé financière solide confirmant notre développement",
+                icon: "📈",
             },
             {
                 title: "Fiabilité",
@@ -767,21 +769,22 @@ function getValues(lang) {
                 icon: "🤝",
             },
             {
-                title: "Durabilité",
-                description: "Approche responsable et pérenne",
-                icon: "🌱",
+                title: "Expertise Technique",
+                description: "Maîtrise complète de la chaîne logistique",
+                icon: "⚙️",
             },
         ],
         en: [
             {
-                title: "Excellence",
-                description: "Certified quality and international standards",
+                title: "International Standards",
+                description: "Certified products meeting global standards",
                 icon: "🏆",
             },
             {
-                title: "Innovation",
-                description: "Technical solutions adapted to local needs",
-                icon: "🚀",
+                title: "Steady Growth",
+                description:
+                    "Strong financial health confirming our development",
+                icon: "📈",
             },
             {
                 title: "Reliability",
@@ -789,21 +792,21 @@ function getValues(lang) {
                 icon: "🤝",
             },
             {
-                title: "Sustainability",
-                description: "Responsible and sustainable approach",
-                icon: "🌱",
+                title: "Technical Expertise",
+                description: "Complete logistics chain mastery",
+                icon: "⚙️",
             },
         ],
         ar: [
             {
-                title: "التميز",
-                description: "جودة معتمدة ومعايير دولية",
+                title: "المعايير الدولية",
+                description: "منتجات معتمدة مطابقة للمعايير العالمية",
                 icon: "🏆",
             },
             {
-                title: "الابتكار",
-                description: "حلول تقنية متكيفة مع الاحتياجات المحلية",
-                icon: "🚀",
+                title: "نمو ملحوظ",
+                description: "صحة مالية قوية تؤكد تطورنا",
+                icon: "📈",
             },
             {
                 title: "الموثوقية",
@@ -811,9 +814,9 @@ function getValues(lang) {
                 icon: "🤝",
             },
             {
-                title: "الاستدامة",
-                description: "نهج مسؤول ومستدام",
-                icon: "🌱",
+                title: "الخبرة التقنية",
+                description: "إتقان كامل لسلسلة التوريد",
+                icon: "⚙️",
             },
         ],
     };
@@ -826,27 +829,27 @@ function getValues(lang) {
 const translations = {
     fr: {
         about: {
-            title: "Samy Business EURL",
+            title: "EURL Samy Business",
             description:
-                "Samy Business EURL est une entreprise algérienne fondée en 2007 à Alger par son gérant unique, M. Rabah Bourrai. Elle est spécialisée dans l'importation, la transformation et la commercialisation de produits sidérurgiques ainsi que de métaux ferreux et non ferreux destinés principalement aux secteurs industriels.\n\nDepuis plus de 15 ans, Samy Business accompagne des acteurs industriels nationaux à travers une offre structurée, reposant sur la maîtrise des chaînes d'approvisionnement internationales, la conformité aux normes européennes et l'indexation des produits sur la London Metal Exchange (LME). L'entreprise s'appuie sur une organisation interne solide et une équipe pluridisciplinaire couvrant la direction générale, l'administration, les finances, le commercial, la logistique et les systèmes d'information.",
+                "EURL Samy Business est une entreprise algérienne fondée en 2007 à Alger par son gérant unique, M. Rabah Bourrai.\n\nSpécialisée dans l'importation, se dirige vers la production, transformation et la commercialisation de produits sidérurgiques et divers métaux, en particulier l'Oxyde de Zinc, qui sont destinés principalement aux secteurs industriels.\n\nDepuis plusieurs années, Samy Business accompagne des acteurs industriels nationaux à travers une offre structurée, reposant sur la maîtrise des chaînes d'approvisionnement, la conformité aux normes selon le standard international. L'entreprise s'appuie sur une organisation interne solide et une équipe pluridisciplinaire couvrant la direction générale, l'administration, les finances, le commercial, la logistique et des moyens techniques.",
         },
         services: {
-            title: "Nos Services",
+            title: "Notre Expertise",
             items: [
                 {
                     name: "Import & Distribution",
                     color: "#38367F",
-                    desc: "Approvisionnement international de métaux ferreux et non ferreux.\nDevis indexés LME, traçabilité ERP, contrôle qualité et distribution nationale.",
+                    desc: "Maîtrise complète de la chaîne logistique.\nPartenariat avec des fournisseurs européens reconnus (Allemagne, Belgique, Espagne).",
                 },
                 {
                     name: "Transformation & ZnO",
                     color: "#38367F",
-                    desc: "Accompagnement technique pour les filières caoutchouc, céramique et chimie.\nMaîtrise des procédés, qualité constante et logistique sécurisée.",
+                    desc: "Production et transformation de l'Oxyde de Zinc pour divers secteurs industriels.\nAnalyse périodique des produits fabriqués.",
                 },
                 {
                     name: "Consulting Métallurgique",
                     color: "#38367F",
-                    desc: "Sourcing stratégique, conformité UE, audits fournisseurs et optimisation coûts-délais pour décisions industrielles fiables.",
+                    desc: "Expertise technique pour les décisions industrielles.\nConformité aux normes internationales et optimisation des coûts.",
                 },
             ],
         },
@@ -854,27 +857,27 @@ const translations = {
 
     en: {
         about: {
-            title: "Samy Business EURL",
+            title: "EURL Samy Business",
             description:
-                "Samy Business EURL is an Algerian company founded in 2007 in Algiers by its sole manager, Mr. Rabah Bourrai. It specializes in the import, processing, and commercialization of steel products as well as ferrous and non-ferrous metals, primarily serving industrial sectors.\n\nFor more than 15 years, Samy Business has supported national industrial players through a structured offering based on international supply chain expertise, compliance with European standards, and product pricing indexed to the London Metal Exchange (LME). The company relies on a solid internal organization and a multidisciplinary team covering general management, administration, finance, sales, logistics, and information systems.",
+                "EURL Samy Business is an Algerian company founded in 2007 in Algiers by its sole manager, Mr. Rabah Bourrai.\n\nSpecializing in import, moving towards production, processing, and commercialization of steel products and various metals, particularly Zinc Oxide, primarily serving industrial sectors.\n\nFor several years, Samy Business has supported national industrial players through a structured offering based on supply chain mastery and compliance with international standards. The company relies on a solid internal organization and a multidisciplinary team covering general management, administration, finance, sales, logistics, and technical resources.",
         },
         services: {
-            title: "Our Services",
+            title: "Our Expertise",
             items: [
                 {
                     name: "Import & Distribution",
                     color: "#38367F",
-                    desc: "International sourcing of ferrous and non-ferrous metals.\nLME-indexed pricing, ERP traceability, quality control, and nationwide distribution.",
+                    desc: "Complete logistics chain mastery.\nPartnerships with recognized European suppliers (Germany, Belgium, Spain).",
                 },
                 {
                     name: "Processing & ZnO",
                     color: "#38367F",
-                    desc: "Technical support for rubber, ceramics, and chemical industries.\nProcess control, consistent quality, and secured logistics.",
+                    desc: "Production and processing of Zinc Oxide for various industrial sectors.\nPeriodic analysis of manufactured products.",
                 },
                 {
                     name: "Metallurgical Consulting",
                     color: "#38367F",
-                    desc: "Strategic sourcing, EU compliance, supplier audits, and cost–lead time optimization for reliable industrial decisions.",
+                    desc: "Technical expertise for industrial decisions.\nCompliance with international standards and cost optimization.",
                 },
             ],
         },
@@ -882,27 +885,27 @@ const translations = {
 
     ar: {
         about: {
-            title: "شركة سامي بيزنس",
+            title: "شركة سامي بيزنس ذات المسؤولية المحدودة",
             description:
-                "شركة سامي بيزنس ذات المسؤولية المحدودة هي شركة جزائرية تأسست سنة 2007 بالجزائر العاصمة على يد مسيرها الوحيد السيد رباح بوراي، وهي متخصصة في استيراد، تحويل وتسويق المنتجات الحديدية والمعادن الحديدية وغير الحديدية الموجهة أساسًا للقطاعات الصناعية.\n\nمنذ أكثر من 15 سنة، ترافق سامي بيزنس الفاعلين الصناعيين الوطنيين من خلال عرض منظم يرتكز على التحكم في سلاسل التموين الدولية، مطابقة المعايير الأوروبية، وتسعير المنتجات وفق بورصة لندن للمعادن (LME). وتعتمد الشركة على تنظيم داخلي متين وفريق متعدد التخصصات يشمل الإدارة العامة، الإدارة، المالية، التجارة، اللوجستيك ونظم المعلومات.",
+                "شركة سامي بيزنس ذات المسؤولية المحدودة هي شركة جزائرية تأسست سنة 2007 بالجزائر العاصمة على يد مسيرها الوحيد السيد رباح بوراي.\n\nمتخصصة في الاستيراد، تتجه نحو الإنتاج، التحويل وتسويق المنتجات الحديدية والمعادن المختلفة، خاصة أكسيد الزنك، الموجهة أساسًا للقطاعات الصناعية.\n\nمنذ عدة سنوات، ترافق سامي بيزنس الفاعلين الصناعيين الوطنيين من خلال عرض منظم يرتكز على التحكم في سلاسل التموين ومطابقة المعايير الدولية. تعتمد الشركة على تنظيم داخلي متين وفريق متعدد التخصصات يشمل الإدارة العامة، الإدارة، المالية، التجارة، اللوجستيك والوسائل التقنية.",
         },
         services: {
-            title: "خدماتنا",
+            title: "خبرتنا",
             items: [
                 {
                     name: "الاستيراد والتوزيع",
                     color: "#38367F",
-                    desc: "تموين دولي بالمعادن الحديدية وغير الحديدية.\nتسعير مرتبط بـ LME، تتبع ERP، مراقبة الجودة وتوزيع وطني.",
+                    desc: "إتقان كامل لسلسلة التوريد.\nشراكات مع موردين أوروبيين معترف بهم (ألمانيا، بلجيكا، إسبانيا).",
                 },
                 {
                     name: "التحويل و ZnO",
                     color: "#38367F",
-                    desc: "مرافقة تقنية لقطاعات المطاط، السيراميك والصناعة الكيميائية.\nتحكم في العمليات وجودة ثابتة ولوجستيك مؤمن.",
+                    desc: "إنتاج وتحويل أكسيد الزنك لمختلف القطاعات الصناعية.\nتحليل دوري للمنتجات المصنعة.",
                 },
                 {
                     name: "الاستشارة المعدنية",
                     color: "#38367F",
-                    desc: "اختيار الموردين، مطابقة المعايير الأوروبية، تدقيق الموردين وتحسين التكاليف والآجال لاتخاذ قرارات صناعية دقيقة.",
+                    desc: "خبرة تقنية لدعم القرارات الصناعية.\nمطابقة المعايير الدولية وتحسين التكاليف.",
                 },
             ],
         },

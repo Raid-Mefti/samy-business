@@ -63,7 +63,13 @@ export default function ArticlePage({
             border: "#333333",
         },
     };
-
+    // Add these after your color definitions
+    const gradientStart = "rgb(47, 134, 253)"; // #2f86fd
+    const gradientEnd = "rgb(76, 242, 255)"; // #4cf2ff
+    const blue = "rgb(25, 43, 94)"; // #192b5e
+    const mediumGray = "rgb(180, 180, 180)";
+    const lightGray = "rgb(240, 240, 240)";
+    const white = "rgb(255, 255, 255)"; // Fixed from (0,0,0) to (255,255,255)
     // Set currentColors based on theme
     const currentColors = colorSchemes[theme] || colorSchemes.light;
 
@@ -74,19 +80,19 @@ export default function ArticlePage({
         // Replace color: rgb(25,43,94) with theme-based blue color
         const htmlWithBlue = html.replace(
             /style="color: rgb\(25,43,94\);"/g,
-            `style="color: ${currentColors.blue};"`
+            `style="color: ${currentColors.blue};"`,
         );
 
         // Replace color: white with theme-based textPrimary color
         const htmlWithWhite = htmlWithBlue.replace(
             /style="color: white;"/g,
-            `style="color: ${currentColors.textPrimary};"`
+            `style="color: ${currentColors.textPrimary};"`,
         );
 
         // Replace background colors for dark mode
         const htmlWithBackground = htmlWithWhite.replace(
             /bg-gray-100 dark:bg-gray-800/g,
-            theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+            theme === "dark" ? "bg-gray-800" : "bg-gray-100",
         );
 
         return htmlWithBackground;
@@ -97,7 +103,7 @@ export default function ArticlePage({
         // ===== ZAMAK =====
         zamak: {
             image: "/finals/zamak.png",
-            imageTableau: "/tableaux/tableau_zamak.jpeg",
+            pdf: "/pdf/Analyses Techniques Zamak 5.pdf",
             fr: {
                 shortTitle: "Zamak 5",
                 longTitle: "Alliage Zinc-Aluminium de Haute Précision",
@@ -308,7 +314,7 @@ export default function ArticlePage({
         // ===== PLOMB =====
         plomb: {
             image: "/finals/plomb.png",
-            imageTableau: "/tableaux/tableau_plomb.jpeg",
+            pdf: "/pdf/Analyses Techniques Plomb Doux.pdf",
             fr: {
                 shortTitle: "Plomb Doux",
                 longTitle:
@@ -519,7 +525,7 @@ export default function ArticlePage({
         // ===== ALUMINIUM =====
         aluminium: {
             image: "/finals/aluminium.png",
-            imageTableau: "/tableaux/tableau_aluminium.jpeg",
+            pdf: "/pdf/Analyses Techniques Aluminium AL000.pdf",
             fr: {
                 shortTitle: "Aluminium",
                 longTitle: "Aluminium en Lingots - Léger, Résistant, Durable",
@@ -732,7 +738,7 @@ export default function ArticlePage({
         // ===== CUIVRE =====
         cuivre: {
             image: "/finals/cuivre.png",
-            imageTableau: "/tableaux/tableau_cuivre.jpeg",
+            pdf: "/pdf/Analyses Techniques Cables Cuivre_99.pdf",
             fr: {
                 shortTitle: "Cuivre",
                 longTitle: "Cuivre Cathode Grade A - Conductivité Maximale",
@@ -948,7 +954,7 @@ export default function ArticlePage({
         // ===== ZINC =====
         zinc: {
             image: "/finals/zinc_hg.png",
-            imageTableau: "/tableaux/tableau_zinc.jpeg",
+            pdf: "/pdf/Analyses Techniques Zinc_99.pdf",
             fr: {
                 shortTitle: "Zinc SHG",
                 longTitle: "Zinc 99.995% - Excellence en Galvanisation",
@@ -1160,7 +1166,7 @@ export default function ArticlePage({
         // ===== OXYDE DE ZINC =====
         "oxyde-de-zinc": {
             image: "/finals/oxyde_de_zinc.png",
-            imageTableau: "/tableaux/tableau_oxyde_zinc.jpeg",
+            pdf: "/pdf/Analyses Techniques of Zinc Oxide.pdf",
             fr: {
                 shortTitle: "Oxyde de Zinc",
                 longTitle: "Zinc Oxide 99.7% - Polyvalence Industrielle",
@@ -1370,7 +1376,7 @@ export default function ArticlePage({
         // ===== CARTON (Fil Machine) =====
         carton: {
             image: "/finals/carton.png",
-            imageTableau: "/tableaux/tableau_carton.jpeg",
+            pdf: "/pdf/nopdf",
             fr: {
                 shortTitle: "Carton",
                 longTitle:
@@ -1582,7 +1588,8 @@ export default function ArticlePage({
         // ===== ZINC ALUMINÉ =====
         "zinc-alumine": {
             image: "/finals/zinc_alumine.png",
-            imageTableau: "/tableaux/tableau_zinc_alumine.jpeg",
+            pdf: "/pdf/nopdf",
+
             fr: {
                 shortTitle: "Zinc Aluminé",
                 longTitle: "Zinc-Aluminium Alliage - Protection Supérieure",
@@ -2068,6 +2075,19 @@ export default function ArticlePage({
             </p>
         ));
     };
+    const getPdfPath = (slug) => {
+        const pdfPaths = {
+            zamak: "/pdf/Analyses Techniques Zamak 5.pdf",
+            plomb: "/pdf/Analyses Techniques Plomb Doux.pdf",
+            aluminium: "/pdf/Analyses Techniques Aluminium AL000.pdf",
+            cuivre: "/pdf/Analyses Techniques Cables Cuivre_99.pdf",
+            zinc: "/pdf/Analyses Techniques Zinc_99.pdf",
+            "oxyde-de-zinc": "/pdf/Analyses Techniques of Zinc Oxide.pdf",
+            // carton: "/pdf/carton-technical-specs.pdf",
+            // "zinc-alumine": "/pdf/zinc-alumine-technical-specs.pdf",
+        };
+        return pdfPaths[slug] || null;
+    };
 
     return (
         <section
@@ -2080,6 +2100,44 @@ export default function ArticlePage({
         >
             {/* Floating Action Buttons - Mobile Optimized */}
             <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3 sm:right-6 sm:bottom-6">
+                {/* PDF Download Button (Only show if PDF exists) */}
+                {productData[slug]?.pdf &&
+                    productData[slug]?.pdf !== "/pdf/nopdf" && (
+                        <a
+                            href={productData[slug]?.pdf}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 sm:p-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 group"
+                            title={t.downloadSpecs}
+                            style={{
+                                background: `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`,
+                                color: "white",
+                            }}
+                        >
+                            <svg
+                                className="w-5 h-5 sm:w-6 sm:h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                            </svg>
+                            <span
+                                className="hidden sm:block absolute right-full mr-3 top-1/2 -translate-y-1/2 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
+                                style={{
+                                    background: `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`,
+                                }}
+                            >
+                                {t.downloadSpecs}
+                            </span>
+                        </a>
+                    )}
+
                 <button
                     onClick={scrollToContact}
                     className="p-3 sm:p-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 group"
@@ -2111,6 +2169,7 @@ export default function ArticlePage({
                         {t.requestCustomizedQuote}
                     </span>
                 </button>
+
                 <a
                     href="tel:+213123456789"
                     className="p-3 sm:p-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 group"
@@ -2118,8 +2177,8 @@ export default function ArticlePage({
                         language === "fr"
                             ? "Appeler"
                             : language === "ar"
-                            ? "اتصال"
-                            : "Call"
+                              ? "اتصال"
+                              : "Call"
                     }
                     style={{
                         backgroundColor: currentColors.primary,
@@ -2146,8 +2205,8 @@ export default function ArticlePage({
                         {language === "fr"
                             ? "Appeler"
                             : language === "ar"
-                            ? "اتصال"
-                            : "Call"}
+                              ? "اتصال"
+                              : "Call"}
                     </span>
                 </a>
             </div>
@@ -2167,8 +2226,8 @@ export default function ArticlePage({
                             {language === "fr"
                                 ? "Accueil"
                                 : language === "ar"
-                                ? "الرئيسية"
-                                : "Home"}
+                                  ? "الرئيسية"
+                                  : "Home"}
                         </Link>
                         <span className="opacity-40">›</span>
                         <Link
@@ -2179,8 +2238,8 @@ export default function ArticlePage({
                             {language === "fr"
                                 ? "Produits"
                                 : language === "ar"
-                                ? "المنتجات"
-                                : "Products"}
+                                  ? "المنتجات"
+                                  : "Products"}
                         </Link>
                         <span className="opacity-40">›</span>
                         <span
@@ -2299,39 +2358,36 @@ export default function ArticlePage({
                                         {t.requestCustomizedQuote}
                                     </button>
 
-                                    {availableTabs.includes(
-                                        "specifications"
-                                    ) && (
-                                        <button
-                                            onClick={() =>
-                                                setActiveTab("specifications")
-                                            }
-                                            className="inline-flex items-center justify-center gap-2 sm:gap-3 rounded-xl px-6 sm:px-8 py-3 sm:py-4 font-bold transition-all duration-300 text-sm sm:text-base"
-                                            style={{
-                                                border: `2px solid ${currentColors.gradientStart}`,
-                                                color: currentColors.gradientStart,
-                                                backgroundColor:
-                                                    theme === "dark"
-                                                        ? "rgba(47, 134, 253, 0.1)"
-                                                        : "rgba(47, 134, 253, 0.05)",
-                                            }}
-                                        >
-                                            <svg
-                                                className="w-4 h-4 sm:w-5 sm:h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
+                                    {/* PDF Download Button in Hero Section */}
+                                    {productData[slug]?.pdf &&
+                                        productData[slug]?.pdf !==
+                                            "/pdf/nopdf" && (
+                                            <a
+                                                href={productData[slug]?.pdf}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center justify-center gap-2 sm:gap-3 rounded-xl px-6 sm:px-8 py-3 sm:py-4 font-bold text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-sm sm:text-base"
+                                                style={{
+                                                    background: `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`,
+                                                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                }}
                                             >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                                />
-                                            </svg>
-                                            {t.keySpecifications}
-                                        </button>
-                                    )}
+                                                <svg
+                                                    className="w-4 h-4 sm:w-5 sm:h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                                    />
+                                                </svg>
+                                                {t.downloadSpecs}
+                                            </a>
+                                        )}
                                 </div>
 
                                 {/* Company Stats - Mobile Optimized */}
@@ -2552,7 +2608,7 @@ export default function ArticlePage({
 
                                             {/* Quick Applications Preview */}
                                             {availableTabs.includes(
-                                                "applications"
+                                                "applications",
                                             ) &&
                                                 data.applications.length >
                                                     0 && (
@@ -2573,7 +2629,7 @@ export default function ArticlePage({
                                                                 .map(
                                                                     (
                                                                         app,
-                                                                        index
+                                                                        index,
                                                                     ) => (
                                                                         <div
                                                                             key={
@@ -2616,7 +2672,7 @@ export default function ArticlePage({
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    )
+                                                                    ),
                                                                 )}
                                                         </div>
                                                         {data.applications
@@ -2624,7 +2680,7 @@ export default function ArticlePage({
                                                             <button
                                                                 onClick={() =>
                                                                     setActiveTab(
-                                                                        "applications"
+                                                                        "applications",
                                                                     )
                                                                 }
                                                                 className="mt-3 sm:mt-4 text-sm font-semibold"
@@ -2801,10 +2857,48 @@ export default function ArticlePage({
                                             <div
                                                 dangerouslySetInnerHTML={{
                                                     __html: getSpecsHtmlWithTheme(
-                                                        data.specsHtml
+                                                        data.specsHtml,
                                                     ),
                                                 }}
                                             />
+                                            {/* PDF Download Button in Specifications Tab */}
+                                            {productData[slug]?.pdf &&
+                                                productData[slug]?.pdf !==
+                                                    "/pdf/nopdf" && (
+                                                    <div className="mt-6 sm:mt-8">
+                                                        <a
+                                                            href={
+                                                                productData[
+                                                                    slug
+                                                                ]?.pdf
+                                                            }
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center justify-center gap-3 sm:gap-4 rounded-xl px-6 sm:px-8 py-3 sm:py-4 font-bold text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
+                                                            style={{
+                                                                background: `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`,
+                                                                border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                            }}
+                                                        >
+                                                            <svg
+                                                                className="w-5 h-5 sm:w-6 sm:h-6"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={
+                                                                        2
+                                                                    }
+                                                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                                                />
+                                                            </svg>
+                                                            {t.downloadSpecs}
+                                                        </a>
+                                                    </div>
+                                                )}
                                         </div>
                                         <div>
                                             <div
@@ -2899,7 +2993,7 @@ export default function ArticlePage({
                                                     showMoreApplications
                                                         ? data.applications
                                                               .length
-                                                        : 6
+                                                        : 6,
                                                 )
                                                 .map((app, index) => (
                                                     <div
@@ -2982,7 +3076,7 @@ export default function ArticlePage({
                                                 <button
                                                     onClick={() =>
                                                         setShowMoreApplications(
-                                                            !showMoreApplications
+                                                            !showMoreApplications,
                                                         )
                                                     }
                                                     className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base"
@@ -2999,13 +3093,13 @@ export default function ArticlePage({
                                                         ? language === "fr"
                                                             ? "Voir Moins"
                                                             : language === "ar"
-                                                            ? "عرض أقل"
-                                                            : "Show Less"
+                                                              ? "عرض أقل"
+                                                              : "Show Less"
                                                         : language === "fr"
-                                                        ? "Voir Plus d'Applications"
-                                                        : language === "ar"
-                                                        ? "عرض المزيد من التطبيقات"
-                                                        : "See More Applications"}
+                                                          ? "Voir Plus d'Applications"
+                                                          : language === "ar"
+                                                            ? "عرض المزيد من التطبيقات"
+                                                            : "See More Applications"}
                                                     <svg
                                                         className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 ${
                                                             showMoreApplications
@@ -3038,7 +3132,7 @@ export default function ArticlePage({
                                                     0,
                                                     showMoreBenefits
                                                         ? data.benefits.length
-                                                        : 4
+                                                        : 4,
                                                 )
                                                 .map((benefit, index) => (
                                                     <div
@@ -3101,7 +3195,7 @@ export default function ArticlePage({
                                                 <button
                                                     onClick={() =>
                                                         setShowMoreBenefits(
-                                                            !showMoreBenefits
+                                                            !showMoreBenefits,
                                                         )
                                                     }
                                                     className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base"
@@ -3118,13 +3212,13 @@ export default function ArticlePage({
                                                         ? language === "fr"
                                                             ? "Voir Moins"
                                                             : language === "ar"
-                                                            ? "عرض أقل"
-                                                            : "Show Less"
+                                                              ? "عرض أقل"
+                                                              : "Show Less"
                                                         : language === "fr"
-                                                        ? "Voir Plus d'Avantages"
-                                                        : language === "ar"
-                                                        ? "عرض المزيد من المزايا"
-                                                        : "See More Benefits"}
+                                                          ? "Voir Plus d'Avantages"
+                                                          : language === "ar"
+                                                            ? "عرض المزيد من المزايا"
+                                                            : "See More Benefits"}
                                                 </button>
                                             </div>
                                         )}
@@ -3205,13 +3299,47 @@ export default function ArticlePage({
                                                 <div
                                                     dangerouslySetInnerHTML={{
                                                         __html: getSpecsHtmlWithTheme(
-                                                            data.specsHtml
+                                                            data.specsHtml,
                                                         ),
                                                     }}
                                                 />
                                             </div>
                                         )}
 
+                                    {/* PDF Download Button for simple products */}
+                                    {productData[slug]?.pdf &&
+                                        productData[slug]?.pdf !==
+                                            "/pdf/nopdf" && (
+                                            <div className="mt-6 sm:mt-8">
+                                                <a
+                                                    href={
+                                                        productData[slug]?.pdf
+                                                    }
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center justify-center gap-3 sm:gap-4 rounded-xl px-6 sm:px-8 py-3 sm:py-4 font-bold text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
+                                                    style={{
+                                                        background: `linear-gradient(135deg, ${gradientStart} 0%, ${gradientEnd} 100%)`,
+                                                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                    }}
+                                                >
+                                                    <svg
+                                                        className="w-5 h-5 sm:w-6 sm:h-6"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                                        />
+                                                    </svg>
+                                                    {t.downloadSpecs}
+                                                </a>
+                                            </div>
+                                        )}
                                     {/* Applications for simple products */}
                                     {data.applications &&
                                         data.applications.length > 0 && (
@@ -3264,7 +3392,7 @@ export default function ArticlePage({
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        )
+                                                        ),
                                                     )}
                                                 </div>
                                             </div>
@@ -3432,8 +3560,8 @@ export default function ArticlePage({
                                     {language === "fr"
                                         ? "SAMY BUSINESS"
                                         : language === "ar"
-                                        ? "سامي بيزنس"
-                                        : "SAMY BUSINESS"}
+                                          ? "سامي بيزنس"
+                                          : "SAMY BUSINESS"}
                                 </div>
                                 <div
                                     className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6"
